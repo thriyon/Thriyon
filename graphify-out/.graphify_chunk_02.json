@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {"id":"header_header","label":"Header Component","file_type":"code","source_file":"src/components/site/Header.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"footer_footer","label":"Footer Component","file_type":"code","source_file":"src/components/site/Footer.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"herosphere_herosphere","label":"HeroSphere WebGL Orb","file_type":"code","source_file":"src/components/site/HeroSphere.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"pageloader_pageloader","label":"PageLoader Animation","file_type":"code","source_file":"src/components/site/PageLoader.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"pageshell_pageshell","label":"PageShell Layout Wrapper","file_type":"code","source_file":"src/components/site/PageShell.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"smoothscroll_smoothscroll","label":"SmoothScroll (Lenis)","file_type":"code","source_file":"src/components/site/SmoothScroll.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"useauth_authprovider","label":"AuthProvider Context","file_type":"code","source_file":"src/hooks/useAuth.tsx","source_location":"line 34","source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"useauth_useauth","label":"useAuth Hook","file_type":"code","source_file":"src/hooks/useAuth.tsx","source_location":"line 120","source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"useauth_profile","label":"Profile Type","file_type":"code","source_file":"src/hooks/useAuth.tsx","source_location":"line 7","source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"use_mobile_usemobile","label":"useMobile Responsive Hook","file_type":"code","source_file":"src/hooks/use-mobile.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"supabase_supabase","label":"Supabase Client Singleton","file_type":"code","source_file":"src/lib/supabase.ts","source_location":"line 10","source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"mock_freelancers","label":"Mock Freelancers Data","file_type":"code","source_file":"src/lib/mock.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"mock_projects","label":"Mock Projects Data","file_type":"code","source_file":"src/lib/mock.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"mock_showcases","label":"Mock Showcases Data","file_type":"code","source_file":"src/lib/mock.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"mock_posts","label":"Mock Editorial Posts Data","file_type":"code","source_file":"src/lib/mock.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"error_capture_consume","label":"consumeLastCapturedError","file_type":"code","source_file":"src/lib/error-capture.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"error_page_render","label":"renderErrorPage","file_type":"code","source_file":"src/lib/error-page.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"utils_cn","label":"cn (className Utility)","file_type":"code","source_file":"src/lib/utils.ts","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"supabase_profiles_table","label":"Supabase profiles Table","file_type":"rationale","source_file":"src/hooks/useAuth.tsx","source_location":"line 42","source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"useauth_dual_role","label":"Dual Role System (freelancer/client)","file_type":"rationale","source_file":"src/hooks/useAuth.tsx","source_location":"line 12","source_url":null,"captured_at":null,"author":null,"contributor":null}
+  ],
+  "edges": [
+    {"source":"useauth_authprovider","target":"supabase_supabase","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"src/hooks/useAuth.tsx","source_location":null,"weight":1.0},
+    {"source":"useauth_useauth","target":"useauth_authprovider","relation":"calls","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"src/hooks/useAuth.tsx","source_location":null,"weight":1.0},
+    {"source":"useauth_profile","target":"useauth_dual_role","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"src/hooks/useAuth.tsx","source_location":null,"weight":1.0},
+    {"source":"header_header","target":"useauth_useauth","relation":"calls","confidence":"INFERRED","confidence_score":0.95,"source_file":"src/components/site/Header.tsx","source_location":null,"weight":1.0},
+    {"source":"mock_freelancers","target":"useauth_profile","relation":"shares_data_with","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/lib/mock.ts","source_location":null,"weight":1.0},
+    {"source":"mock_freelancers","target":"mock_showcases","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/lib/mock.ts","source_location":null,"weight":1.0},
+    {"source":"mock_projects","target":"mock_freelancers","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/lib/mock.ts","source_location":null,"weight":1.0},
+    {"source":"supabase_supabase","target":"supabase_profiles_table","relation":"references","confidence":"INFERRED","confidence_score":0.95,"source_file":"src/lib/supabase.ts","source_location":null,"weight":1.0},
+    {"source":"error_capture_consume","target":"error_page_render","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/lib/error-capture.ts","source_location":null,"weight":1.0}
+  ],
+  "hyperedges": [
+    {"id":"site_shell_components","label":"Site Shell Components","nodes":["header_header","footer_footer","pageshell_pageshell","smoothscroll_smoothscroll","pageloader_pageloader"],"relation":"form","confidence":"INFERRED","confidence_score":0.90,"source_file":"src/components/site/"},
+    {"id":"auth_system","label":"Auth & Profile System","nodes":["useauth_authprovider","useauth_useauth","useauth_profile","supabase_supabase","supabase_profiles_table"],"relation":"implement","confidence":"INFERRED","confidence_score":0.95,"source_file":"src/hooks/useAuth.tsx"},
+    {"id":"mock_data_layer","label":"Mock Data Layer","nodes":["mock_freelancers","mock_projects","mock_showcases","mock_posts"],"relation":"form","confidence":"INFERRED","confidence_score":0.90,"source_file":"src/lib/mock.ts"}
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

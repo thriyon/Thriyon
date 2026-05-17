@@ -1,0 +1,1635 @@
+{
+  "nodes": [
+    {
+      "id": "roadmap_thriyon_nexus",
+      "label": "Thriyon Nexus Platform Roadmap",
+      "file_type": "document",
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "roadmap_public_discovery_layer",
+      "label": "Public & Discovery Layer",
+      "file_type": "rationale",
+      "source_file": "ROADMAP.md",
+      "source_location": "line 9",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "roadmap_freelancer_space",
+      "label": "Freelancer Space (Sovereign OS)",
+      "file_type": "rationale",
+      "source_file": "ROADMAP.md",
+      "source_location": "line 22",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "roadmap_client_space",
+      "label": "Client Space (Initiator OS)",
+      "file_type": "rationale",
+      "source_file": "ROADMAP.md",
+      "source_location": "line 34",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "roadmap_collaboration_financial_layer",
+      "label": "Collaboration & Financial Layer",
+      "file_type": "rationale",
+      "source_file": "ROADMAP.md",
+      "source_location": "line 46",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "roadmap_escrow_system",
+      "label": "Escrow Payment System",
+      "file_type": "rationale",
+      "source_file": "ROADMAP.md",
+      "source_location": "line 53",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "roadmap_invite_only_curation",
+      "label": "Invite-Only Curation Model",
+      "file_type": "rationale",
+      "source_file": "ROADMAP.md",
+      "source_location": "line 5",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "layout_rootlayout",
+      "label": "RootLayout",
+      "file_type": "code",
+      "source_file": "app/layout.tsx",
+      "source_location": "line 24",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "layout_metadata",
+      "label": "App Metadata (SEO)",
+      "file_type": "code",
+      "source_file": "app/layout.tsx",
+      "source_location": "line 8",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "providers_providers",
+      "label": "Providers",
+      "file_type": "code",
+      "source_file": "app/providers.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_homepage",
+      "label": "Homepage (The Gateway)",
+      "file_type": "code",
+      "source_file": "app/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "not_found_notfound",
+      "label": "NotFound Page",
+      "file_type": "code",
+      "source_file": "app/not-found.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "route_auth_callback",
+      "label": "Auth Callback Route Handler",
+      "file_type": "code",
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_auth_login",
+      "label": "Login Page (Access Portal)",
+      "file_type": "code",
+      "source_file": "app/auth/login/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_auth_signup",
+      "label": "Signup Page (Application Portal)",
+      "file_type": "code",
+      "source_file": "app/auth/signup/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_talent_index",
+      "label": "Talent Index Page",
+      "file_type": "code",
+      "source_file": "app/talent/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_talent_username",
+      "label": "Talent Showcase Profile Page",
+      "file_type": "code",
+      "source_file": "app/talent/[username]/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_client_dashboard",
+      "label": "Client Dashboard (Initiator)",
+      "file_type": "code",
+      "source_file": "app/user/dashboard/client/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_client_briefs",
+      "label": "Client Briefs Index",
+      "file_type": "code",
+      "source_file": "app/user/dashboard/client/briefs/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_client_briefs_new",
+      "label": "New Brief Builder",
+      "file_type": "code",
+      "source_file": "app/user/dashboard/client/briefs/new/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_freelancer_dashboard",
+      "label": "Freelancer Dashboard (Sovereign)",
+      "file_type": "code",
+      "source_file": "app/user/dashboard/freelancer/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_freelancer_services_new",
+      "label": "New Service Creation Page",
+      "file_type": "code",
+      "source_file": "app/user/dashboard/freelancer/services/new/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_messages",
+      "label": "Messages Page (The Conduit)",
+      "file_type": "code",
+      "source_file": "app/user/dashboard/messages/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_auth_signup_role_selector",
+      "label": "Role Selector (Freelancer vs Client)",
+      "file_type": "rationale",
+      "source_file": "app/auth/signup/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "page_messages_realtime",
+      "label": "Realtime Messaging with Supabase",
+      "file_type": "rationale",
+      "source_file": "app/user/dashboard/messages/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "header_header",
+      "label": "Header Component",
+      "file_type": "code",
+      "source_file": "src/components/site/Header.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "footer_footer",
+      "label": "Footer Component",
+      "file_type": "code",
+      "source_file": "src/components/site/Footer.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "herosphere_herosphere",
+      "label": "HeroSphere WebGL Orb",
+      "file_type": "code",
+      "source_file": "src/components/site/HeroSphere.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "pageloader_pageloader",
+      "label": "PageLoader Animation",
+      "file_type": "code",
+      "source_file": "src/components/site/PageLoader.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "pageshell_pageshell",
+      "label": "PageShell Layout Wrapper",
+      "file_type": "code",
+      "source_file": "src/components/site/PageShell.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "smoothscroll_smoothscroll",
+      "label": "SmoothScroll (Lenis)",
+      "file_type": "code",
+      "source_file": "src/components/site/SmoothScroll.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "useauth_authprovider",
+      "label": "AuthProvider Context",
+      "file_type": "code",
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": "line 34",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "useauth_useauth",
+      "label": "useAuth Hook",
+      "file_type": "code",
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": "line 120",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "useauth_profile",
+      "label": "Profile Type",
+      "file_type": "code",
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": "line 7",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "use_mobile_usemobile",
+      "label": "useMobile Responsive Hook",
+      "file_type": "code",
+      "source_file": "src/hooks/use-mobile.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "supabase_supabase",
+      "label": "Supabase Client Singleton",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "line 10",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mock_freelancers",
+      "label": "Mock Freelancers Data",
+      "file_type": "code",
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mock_projects",
+      "label": "Mock Projects Data",
+      "file_type": "code",
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mock_showcases",
+      "label": "Mock Showcases Data",
+      "file_type": "code",
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mock_posts",
+      "label": "Mock Editorial Posts Data",
+      "file_type": "code",
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "error_capture_consume",
+      "label": "consumeLastCapturedError",
+      "file_type": "code",
+      "source_file": "src/lib/error-capture.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "error_page_render",
+      "label": "renderErrorPage",
+      "file_type": "code",
+      "source_file": "src/lib/error-page.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "utils_cn",
+      "label": "cn (className Utility)",
+      "file_type": "code",
+      "source_file": "src/lib/utils.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "supabase_profiles_table",
+      "label": "Supabase profiles Table",
+      "file_type": "rationale",
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": "line 42",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "useauth_dual_role",
+      "label": "Dual Role System (freelancer/client)",
+      "file_type": "rationale",
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": "line 12",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "accordion_accordion",
+      "label": "Accordion",
+      "file_type": "code",
+      "source_file": "src/components/ui/accordion.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "alert_dialog_alertdialog",
+      "label": "AlertDialog",
+      "file_type": "code",
+      "source_file": "src/components/ui/alert-dialog.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "alert_alert",
+      "label": "Alert",
+      "file_type": "code",
+      "source_file": "src/components/ui/alert.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "aspect_ratio_aspectratio",
+      "label": "AspectRatio",
+      "file_type": "code",
+      "source_file": "src/components/ui/aspect-ratio.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "avatar_avatar",
+      "label": "Avatar",
+      "file_type": "code",
+      "source_file": "src/components/ui/avatar.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "badge_badge",
+      "label": "Badge",
+      "file_type": "code",
+      "source_file": "src/components/ui/badge.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "breadcrumb_breadcrumb",
+      "label": "Breadcrumb",
+      "file_type": "code",
+      "source_file": "src/components/ui/breadcrumb.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "button_button",
+      "label": "Button",
+      "file_type": "code",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "calendar_calendar",
+      "label": "Calendar",
+      "file_type": "code",
+      "source_file": "src/components/ui/calendar.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "card_card",
+      "label": "Card",
+      "file_type": "code",
+      "source_file": "src/components/ui/card.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "carousel_carousel",
+      "label": "Carousel",
+      "file_type": "code",
+      "source_file": "src/components/ui/carousel.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "chart_chart",
+      "label": "Chart (Recharts wrapper)",
+      "file_type": "code",
+      "source_file": "src/components/ui/chart.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "checkbox_checkbox",
+      "label": "Checkbox",
+      "file_type": "code",
+      "source_file": "src/components/ui/checkbox.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "collapsible_collapsible",
+      "label": "Collapsible",
+      "file_type": "code",
+      "source_file": "src/components/ui/collapsible.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "command_command",
+      "label": "Command (CMDK)",
+      "file_type": "code",
+      "source_file": "src/components/ui/command.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "context_menu_contextmenu",
+      "label": "ContextMenu",
+      "file_type": "code",
+      "source_file": "src/components/ui/context-menu.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dialog_dialog",
+      "label": "Dialog",
+      "file_type": "code",
+      "source_file": "src/components/ui/dialog.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "drawer_drawer",
+      "label": "Drawer",
+      "file_type": "code",
+      "source_file": "src/components/ui/drawer.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dropdown_menu_dropdownmenu",
+      "label": "DropdownMenu",
+      "file_type": "code",
+      "source_file": "src/components/ui/dropdown-menu.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "form_form",
+      "label": "Form (react-hook-form)",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hover_card_hovercard",
+      "label": "HoverCard",
+      "file_type": "code",
+      "source_file": "src/components/ui/hover-card.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "input_otp_inputotp",
+      "label": "InputOTP",
+      "file_type": "code",
+      "source_file": "src/components/ui/input-otp.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "input_input",
+      "label": "Input",
+      "file_type": "code",
+      "source_file": "src/components/ui/input.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "label_label",
+      "label": "Label",
+      "file_type": "code",
+      "source_file": "src/components/ui/label.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "menubar_menubar",
+      "label": "Menubar",
+      "file_type": "code",
+      "source_file": "src/components/ui/menubar.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "navigation_menu_navigationmenu",
+      "label": "NavigationMenu",
+      "file_type": "code",
+      "source_file": "src/components/ui/navigation-menu.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "pagination_pagination",
+      "label": "Pagination",
+      "file_type": "code",
+      "source_file": "src/components/ui/pagination.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "popover_popover",
+      "label": "Popover",
+      "file_type": "code",
+      "source_file": "src/components/ui/popover.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "progress_progress",
+      "label": "Progress",
+      "file_type": "code",
+      "source_file": "src/components/ui/progress.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "radio_group_radiogroup",
+      "label": "RadioGroup",
+      "file_type": "code",
+      "source_file": "src/components/ui/radio-group.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "resizable_resizable",
+      "label": "Resizable Panels",
+      "file_type": "code",
+      "source_file": "src/components/ui/resizable.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "scroll_area_scrollarea",
+      "label": "ScrollArea",
+      "file_type": "code",
+      "source_file": "src/components/ui/scroll-area.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "select_select",
+      "label": "Select",
+      "file_type": "code",
+      "source_file": "src/components/ui/select.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "separator_separator",
+      "label": "Separator",
+      "file_type": "code",
+      "source_file": "src/components/ui/separator.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sheet_sheet",
+      "label": "Sheet (Slide-over Panel)",
+      "file_type": "code",
+      "source_file": "src/components/ui/sheet.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sidebar_sidebar",
+      "label": "Sidebar",
+      "file_type": "code",
+      "source_file": "src/components/ui/sidebar.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skeleton_skeleton",
+      "label": "Skeleton Loading",
+      "file_type": "code",
+      "source_file": "src/components/ui/skeleton.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "slider_slider",
+      "label": "Slider",
+      "file_type": "code",
+      "source_file": "src/components/ui/slider.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sonner_sonner",
+      "label": "Sonner (Toast Notifications)",
+      "file_type": "code",
+      "source_file": "src/components/ui/sonner.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "switch_switch",
+      "label": "Switch",
+      "file_type": "code",
+      "source_file": "src/components/ui/switch.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "table_table",
+      "label": "Table",
+      "file_type": "code",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "tabs_tabs",
+      "label": "Tabs",
+      "file_type": "code",
+      "source_file": "src/components/ui/tabs.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "textarea_textarea",
+      "label": "Textarea",
+      "file_type": "code",
+      "source_file": "src/components/ui/textarea.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "toggle_group_togglegroup",
+      "label": "ToggleGroup",
+      "file_type": "code",
+      "source_file": "src/components/ui/toggle-group.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "toggle_toggle",
+      "label": "Toggle",
+      "file_type": "code",
+      "source_file": "src/components/ui/toggle.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "tooltip_tooltip",
+      "label": "Tooltip",
+      "file_type": "code",
+      "source_file": "src/components/ui/tooltip.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "layout_rootlayout",
+      "target": "providers_providers",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/layout.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_public_discovery_layer",
+      "target": "page_homepage",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_public_discovery_layer",
+      "target": "page_talent_index",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_public_discovery_layer",
+      "target": "page_talent_username",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_freelancer_space",
+      "target": "page_freelancer_dashboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_freelancer_space",
+      "target": "page_messages",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_client_space",
+      "target": "page_client_dashboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_client_space",
+      "target": "page_client_briefs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_client_space",
+      "target": "page_client_briefs_new",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_collaboration_financial_layer",
+      "target": "roadmap_escrow_system",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "roadmap_invite_only_curation",
+      "target": "roadmap_public_discovery_layer",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "ROADMAP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_auth_signup",
+      "target": "page_auth_signup_role_selector",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/auth/signup/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_auth_signup_role_selector",
+      "target": "page_freelancer_dashboard",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "app/auth/signup/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_auth_signup_role_selector",
+      "target": "page_client_dashboard",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "app/auth/signup/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_messages",
+      "target": "page_messages_realtime",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "app/user/dashboard/messages/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_client_briefs_new",
+      "target": "page_client_briefs",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "app/user/dashboard/client/briefs/new/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "route_auth_callback",
+      "target": "page_auth_login",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_talent_index",
+      "target": "page_talent_username",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "app/talent/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_messages",
+      "target": "page_client_dashboard",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "app/user/dashboard/messages/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "page_messages",
+      "target": "page_freelancer_dashboard",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "app/user/dashboard/messages/page.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "useauth_authprovider",
+      "target": "supabase_supabase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "useauth_useauth",
+      "target": "useauth_authprovider",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "useauth_profile",
+      "target": "useauth_dual_role",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/hooks/useAuth.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "header_header",
+      "target": "useauth_useauth",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/components/site/Header.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "mock_freelancers",
+      "target": "useauth_profile",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "mock_freelancers",
+      "target": "mock_showcases",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "mock_projects",
+      "target": "mock_freelancers",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/mock.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "supabase_supabase",
+      "target": "supabase_profiles_table",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/supabase.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "error_capture_consume",
+      "target": "error_page_render",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/error-capture.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "alert_dialog_alertdialog",
+      "target": "dialog_dialog",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/alert-dialog.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "drawer_drawer",
+      "target": "dialog_dialog",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/drawer.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "context_menu_contextmenu",
+      "target": "dropdown_menu_dropdownmenu",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/context-menu.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "command_command",
+      "target": "dropdown_menu_dropdownmenu",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/ui/command.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "form_form",
+      "target": "checkbox_checkbox",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "accordion_accordion",
+      "target": "collapsible_collapsible",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/accordion.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "badge_badge",
+      "target": "avatar_avatar",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "src/components/ui/badge.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sheet_sheet",
+      "target": "popover_popover",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/ui/sheet.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "tooltip_tooltip",
+      "target": "hover_card_hovercard",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/tooltip.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "toggle_group_togglegroup",
+      "target": "toggle_toggle",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ui/toggle-group.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "input_input",
+      "target": "textarea_textarea",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/input.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "input_otp_inputotp",
+      "target": "input_input",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/ui/input-otp.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "radio_group_radiogroup",
+      "target": "select_select",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/ui/radio-group.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sidebar_sidebar",
+      "target": "navigation_menu_navigationmenu",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/ui/sidebar.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "menubar_menubar",
+      "target": "navigation_menu_navigationmenu",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/menubar.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "progress_progress",
+      "target": "skeleton_skeleton",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "src/components/ui/progress.tsx",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "auth_flow",
+      "label": "Authentication Flow",
+      "nodes": [
+        "page_auth_login",
+        "page_auth_signup",
+        "route_auth_callback",
+        "page_auth_signup_role_selector"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "app/auth/"
+    },
+    {
+      "id": "dashboard_pages",
+      "label": "Authenticated Dashboard Pages",
+      "nodes": [
+        "page_client_dashboard",
+        "page_client_briefs",
+        "page_client_briefs_new",
+        "page_freelancer_dashboard",
+        "page_freelancer_services_new",
+        "page_messages"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "app/user/dashboard/"
+    },
+    {
+      "id": "public_discovery_pages",
+      "label": "Public Discovery Pages",
+      "nodes": [
+        "page_homepage",
+        "page_talent_index",
+        "page_talent_username"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "app/"
+    },
+    {
+      "id": "site_shell_components",
+      "label": "Site Shell Components",
+      "nodes": [
+        "header_header",
+        "footer_footer",
+        "pageshell_pageshell",
+        "smoothscroll_smoothscroll",
+        "pageloader_pageloader"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "src/components/site/"
+    },
+    {
+      "id": "auth_system",
+      "label": "Auth & Profile System",
+      "nodes": [
+        "useauth_authprovider",
+        "useauth_useauth",
+        "useauth_profile",
+        "supabase_supabase",
+        "supabase_profiles_table"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/hooks/useAuth.tsx"
+    },
+    {
+      "id": "mock_data_layer",
+      "label": "Mock Data Layer",
+      "nodes": [
+        "mock_freelancers",
+        "mock_projects",
+        "mock_showcases",
+        "mock_posts"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "src/lib/mock.ts"
+    },
+    {
+      "id": "overlay_components",
+      "label": "Overlay / Modal Component Family",
+      "nodes": [
+        "dialog_dialog",
+        "alert_dialog_alertdialog",
+        "drawer_drawer",
+        "context_menu_contextmenu",
+        "dropdown_menu_dropdownmenu"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "src/components/ui/"
+    },
+    {
+      "id": "form_input_components",
+      "label": "Form Input Components",
+      "nodes": [
+        "form_form",
+        "checkbox_checkbox",
+        "calendar_calendar"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/"
+    },
+    {
+      "id": "display_components",
+      "label": "Display & Feedback Components",
+      "nodes": [
+        "alert_alert",
+        "badge_badge",
+        "card_card",
+        "avatar_avatar",
+        "chart_chart"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ui/"
+    },
+    {
+      "id": "overlay_popup_family",
+      "label": "Overlay & Popup Family",
+      "nodes": [
+        "sheet_sheet",
+        "popover_popover",
+        "tooltip_tooltip",
+        "hover_card_hovercard"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "src/components/ui/"
+    },
+    {
+      "id": "form_input_family",
+      "label": "Form Input Family",
+      "nodes": [
+        "input_input",
+        "textarea_textarea",
+        "select_select",
+        "radio_group_radiogroup",
+        "switch_switch",
+        "slider_slider",
+        "input_otp_inputotp"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "src/components/ui/"
+    },
+    {
+      "id": "layout_nav_family",
+      "label": "Layout & Navigation Family",
+      "nodes": [
+        "sidebar_sidebar",
+        "navigation_menu_navigationmenu",
+        "menubar_menubar",
+        "tabs_tabs",
+        "pagination_pagination"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "src/components/ui/"
+    }
+  ]
+}

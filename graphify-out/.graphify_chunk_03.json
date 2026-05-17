@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {"id":"accordion_accordion","label":"Accordion","file_type":"code","source_file":"src/components/ui/accordion.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"alert_dialog_alertdialog","label":"AlertDialog","file_type":"code","source_file":"src/components/ui/alert-dialog.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"alert_alert","label":"Alert","file_type":"code","source_file":"src/components/ui/alert.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"aspect_ratio_aspectratio","label":"AspectRatio","file_type":"code","source_file":"src/components/ui/aspect-ratio.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"avatar_avatar","label":"Avatar","file_type":"code","source_file":"src/components/ui/avatar.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"badge_badge","label":"Badge","file_type":"code","source_file":"src/components/ui/badge.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"breadcrumb_breadcrumb","label":"Breadcrumb","file_type":"code","source_file":"src/components/ui/breadcrumb.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"button_button","label":"Button","file_type":"code","source_file":"src/components/ui/button.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"calendar_calendar","label":"Calendar","file_type":"code","source_file":"src/components/ui/calendar.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"card_card","label":"Card","file_type":"code","source_file":"src/components/ui/card.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"carousel_carousel","label":"Carousel","file_type":"code","source_file":"src/components/ui/carousel.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"chart_chart","label":"Chart (Recharts wrapper)","file_type":"code","source_file":"src/components/ui/chart.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"checkbox_checkbox","label":"Checkbox","file_type":"code","source_file":"src/components/ui/checkbox.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"collapsible_collapsible","label":"Collapsible","file_type":"code","source_file":"src/components/ui/collapsible.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"command_command","label":"Command (CMDK)","file_type":"code","source_file":"src/components/ui/command.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"context_menu_contextmenu","label":"ContextMenu","file_type":"code","source_file":"src/components/ui/context-menu.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"dialog_dialog","label":"Dialog","file_type":"code","source_file":"src/components/ui/dialog.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"drawer_drawer","label":"Drawer","file_type":"code","source_file":"src/components/ui/drawer.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"dropdown_menu_dropdownmenu","label":"DropdownMenu","file_type":"code","source_file":"src/components/ui/dropdown-menu.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"form_form","label":"Form (react-hook-form)","file_type":"code","source_file":"src/components/ui/form.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null}
+  ],
+  "edges": [
+    {"source":"alert_dialog_alertdialog","target":"dialog_dialog","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/alert-dialog.tsx","source_location":null,"weight":1.0},
+    {"source":"drawer_drawer","target":"dialog_dialog","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/drawer.tsx","source_location":null,"weight":1.0},
+    {"source":"context_menu_contextmenu","target":"dropdown_menu_dropdownmenu","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/context-menu.tsx","source_location":null,"weight":1.0},
+    {"source":"command_command","target":"dropdown_menu_dropdownmenu","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"src/components/ui/command.tsx","source_location":null,"weight":1.0},
+    {"source":"form_form","target":"checkbox_checkbox","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"src/components/ui/form.tsx","source_location":null,"weight":1.0},
+    {"source":"accordion_accordion","target":"collapsible_collapsible","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/accordion.tsx","source_location":null,"weight":1.0},
+    {"source":"badge_badge","target":"avatar_avatar","relation":"conceptually_related_to","confidence":"INFERRED","confidence_score":0.65,"source_file":"src/components/ui/badge.tsx","source_location":null,"weight":1.0}
+  ],
+  "hyperedges": [
+    {"id":"overlay_components","label":"Overlay / Modal Component Family","nodes":["dialog_dialog","alert_dialog_alertdialog","drawer_drawer","context_menu_contextmenu","dropdown_menu_dropdownmenu"],"relation":"form","confidence":"INFERRED","confidence_score":0.90,"source_file":"src/components/ui/"},
+    {"id":"form_input_components","label":"Form Input Components","nodes":["form_form","checkbox_checkbox","calendar_calendar"],"relation":"form","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/"},
+    {"id":"display_components","label":"Display & Feedback Components","nodes":["alert_alert","badge_badge","card_card","avatar_avatar","chart_chart"],"relation":"form","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/"}
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {"id":"hover_card_hovercard","label":"HoverCard","file_type":"code","source_file":"src/components/ui/hover-card.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"input_otp_inputotp","label":"InputOTP","file_type":"code","source_file":"src/components/ui/input-otp.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"input_input","label":"Input","file_type":"code","source_file":"src/components/ui/input.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"label_label","label":"Label","file_type":"code","source_file":"src/components/ui/label.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"menubar_menubar","label":"Menubar","file_type":"code","source_file":"src/components/ui/menubar.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"navigation_menu_navigationmenu","label":"NavigationMenu","file_type":"code","source_file":"src/components/ui/navigation-menu.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"pagination_pagination","label":"Pagination","file_type":"code","source_file":"src/components/ui/pagination.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"popover_popover","label":"Popover","file_type":"code","source_file":"src/components/ui/popover.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"progress_progress","label":"Progress","file_type":"code","source_file":"src/components/ui/progress.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"radio_group_radiogroup","label":"RadioGroup","file_type":"code","source_file":"src/components/ui/radio-group.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"resizable_resizable","label":"Resizable Panels","file_type":"code","source_file":"src/components/ui/resizable.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"scroll_area_scrollarea","label":"ScrollArea","file_type":"code","source_file":"src/components/ui/scroll-area.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"select_select","label":"Select","file_type":"code","source_file":"src/components/ui/select.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"separator_separator","label":"Separator","file_type":"code","source_file":"src/components/ui/separator.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"sheet_sheet","label":"Sheet (Slide-over Panel)","file_type":"code","source_file":"src/components/ui/sheet.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"sidebar_sidebar","label":"Sidebar","file_type":"code","source_file":"src/components/ui/sidebar.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"skeleton_skeleton","label":"Skeleton Loading","file_type":"code","source_file":"src/components/ui/skeleton.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"slider_slider","label":"Slider","file_type":"code","source_file":"src/components/ui/slider.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"sonner_sonner","label":"Sonner (Toast Notifications)","file_type":"code","source_file":"src/components/ui/sonner.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"switch_switch","label":"Switch","file_type":"code","source_file":"src/components/ui/switch.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"table_table","label":"Table","file_type":"code","source_file":"src/components/ui/table.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"tabs_tabs","label":"Tabs","file_type":"code","source_file":"src/components/ui/tabs.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"textarea_textarea","label":"Textarea","file_type":"code","source_file":"src/components/ui/textarea.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"toggle_group_togglegroup","label":"ToggleGroup","file_type":"code","source_file":"src/components/ui/toggle-group.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"toggle_toggle","label":"Toggle","file_type":"code","source_file":"src/components/ui/toggle.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null},
+    {"id":"tooltip_tooltip","label":"Tooltip","file_type":"code","source_file":"src/components/ui/tooltip.tsx","source_location":null,"source_url":null,"captured_at":null,"author":null,"contributor":null}
+  ],
+  "edges": [
+    {"source":"sheet_sheet","target":"popover_popover","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"src/components/ui/sheet.tsx","source_location":null,"weight":1.0},
+    {"source":"tooltip_tooltip","target":"hover_card_hovercard","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/tooltip.tsx","source_location":null,"weight":1.0},
+    {"source":"toggle_group_togglegroup","target":"toggle_toggle","relation":"implements","confidence":"EXTRACTED","confidence_score":1.0,"source_file":"src/components/ui/toggle-group.tsx","source_location":null,"weight":1.0},
+    {"source":"input_input","target":"textarea_textarea","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/input.tsx","source_location":null,"weight":1.0},
+    {"source":"input_otp_inputotp","target":"input_input","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"src/components/ui/input-otp.tsx","source_location":null,"weight":1.0},
+    {"source":"radio_group_radiogroup","target":"select_select","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"src/components/ui/radio-group.tsx","source_location":null,"weight":1.0},
+    {"source":"sidebar_sidebar","target":"navigation_menu_navigationmenu","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.75,"source_file":"src/components/ui/sidebar.tsx","source_location":null,"weight":1.0},
+    {"source":"menubar_menubar","target":"navigation_menu_navigationmenu","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.85,"source_file":"src/components/ui/menubar.tsx","source_location":null,"weight":1.0},
+    {"source":"progress_progress","target":"skeleton_skeleton","relation":"semantically_similar_to","confidence":"INFERRED","confidence_score":0.65,"source_file":"src/components/ui/progress.tsx","source_location":null,"weight":1.0}
+  ],
+  "hyperedges": [
+    {"id":"overlay_popup_family","label":"Overlay & Popup Family","nodes":["sheet_sheet","popover_popover","tooltip_tooltip","hover_card_hovercard"],"relation":"form","confidence":"INFERRED","confidence_score":0.90,"source_file":"src/components/ui/"},
+    {"id":"form_input_family","label":"Form Input Family","nodes":["input_input","textarea_textarea","select_select","radio_group_radiogroup","switch_switch","slider_slider","input_otp_inputotp"],"relation":"form","confidence":"INFERRED","confidence_score":0.90,"source_file":"src/components/ui/"},
+    {"id":"layout_nav_family","label":"Layout & Navigation Family","nodes":["sidebar_sidebar","navigation_menu_navigationmenu","menubar_menubar","tabs_tabs","pagination_pagination"],"relation":"form","confidence":"INFERRED","confidence_score":0.90,"source_file":"src/components/ui/"}
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
