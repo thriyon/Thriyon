@@ -339,11 +339,17 @@ export default function HomePage() {
     // If the user has just logged in or is logged in AND has an access token in the hash,
     // let's redirect them to their dashboard!
     const hash = typeof window !== "undefined" ? window.location.hash : "";
-    if (user && profile && (hash.includes("access_token") || hash.includes("id_token"))) {
-      if (profile.role === "client") {
-        router.push("/user/dashboard/client");
-      } else {
-        router.push("/user/dashboard/freelancer");
+    if (user && profile) {
+      if (!profile.onboarding_completed) {
+        router.push("/onboarding");
+        return;
+      }
+      if (hash.includes("access_token") || hash.includes("id_token")) {
+        if (profile.role === "client") {
+          router.push("/user/dashboard/client");
+        } else {
+          router.push("/user/dashboard/freelancer");
+        }
       }
     }
   }, [user, profile, router]);
