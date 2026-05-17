@@ -157,10 +157,11 @@ export default function OnboardingPage() {
   // Guard: if already onboarded, redirect to correct dashboard
   useEffect(() => {
     if (!loading && user && profile && profile.onboarding_completed) {
+      const uname = profile.username || 'user';
       if (profile.role === "client") {
-        router.push("/user/dashboard/client");
+        router.push(`/${uname}/dashboard/client`);
       } else {
-        router.push("/user/dashboard/freelancer");
+        router.push(`/${uname}/dashboard/freelancer`);
       }
     }
     // If not logged in at all, send to login
@@ -336,10 +337,11 @@ export default function OnboardingPage() {
       await refreshProfile();
       
       // Redirect
+      const uname = username || profile?.username || 'user';
       if (role === "client") {
-        router.push("/user/dashboard/client");
+        router.push(`/${uname}/dashboard/client`);
       } else {
-        router.push("/user/dashboard/freelancer");
+        router.push(`/${uname}/dashboard/freelancer`);
       }
 
     } catch (err: any) {
@@ -358,10 +360,11 @@ export default function OnboardingPage() {
         onboarding_completed: true,
       });
       await refreshProfile();
+      const uname = username || profile?.username || 'user';
       if (role === "client") {
-        router.push("/user/dashboard/client");
+        router.push(`/${uname}/dashboard/client`);
       } else {
-        router.push("/user/dashboard/freelancer");
+        router.push(`/${uname}/dashboard/freelancer`);
       }
     } catch (err) {
       console.error(err);

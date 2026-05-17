@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { projects as mockProjects, Project } from "@/lib/mock";
 
 export default function ClientBriefsPage() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [dbJobs, setDbJobs] = useState<Project[]>([]);
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,7 +82,7 @@ export default function ClientBriefsPage() {
           </div>
 
           <Link
-            href="/user/dashboard/client/briefs/new"
+            href={`/${profile?.username || 'user'}/dashboard/client/briefs/new`}
             className="inline-flex rounded-full bg-white px-6 py-3 text-xs font-semibold text-black transition hover:bg-white/90 text-center"
           >
             + Initiate Project Brief

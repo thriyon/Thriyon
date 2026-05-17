@@ -36,7 +36,7 @@ const ONBOARDING_TIPS: Record<string, { title: string; body: string }> = {
 
 export default function NewServicePage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Brand");
@@ -74,7 +74,7 @@ export default function NewServicePage() {
 
       setSuccess(true);
       setTimeout(() => {
-        router.push("/user/dashboard/freelancer");
+        router.push(`/${profile?.username || 'user'}/dashboard/freelancer`);
       }, 2000);
     } catch (err: any) {
       setError(err.message || "Erreur lors de la création du service.");

@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       // Fetch profile to check onboarding status and role
       const { data: profile } = await supabase
         .from("profiles")
-        .select("role, onboarding_completed")
+        .select("role, onboarding_completed, username")
         .eq("id", data.user.id)
         .single();
 
@@ -48,9 +48,9 @@ export async function GET(request: Request) {
 
       // Onboarded → go to correct dashboard
       if (profile.role === "client") {
-        return NextResponse.redirect(new URL("/user/dashboard/client", requestUrl.origin));
+        return NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/client`, requestUrl.origin));
       } else {
-        return NextResponse.redirect(new URL("/user/dashboard/freelancer", requestUrl.origin));
+        return NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/freelancer`, requestUrl.origin));
       }
     }
   }

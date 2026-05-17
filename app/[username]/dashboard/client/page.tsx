@@ -187,7 +187,7 @@ export default function ClientDashboardPage() {
         {/* Quick Actions */}
         <div className="grid gap-6 md:grid-cols-2 mb-10">
           <Link
-            href="/user/dashboard/client/briefs/new"
+            href={`/${profile?.username || 'user'}/dashboard/client/briefs/new`}
             className="group glass rounded-2xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background hover:bg-white/5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
@@ -203,7 +203,7 @@ export default function ClientDashboardPage() {
             <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Sovereign allocation</div>
           </Link>
           <Link
-            href="/user/dashboard/client/briefs"
+            href={`/${profile?.username || 'user'}/dashboard/client/briefs`}
             className="group glass rounded-2xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background hover:bg-white/5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
@@ -227,7 +227,7 @@ export default function ClientDashboardPage() {
           <div className="glass rounded-3xl p-6 hairline border border-white/6">
             <div className="flex justify-between items-center mb-5 border-b border-white/5 pb-4">
               <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Recent Briefs</span>
-              <Link href="/user/dashboard/client/briefs" className="font-mono text-[8px] uppercase tracking-wider text-accent/80 hover:text-accent transition">
+              <Link href={`/${profile?.username || 'user'}/dashboard/client/briefs`} className="font-mono text-[8px] uppercase tracking-wider text-accent/80 hover:text-accent transition">
                 View all →
               </Link>
             </div>

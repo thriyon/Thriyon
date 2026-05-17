@@ -44,7 +44,7 @@ function NewBriefForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const targetTalent = searchParams?.get("talent") || "";
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Brand");
@@ -98,7 +98,7 @@ function NewBriefForm() {
       } else {
         setSuccess(true);
         setTimeout(() => {
-          router.push("/user/dashboard/client");
+          router.push(`/${profile?.username || 'user'}/dashboard/client`);
         }, 2200);
       }
     } catch (err) {

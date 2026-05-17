@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
 import { talents as mockTalents, showcases as mockShowcases, Talent } from "@/lib/mock";
 
 export default function TalentShowcasePage() {
   const params = useParams();
   const router = useRouter();
+  const { profile } = useAuth();
   const username = params?.username as string;
 
   const [talent, setTalent] = useState<Talent | null>(null);
@@ -188,7 +190,7 @@ export default function TalentShowcasePage() {
             </div>
 
             <button
-              onClick={() => router.push(`/user/dashboard/client/briefs/new?talent=${talent.username}`)}
+              onClick={() => router.push(`/${profile?.username || 'user'}/dashboard/client/briefs/new?talent=${talent.username}`)}
               className="w-full mt-8 rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
             >
               Initiate Project Brief →

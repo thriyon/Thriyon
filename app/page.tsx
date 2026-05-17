@@ -346,9 +346,9 @@ export default function HomePage() {
       }
       if (hash.includes("access_token") || hash.includes("id_token")) {
         if (profile.role === "client") {
-          router.push("/user/dashboard/client");
+          router.push(`/${profile.username || 'user'}/dashboard/client`);
         } else {
-          router.push("/user/dashboard/freelancer");
+          router.push(`/${profile.username || 'user'}/dashboard/freelancer`);
         }
       }
     }

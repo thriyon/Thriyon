@@ -19,9 +19,9 @@ export default function LoginPage() {
   useEffect(() => {
     if (user && profile) {
       if (profile.role === "client") {
-        router.push("/user/dashboard/client");
+        router.push(`/${profile.username || 'user'}/dashboard/client`);
       } else {
-        router.push("/user/dashboard/freelancer");
+        router.push(`/${profile.username || 'user'}/dashboard/freelancer`);
       }
     }
   }, [user, profile, router]);
@@ -46,14 +46,14 @@ export default function LoginPage() {
 
       const { data: profile } = await supabase
         .from("profiles")
-        .select("role")
+        .select("role, username")
         .eq("id", data.user.id)
         .single();
 
       if (profile?.role === "client") {
-        router.push("/user/dashboard/client");
+        router.push(`/${profile.username || 'user'}/dashboard/client`);
       } else {
-        router.push("/user/dashboard/freelancer");
+        router.push(`/${profile?.username || 'user'}/dashboard/freelancer`);
       }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");

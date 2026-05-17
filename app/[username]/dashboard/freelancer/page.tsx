@@ -210,7 +210,7 @@ export default function FreelancerDashboardPage() {
               ))}
               {activeTab === "services" && (
                 <Link
-                  href="/user/dashboard/freelancer/services/new"
+                  href={`/${profile?.username || 'user'}/dashboard/freelancer/services/new`}
                   className="ml-auto font-mono text-[9px] uppercase tracking-wider px-3 py-1.5 rounded-full bg-white text-black transition hover:bg-white/90 cursor-pointer"
                 >
                   + Add Service
@@ -252,7 +252,7 @@ export default function FreelancerDashboardPage() {
                               <div className="font-display text-sm font-semibold mt-0.5">{job.budget}</div>
                             </div>
                             <Link
-                              href={`/user/dashboard/freelancer/proposals/new?job=${job.id}`}
+                              href={`/${profile?.username || 'user'}/dashboard/freelancer/proposals/new?job=${job.id}`}
                               className="rounded-full border border-white/15 hover:bg-white/5 px-4 py-2 text-[10px] font-mono uppercase tracking-wider transition"
                             >
                               Submit Proposal →
@@ -274,7 +274,7 @@ export default function FreelancerDashboardPage() {
                     <div className="text-center py-12">
                       <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">No services listed yet.</p>
                       <Link
-                        href="/user/dashboard/freelancer/services/new"
+                        href={`/${profile?.username || 'user'}/dashboard/freelancer/services/new`}
                         className="rounded-full bg-white px-6 py-2.5 text-xs font-semibold text-black hover:bg-white/90 transition"
                       >
                         Create Your First Service →
@@ -407,7 +407,7 @@ export default function FreelancerDashboardPage() {
             <div className="glass rounded-3xl p-6 hairline border border-white/6">
               <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Quick Links</span>
               <div className="mt-4 space-y-2">
-                <Link href="/user/dashboard/messages" className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3 text-xs text-foreground hover:bg-white/5 transition">
+                <Link href={`/${profile?.username || 'user'}/dashboard/messages`} className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3 text-xs text-foreground hover:bg-white/5 transition">
                   <span>Le Conduit Messages</span>
                   <span className="text-muted-foreground">→</span>
                 </Link>
