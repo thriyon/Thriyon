@@ -27,6 +27,7 @@ export default function SettingsPage() {
   const { user, profile, refreshProfile } = useAuth();
   const [isSaving, setIsSaving] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const {
     register,
@@ -59,16 +60,37 @@ export default function SettingsPage() {
     if (!user) return;
     setIsSaving(true);
     try {
+      let finalAvatarUrl = profile?.avatar_url;
+
+      if (avatarFile) {
+        const fileExt = avatarFile.name.split('.').pop();
+        const fileName = `${user.id}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, avatarFile, { upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+        
+        finalAvatarUrl = publicUrlData.publicUrl;
+      }
+
       const { error } = await supabase
         .from("profiles")
         .update({
           full_name: data.full_name,
           bio: data.bio,
           rate: data.rate,
+          avatar_url: finalAvatarUrl,
         })
         .eq("id", user.id);
 
       if (error) throw error;
+      setAvatarFile(null);
       await refreshProfile();
       toast.success("Profil mis à jour avec succès");
     } catch (err: any) {
@@ -83,7 +105,7 @@ export default function SettingsPage() {
     if (file) {
       const url = URL.createObjectURL(file);
       setAvatarPreview(url);
-      toast.info("Mode sélection - l'upload n'est pas encore connecté au stockage");
+      setAvatarFile(file);
     }
   };
 
