@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,18 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { user, profile } = useAuth();
+
+  useEffect(() => {
+    if (user && profile) {
+      if (profile.role === "client") {
+        router.push("/user/dashboard/client");
+      } else {
+        router.push("/user/dashboard/freelancer");
+      }
+    }
+  }, [user, profile, router]);
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
