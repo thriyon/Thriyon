@@ -13,6 +13,13 @@ export type Profile = {
   avatar_url: string | null;
   rate: number | null;
   updated_at: string | null;
+  // Company-specific fields
+  company_name: string | null;
+  industry: string | null;
+  company_size: string | null;
+  website: string | null;
+  budget_range: string | null;
+  onboarding_completed: boolean;
 };
 
 type AuthContextType = {

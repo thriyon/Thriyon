@@ -34,16 +34,22 @@ export async function GET(request: Request) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && data.user) {
-      // Fetch role from profiles table to redirect correctly
+      // Fetch profile to check onboarding status and role
       const { data: profile } = await supabase
         .from("profiles")
-        .select("role")
+        .select("role, onboarding_completed")
         .eq("id", data.user.id)
         .single();
 
-      if (profile?.role === "client") {
+      // If no profile, or onboarding not done, or no role assigned → go onboard
+      if (!profile || !profile.onboarding_completed || !profile.role) {
+        return NextResponse.redirect(new URL("/onboarding", requestUrl.origin));
+      }
+
+      // Onboarded → go to correct dashboard
+      if (profile.role === "client") {
         return NextResponse.redirect(new URL("/user/dashboard/client", requestUrl.origin));
-      } else if (profile?.role === "freelancer") {
+      } else {
         return NextResponse.redirect(new URL("/user/dashboard/freelancer", requestUrl.origin));
       }
     }
@@ -52,3 +58,4 @@ export async function GET(request: Request) {
   // Default fallback redirect
   return NextResponse.redirect(new URL(next, requestUrl.origin));
 }
+

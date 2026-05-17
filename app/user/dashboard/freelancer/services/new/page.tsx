@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, Suspense } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 
 function NewServiceForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isFromOnboarding = searchParams.get("onboarding") === "true";
   const { user, profile } = useAuth();
 
   const [title, setTitle] = useState("");
@@ -88,6 +90,24 @@ function NewServiceForm() {
             ← Retour au workspace
           </button>
         </div>
+
+        {/* Onboarding Welcome Banner */}
+        {isFromOnboarding && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="mb-8 rounded-2xl border border-accent/25 bg-accent/5 px-6 py-5 flex items-start gap-4"
+          >
+            <div className="mt-0.5 h-8 w-8 shrink-0 rounded-xl bg-accent/15 flex items-center justify-center text-accent text-base">✦</div>
+            <div>
+              <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent mb-1">Bienvenue sur Thriyon</div>
+              <p className="text-sm text-foreground/80 leading-relaxed">
+                Votre studio est prêt. Publiez maintenant votre <strong className="text-foreground">premier service</strong> pour être visible dans le Nexus et commencer à recevoir des briefs clients.
+              </p>
+            </div>
+          </motion.div>
+        )}
 
         {success ? (
           <motion.div
