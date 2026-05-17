@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
@@ -98,6 +98,10 @@ const ONBOARDING_TIPS: Record<string, { title: string; body: string }> = {
     title: "Vos mots-clés",
     body: "Utilisez les noms des outils et techniques. Ex: Figma, React, After Effects.",
   },
+  username: {
+    title: "Votre identité unique",
+    body: "Ce nom d'utilisateur servira pour l'URL de votre profil (ex: thriyon.com/@nom).",
+  }
 };
 
 export default function OnboardingPage() {
@@ -105,15 +109,22 @@ export default function OnboardingPage() {
   const { user, profile, refreshProfile, loading } = useAuth();
 
   // Step state
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [role, setRole] = useState<Role>("freelancer");
 
-  // Step 2: Freelancer fields
+  // Step 1: Personalization
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Step 3: Freelancer fields (previously Step 2)
   const [bio, setBio] = useState("");
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [customSkill, setCustomSkill] = useState("");
 
-  // Step 2: Client / Company fields
+  // Step 3: Client / Company fields
   const [companyName, setCompanyName] = useState("");
   const [industry, setIndustry] = useState("");
   const [companySize, setCompanySize] = useState("");
@@ -121,7 +132,7 @@ export default function OnboardingPage() {
   const [budgetRange, setBudgetRange] = useState("");
   const [companyBio, setCompanyBio] = useState("");
 
-  // Step 3: Creation fields (Service OR Brief)
+  // Step 4: Creation fields (Service OR Brief) (previously Step 3)
   const [itemTitle, setItemTitle] = useState("");
   const [itemCategory, setItemCategory] = useState("Brand");
   const [itemPrice, setItemPrice] = useState<number>(500); // For Freelancer
@@ -133,6 +144,15 @@ export default function OnboardingPage() {
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Load existing profile data if available
+  useEffect(() => {
+    if (profile) {
+      if (profile.full_name && !fullName) setFullName(profile.full_name);
+      if (profile.username && !username) setUsername(profile.username);
+      if (profile.avatar_url && !avatarPreview) setAvatarPreview(profile.avatar_url);
+    }
+  }, [profile]);
 
   // Guard: if already onboarded, redirect to correct dashboard
   useEffect(() => {
@@ -155,16 +175,73 @@ export default function OnboardingPage() {
     );
   };
 
-  const addCustomSkill = () => {
-    const trimmed = customSkill.trim();
-    if (trimmed && !selectedSkills.includes(trimmed)) {
-      setSelectedSkills((prev) => [...prev, trimmed]);
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(file));
     }
-    setCustomSkill("");
   };
 
-  // Process Step 2 and move to Step 3
-  const handleStep2Complete = async () => {
+  // Process Step 1
+  const handleStep1Complete = async () => {
+    if (!user) return;
+    if (!fullName || !username) {
+      setError("Veuillez remplir votre nom et nom d'utilisateur.");
+      return;
+    }
+    
+    // basic username format check (alphanumeric and underscores)
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    if (!usernameRegex.test(username)) {
+      setError("Le nom d'utilisateur ne peut contenir que des lettres, chiffres et underscores.");
+      return;
+    }
+
+    setSaving(true);
+    setError(null);
+    try {
+        let avatarUrl = profile?.avatar_url || null;
+
+        if (avatarFile) {
+            const fileExt = avatarFile.name.split('.').pop();
+            const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+            const { error: uploadError } = await supabase.storage
+                .from('avatars')
+                .upload(fileName, avatarFile);
+
+            if (uploadError) throw uploadError;
+
+            const { data } = supabase.storage.from('avatars').getPublicUrl(fileName);
+            avatarUrl = data.publicUrl;
+        }
+
+        const { error: updateError } = await supabase.from('profiles').upsert({
+            id: user.id,
+            full_name: fullName,
+            username: username.toLowerCase(),
+            avatar_url: avatarUrl,
+            updated_at: new Date().toISOString()
+        });
+
+        if (updateError) {
+          if (updateError.code === '23505') { // Unique violation
+            throw new Error("Ce nom d'utilisateur est déjà pris.");
+          }
+          throw updateError;
+        }
+        
+        await refreshProfile();
+        setStep(2);
+    } catch(err: any) {
+        setError(err.message || "Erreur lors de la sauvegarde.");
+    } finally {
+        setSaving(false);
+    }
+  };
+
+  // Process Step 3
+  const handleStep3Complete = async () => {
     if (!user) return;
     setSaving(true);
     setError(null);
@@ -173,7 +250,6 @@ export default function OnboardingPage() {
       const updateData: Record<string, any> = {
         id: user.id,
         role,
-        // We DO NOT set onboarding_completed to true yet
         updated_at: new Date().toISOString(),
       };
 
@@ -200,7 +276,7 @@ export default function OnboardingPage() {
       }
 
       await refreshProfile();
-      setStep(3); // Move to final step
+      setStep(4); // Move to final step
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");
     } finally {
@@ -208,7 +284,7 @@ export default function OnboardingPage() {
     }
   };
 
-  // Submit Step 3 and Finish Onboarding
+  // Submit Step 4 and Finish Onboarding
   const handleFinalComplete = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!user) return;
@@ -272,8 +348,8 @@ export default function OnboardingPage() {
     }
   };
 
-  // Skip Step 3 and finish onboarding
-  const handleSkipStep3 = async () => {
+  // Skip Step 4 and finish onboarding
+  const handleSkipStep4 = async () => {
     if (!user) return;
     setSaving(true);
     try {
@@ -301,7 +377,7 @@ export default function OnboardingPage() {
     );
   }
 
-  const totalSteps = 3;
+  const totalSteps = 4;
   const progress = (step / totalSteps) * 100;
 
   return (
@@ -333,9 +409,10 @@ export default function OnboardingPage() {
             transition={{ delay: 0.3 }}
             className="font-display text-[clamp(2rem,6vw,3.2rem)] leading-[1.0] tracking-[-0.04em] text-gradient"
           >
-            {step === 1 && "Who are you?"}
-            {step === 2 && (role === "freelancer" ? "Your Studio" : "Your Company")}
-            {step === 3 && (role === "freelancer" ? "Premier Service" : "Premier Brief")}
+            {step === 1 && "Identity & Persona"}
+            {step === 2 && "Who are you?"}
+            {step === 3 && (role === "freelancer" ? "Your Studio" : "Your Company")}
+            {step === 4 && (role === "freelancer" ? "Premier Service" : "Premier Brief")}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -343,11 +420,12 @@ export default function OnboardingPage() {
             transition={{ delay: 0.4 }}
             className="mt-3 text-[13px] text-muted-foreground/75 leading-relaxed"
           >
-            {step === 1 && "Define your position in the Nexus. This shapes your entire experience."}
-            {step === 2 && role === "freelancer" && "Tell the world what you create. You can always refine this later."}
-            {step === 2 && role === "client" && "Help clients understand your organisation at a glance."}
-            {step === 3 && role === "freelancer" && "Publiez votre premier service pour être visible sur le Nexus."}
-            {step === 3 && role === "client" && "Lancez votre premier projet et attirez les meilleurs talents."}
+            {step === 1 && "Personnalisez votre compte sur le Nexus avant de commencer."}
+            {step === 2 && "Define your position in the Nexus. This shapes your entire experience."}
+            {step === 3 && role === "freelancer" && "Tell the world what you create. You can always refine this later."}
+            {step === 3 && role === "client" && "Help clients understand your organisation at a glance."}
+            {step === 4 && role === "freelancer" && "Publiez votre premier service pour être visible sur le Nexus."}
+            {step === 4 && role === "client" && "Lancez votre premier projet et attirez les meilleurs talents."}
           </motion.p>
         </div>
 
@@ -355,7 +433,7 @@ export default function OnboardingPage() {
         <div className="mb-6 h-px w-full bg-white/6 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-accent rounded-full"
-            initial={{ width: "33%" }}
+            initial={{ width: `${((step - 1) / totalSteps) * 100}%` }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           />
@@ -365,13 +443,132 @@ export default function OnboardingPage() {
         <div className="overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-b from-graphite/60 to-background p-8 md:p-10 grain glow">
           <AnimatePresence mode="wait">
 
-            {/* ─── STEP 1: Role Selection ─── */}
+            {/* ─── STEP 1: Personalization ─── */}
             {step === 1 && (
               <motion.div
                 key="step-1"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-6"
+              >
+                {/* Avatar Upload */}
+                <div className="flex flex-col items-center justify-center space-y-4 mb-8">
+                  <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="relative h-24 w-24 rounded-full border border-white/20 bg-white/5 flex items-center justify-center overflow-hidden cursor-pointer hover:border-accent/50 transition-colors group"
+                  >
+                    {avatarPreview ? (
+                      <img src={avatarPreview} alt="Avatar" className="h-full w-full object-cover" />
+                    ) : (
+                      <div className="text-3xl text-muted-foreground/50 group-hover:text-accent/80 transition-colors">+</div>
+                    )}
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-white">Upload</span>
+                    </div>
+                  </div>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    className="hidden" 
+                    ref={fileInputRef}
+                    onChange={handleAvatarChange}
+                  />
+                  <div className="text-center">
+                    <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">Photo de Profil</p>
+                  </div>
+                </div>
+
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {/* Full Name */}
+                  <div className="space-y-1.5">
+                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                      Nom Complet
+                    </label>
+                    <input
+                      type="text"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="e.g. Satoshi Nakamoto"
+                      className="w-full bg-white/5 border border-white/12 rounded-2xl px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/40 transition-all focus:outline-none focus:border-accent/40 focus:bg-white/8"
+                    />
+                  </div>
+
+                  {/* Username */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                        Nom d'utilisateur
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTip(activeTip === "username" ? null : "username")}
+                        className="font-mono text-[8px] uppercase tracking-widest text-accent/60 hover:text-accent transition-all"
+                      >
+                        Conseil ✦
+                      </button>
+                    </div>
+                    
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 font-mono text-sm">@</span>
+                      <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        onFocus={() => setActiveTip("username")}
+                        placeholder="satoshi_n"
+                        className="w-full bg-white/5 border border-white/12 rounded-2xl pl-8 pr-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/40 transition-all focus:outline-none focus:border-accent/40 focus:bg-white/8 font-mono"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <AnimatePresence>
+                  {activeTip === "username" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
+                    >
+                      <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.username.title}</div>
+                      <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.username.body}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="font-mono text-[11px] text-destructive border border-destructive/20 bg-destructive/5 rounded-2xl px-4 py-3.5 text-center"
+                    >
+                      ⚡ {error}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <button
+                  type="button"
+                  onClick={handleStep1Complete}
+                  disabled={saving || !fullName || !username}
+                  className="w-full rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 mt-4"
+                >
+                  {saving ? "Sauvegarde..." : "Continue →"}
+                </button>
+              </motion.div>
+            )}
+
+            {/* ─── STEP 2: Role Selection ─── */}
+            {step === 2 && (
+              <motion.div
+                key="step-2"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-6"
               >
@@ -423,20 +620,29 @@ export default function OnboardingPage() {
                   </button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setStep(2)}
-                  className="w-full rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99]"
-                >
-                  Continue →
-                </button>
+                <div className="grid grid-cols-[auto_1fr] gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="rounded-full border border-white/15 px-5 py-3.5 text-sm text-foreground/90 transition hover:bg-white/5"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStep(3)}
+                    className="rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99]"
+                  >
+                    Continue →
+                  </button>
+                </div>
               </motion.div>
             )}
 
-            {/* ─── STEP 2A: Freelancer Profile ─── */}
-            {step === 2 && role === "freelancer" && (
+            {/* ─── STEP 3A: Freelancer Profile ─── */}
+            {step === 3 && role === "freelancer" && (
               <motion.div
-                key="step-2-freelancer"
+                key="step-3-freelancer"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -496,14 +702,14 @@ export default function OnboardingPage() {
                 <div className="grid grid-cols-[auto_1fr] gap-3">
                   <button
                     type="button"
-                    onClick={() => setStep(1)}
+                    onClick={() => setStep(2)}
                     className="rounded-full border border-white/15 px-5 py-3.5 text-sm text-foreground/90 transition hover:bg-white/5"
                   >
                     ← Back
                   </button>
                   <button
                     type="button"
-                    onClick={handleStep2Complete}
+                    onClick={handleStep3Complete}
                     disabled={saving}
                     className="rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                   >
@@ -513,10 +719,10 @@ export default function OnboardingPage() {
               </motion.div>
             )}
 
-            {/* ─── STEP 2B: Client / Company Profile ─── */}
-            {step === 2 && role === "client" && (
+            {/* ─── STEP 3B: Client / Company Profile ─── */}
+            {step === 3 && role === "client" && (
               <motion.div
-                key="step-2-client"
+                key="step-3-client"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -579,14 +785,14 @@ export default function OnboardingPage() {
                 <div className="grid grid-cols-[auto_1fr] gap-3">
                   <button
                     type="button"
-                    onClick={() => setStep(1)}
+                    onClick={() => setStep(2)}
                     className="rounded-full border border-white/15 px-5 py-3.5 text-sm text-foreground/90 transition hover:bg-white/5"
                   >
                     ← Back
                   </button>
                   <button
                     type="button"
-                    onClick={handleStep2Complete}
+                    onClick={handleStep3Complete}
                     disabled={saving || !companyName}
                     className="rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                   >
@@ -596,10 +802,10 @@ export default function OnboardingPage() {
               </motion.div>
             )}
 
-            {/* ─── STEP 3: Create Service / Brief ─── */}
-            {step === 3 && (
+            {/* ─── STEP 4: Create Service / Brief ─── */}
+            {step === 4 && (
               <motion.div
-                key="step-3"
+                key="step-4"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -784,7 +990,15 @@ export default function OnboardingPage() {
                   <div className="flex items-center gap-3 pt-2">
                     <button
                       type="button"
-                      onClick={handleSkipStep3}
+                      onClick={() => setStep(3)}
+                      disabled={saving}
+                      className="rounded-full border border-white/15 px-6 py-4 text-sm text-foreground/80 hover:bg-white/5 transition"
+                    >
+                      ← Back
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSkipStep4}
                       disabled={saving}
                       className="rounded-full border border-white/15 px-6 py-4 text-sm text-foreground/80 hover:bg-white/5 transition"
                     >
@@ -807,7 +1021,7 @@ export default function OnboardingPage() {
 
         {/* Footer note */}
         <p className="mt-5 text-center font-mono text-[10px] text-muted-foreground/40 uppercase tracking-widest">
-          {step === 3 
+          {step === 4 
             ? "Cette étape est essentielle pour démarrer."
             : "You can update all of this later from your profile settings."}
         </p>

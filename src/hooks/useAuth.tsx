@@ -7,6 +7,7 @@ import { User } from "@supabase/supabase-js";
 export type Profile = {
   id: string;
   full_name: string | null;
+  username: string | null;
   bio: string | null;
   skills: string[] | null;
   role: "freelancer" | "client" | null;
