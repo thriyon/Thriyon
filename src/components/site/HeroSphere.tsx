@@ -6,7 +6,6 @@ import { MeshDistortMaterial, Float, Environment } from "@react-three/drei";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 
-
 class ErrorBoundary extends Component<{children: ReactNode, fallback: ReactNode}, {hasError: boolean}> {
   constructor(props: any) {
     super(props);
@@ -55,7 +54,7 @@ function Orb() {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
-    const t = state.clock.elapsedTime;
+    const t = state.clock.getElapsedTime();
     ref.current.rotation.y = t * 0.1;
     ref.current.rotation.x = Math.sin(t * 0.15) * 0.2;
   });
@@ -80,7 +79,7 @@ function Ring({ radius = 2.4, tilt = 0 }: { radius?: number; tilt?: number }) {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
-    ref.current.rotation.z = state.clock.elapsedTime * 0.12;
+    ref.current.rotation.z = state.clock.getElapsedTime() * 0.12;
   });
   return (
     <mesh ref={ref} rotation={[Math.PI / 2 + tilt, 0, 0]}>
@@ -116,7 +115,6 @@ export function HeroSphere() {
         <ErrorBoundary fallback={<FallbackOrb />}>
           <Canvas
             className="absolute inset-0"
-            style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
             camera={{ position: [0, 0, 5], fov: 45 }}
             dpr={[1, 2]}
             gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
