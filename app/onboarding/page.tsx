@@ -152,7 +152,8 @@ export default function OnboardingPage() {
         // Guide them to create their first service
         router.push("/user/dashboard/freelancer/services/new?onboarding=true");
       } else {
-        router.push("/user/dashboard/client");
+        // Guide them to post their first brief
+        router.push("/user/dashboard/client/briefs/new?onboarding=true");
       }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");
