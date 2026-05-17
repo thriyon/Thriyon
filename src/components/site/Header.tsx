@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { User } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const nav = [
   { href: "/talent", label: "Talent" },
@@ -71,20 +73,20 @@ export function Header() {
 
         <div className="hidden items-center gap-2 md:flex">
           {user ? (
-            <>
-              <Link
-                href={dashboardLink}
-                className="rounded-full px-4 py-2 text-[13px] text-muted-foreground transition hover:text-foreground"
-              >
-                Dashboard
-              </Link>
-              <button
-                onClick={() => signOut()}
-                className="group relative overflow-hidden rounded-full bg-white px-4 py-2 text-[13px] font-medium text-black transition hover:bg-white/90 cursor-pointer"
-              >
-                Sign out
-              </button>
-            </>
+            <Link
+              href="/user/profile"
+              className="transition hover:scale-105"
+              title="Mon Compte"
+            >
+              <Avatar className="h-10 w-10 border border-white/20 cursor-pointer">
+                <AvatarImage src={profile?.avatar_url ?? undefined} />
+                <AvatarFallback className="bg-white/10 text-foreground text-sm">
+                  {profile?.full_name
+                    ? profile.full_name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()
+                    : user?.email?.[0]?.toUpperCase() ?? "?"}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           ) : (
             <>
               <Link

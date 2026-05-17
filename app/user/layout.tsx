@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { UserLayout } from "@/components/user/UserLayout";
+import { UserLayout } from "@/modules/user/UserLayout";
 
 export const metadata: Metadata = {
   title: "Dashboard — THRIYON",

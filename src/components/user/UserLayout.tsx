@@ -176,10 +176,12 @@ export function UserLayout({ children }: { children: React.ReactNode }) {
               <button className="flex h-8 w-8 items-center justify-center rounded-full border border-white/8 bg-white/3 hover:bg-white/6 transition cursor-pointer">
                 <Bell className="h-3.5 w-3.5 text-muted-foreground" />
               </button>
-              <Avatar className="h-7 w-7 border border-white/10 cursor-pointer">
-                <AvatarImage src={profile?.avatar_url ?? undefined} />
-                <AvatarFallback className="bg-graphite text-muted-foreground text-[10px]">{initials}</AvatarFallback>
-              </Avatar>
+              <Link href="/user/profile" className="transition hover:scale-105">
+                <Avatar className="h-7 w-7 border border-white/10 cursor-pointer">
+                  <AvatarImage src={profile?.avatar_url ?? undefined} />
+                  <AvatarFallback className="bg-graphite text-muted-foreground text-[10px]">{initials}</AvatarFallback>
+                </Avatar>
+              </Link>
             </div>
           </header>
 
