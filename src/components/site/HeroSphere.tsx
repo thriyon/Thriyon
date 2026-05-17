@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, Component, ErrorInfo, ReactNode } from "react";
+import { useEffect, useRef, useState, Component, ErrorInfo, ReactNode, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { MeshDistortMaterial, Float, Environment } from "@react-three/drei";
 import * as THREE from "three";
@@ -23,31 +23,6 @@ class ErrorBoundary extends Component<{children: ReactNode, fallback: ReactNode}
     }
     return this.props.children;
   }
-}
-
-function FallbackOrb() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <motion.div
-        animate={{ scale: [1, 1.05, 1] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="relative flex items-center justify-center h-[500px] w-[500px]"
-      >
-        <div className="absolute h-[300px] w-[300px] rounded-full bg-accent/20 blur-[80px]" />
-        <div className="absolute h-[250px] w-[250px] rounded-full bg-gradient-to-br from-[#1a0d2e] to-background shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] border border-white/5" />
-        <motion.div
-          animate={{ rotateZ: 360, rotateX: [20, 40, 20], rotateY: [10, -10, 10] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute h-[380px] w-[380px] rounded-full border-[1px] border-accent/30"
-        />
-        <motion.div
-          animate={{ rotateZ: -360, rotateX: [-20, 10, -20] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute h-[460px] w-[460px] rounded-full border-[1px] border-accent/20"
-        />
-      </motion.div>
-    </div>
-  );
 }
 
 function Orb() {
@@ -89,46 +64,50 @@ function Ring({ radius = 2.4, tilt = 0 }: { radius?: number; tilt?: number }) {
   );
 }
 
-export function HeroSphere() {
+export function HeroSphere({ onReady }: { onReady?: () => void }) {
   const [mounted, setMounted] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // Delay Canvas by 1.5s so the loading screen letter animation plays
+    // smoothly before WebGL shader compilation blocks the main thread.
+    // The loader minimum time is 2.5s so there's still 1s for shaders to compile.
+    const timer = setTimeout(() => setMounted(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
-  if (!mounted) return <FallbackOrb />;
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0">
       <motion.div
-        animate={{ opacity: loaded ? 0 : 1 }}
-        transition={{ duration: 1.5 }}
-        className="absolute inset-0 z-0"
-      >
-        <FallbackOrb />
-      </motion.div>
-
-      <motion.div
+        initial={{ opacity: 0 }}
         animate={{ opacity: loaded ? 1 : 0 }}
         transition={{ duration: 1.5 }}
         className="absolute inset-0 z-10"
       >
-        <ErrorBoundary fallback={<FallbackOrb />}>
+        <ErrorBoundary fallback={null}>
           <div className="relative w-full h-full">
             <Canvas
               className="absolute inset-0"
               camera={{ position: [0, 0, 5], fov: 45 }}
               dpr={[1, 2]}
               gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-              onCreated={() => setLoaded(true)}
+              onCreated={() => {
+                setLoaded(true);
+                onReady?.();
+              }}
             >
-              <ambientLight intensity={0.3} />
-              <directionalLight position={[5, 5, 5]} intensity={1.2} color="#b39dff" />
-              <directionalLight position={[-5, -3, 2]} intensity={0.8} color="#4a3aff" />
-              <Orb />
-              <Ring radius={2.3} tilt={0.1} />
-              <Ring radius={2.7} tilt={-0.15} />
-              <Ring radius={3.1} tilt={0.05} />
-              <Environment preset="night" />
+              <Suspense fallback={null}>
+                <ambientLight intensity={0.3} />
+                <directionalLight position={[5, 5, 5]} intensity={1.2} color="#b39dff" />
+                <directionalLight position={[-5, -3, 2]} intensity={0.8} color="#4a3aff" />
+                <Orb />
+                <Ring radius={2.3} tilt={0.1} />
+                <Ring radius={2.7} tilt={-0.15} />
+                <Ring radius={3.1} tilt={0.05} />
+                <Environment preset="night" />
+              </Suspense>
             </Canvas>
           </div>
         </ErrorBoundary>

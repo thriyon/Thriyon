@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform, useAnimationFrame, useMotionTemplate, useMotionValue, animate, motionValue } from "framer-motion";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { HeroSphere } from "@/components/site/HeroSphere";
+import { PageLoader } from "@/components/site/PageLoader";
 import { talents } from "@/lib/mock";
 
 function SearchBar() {
@@ -30,7 +31,7 @@ function SearchBar() {
   );
 }
 
-function Hero() {
+function Hero({ onReady }: { onReady: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -38,7 +39,7 @@ function Hero() {
   return (
     <section ref={ref} className="relative h-[100svh] min-h-[720px] w-full overflow-hidden">
       <motion.div style={{ y, opacity }} className="absolute inset-0">
-        <HeroSphere />
+        <HeroSphere onReady={onReady} />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_50%,transparent_30%,oklch(0.06_0.008_270/0.9)_85%)]" />
         <div className="pointer-events-none absolute inset-0 scanline opacity-30" />
       </motion.div>
@@ -329,14 +330,22 @@ function FinalCTA() {
 }
 
 export default function HomePage() {
+  const [isReady, setIsReady] = useState(false);
   return (
     <>
-      <Hero />
-      <Marquee />
-      <Manifesto />
-      <Orbit />
-      <TalentTeaser />
-      <FinalCTA />
+      <PageLoader isReady={isReady} />
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 1.0, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <Hero onReady={() => setIsReady(true)} />
+        <Marquee />
+        <Manifesto />
+        <Orbit />
+        <TalentTeaser />
+        <FinalCTA />
+      </motion.div>
     </>
   );
 }
