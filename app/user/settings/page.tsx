@@ -16,8 +16,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 const generalSchema = z.object({
-  full_name: z.string().min(2, "Le nom doit comporter au moins 2 caractères"),
-  bio: z.string().max(500, "La bio doit faire moins de 500 caractères").optional(),
+  full_name: z.string().min(2, "Name must be at least 2 characters"),
+  bio: z.string().max(500, "Bio must be less than 500 characters").optional(),
   rate: z.coerce.number().min(0).optional(),
 });
 
@@ -27,7 +27,6 @@ export default function SettingsPage() {
   const { user, profile, refreshProfile } = useAuth();
   const [isSaving, setIsSaving] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const {
     register,
@@ -60,41 +59,20 @@ export default function SettingsPage() {
     if (!user) return;
     setIsSaving(true);
     try {
-      let finalAvatarUrl = profile?.avatar_url;
-
-      if (avatarFile) {
-        const fileExt = avatarFile.name.split('.').pop();
-        const fileName = `${user.id}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('avatars')
-          .upload(fileName, avatarFile, { upsert: true });
-
-        if (uploadError) throw uploadError;
-
-        const { data: publicUrlData } = supabase.storage
-          .from('avatars')
-          .getPublicUrl(fileName);
-        
-        finalAvatarUrl = publicUrlData.publicUrl;
-      }
-
       const { error } = await supabase
         .from("profiles")
         .update({
           full_name: data.full_name,
           bio: data.bio,
           rate: data.rate,
-          avatar_url: finalAvatarUrl,
         })
         .eq("id", user.id);
 
       if (error) throw error;
-      setAvatarFile(null);
       await refreshProfile();
-      toast.success("Profil mis à jour avec succès");
+      toast.success("Profile updated successfully");
     } catch (err: any) {
-      toast.error(err.message || "Échec de la mise à jour");
+      toast.error(err.message || "Failed to update profile");
     } finally {
       setIsSaving(false);
     }
@@ -105,47 +83,48 @@ export default function SettingsPage() {
     if (file) {
       const url = URL.createObjectURL(file);
       setAvatarPreview(url);
-      setAvatarFile(file);
+      toast.info("Avatar selection mode - image upload not yet connected to storage");
     }
   };
 
   return (
-    <div className="w-full pb-10">
-      <div className="max-w-4xl mx-auto space-y-8">
-        
-        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="font-display text-3xl font-bold text-slate-900">Paramètres</h1>
-          <p className="text-slate-500 mt-2">
-            Gérez la configuration de votre compte et vos préférences.
+    <div className="relative min-h-full w-full px-6 pt-8 pb-24 overflow-hidden">
+      <div className="pointer-events-none absolute -top-40 right-0 h-[500px] w-[500px] rounded-full bg-accent/5 blur-[120px] opacity-50" />
+
+      <div className="mx-auto max-w-3xl relative z-10">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+          <h1 className="font-display text-3xl font-semibold text-foreground">Settings</h1>
+          <p className="text-sm text-muted-foreground/70 mt-1">
+            Manage your account configurations and preferences.
           </p>
         </motion.div>
 
         <Tabs defaultValue="general" className="w-full">
-          <TabsList className="flex flex-wrap h-auto w-full md:w-max bg-slate-100 border border-slate-200 rounded-xl p-1 mb-8 gap-1">
-            <TabsTrigger value="general" className="rounded-lg text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm px-4 py-2">
-              <UserIcon className="h-4 w-4 mr-2" /> Général
+          <TabsList className="grid grid-cols-4 w-full h-12 bg-white/5 border border-white/10 rounded-xl p-1 mb-8">
+            <TabsTrigger value="general" className="rounded-lg text-xs font-mono uppercase tracking-wider data-[state=active]:bg-white/10 data-[state=active]:text-foreground">
+              <UserIcon className="h-3.5 w-3.5 mr-2" /> General
             </TabsTrigger>
-            <TabsTrigger value="security" className="rounded-lg text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm px-4 py-2">
-              <Shield className="h-4 w-4 mr-2" /> Sécurité
+            <TabsTrigger value="security" className="rounded-lg text-xs font-mono uppercase tracking-wider data-[state=active]:bg-white/10 data-[state=active]:text-foreground">
+              <Shield className="h-3.5 w-3.5 mr-2" /> Security
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="rounded-lg text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm px-4 py-2">
-              <Bell className="h-4 w-4 mr-2" /> Notifications
+            <TabsTrigger value="notifications" className="rounded-lg text-xs font-mono uppercase tracking-wider data-[state=active]:bg-white/10 data-[state=active]:text-foreground">
+              <Bell className="h-3.5 w-3.5 mr-2" /> Alerts
             </TabsTrigger>
-            <TabsTrigger value="billing" className="rounded-lg text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm px-4 py-2">
-              <CreditCard className="h-4 w-4 mr-2" /> Facturation
+            <TabsTrigger value="billing" className="rounded-lg text-xs font-mono uppercase tracking-wider data-[state=active]:bg-white/10 data-[state=active]:text-foreground">
+              <CreditCard className="h-3.5 w-3.5 mr-2" /> Billing
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="general">
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="glass rounded-3xl p-8 hairline border border-white/6 bg-white/1">
               <form onSubmit={handleSubmit(onSubmitGeneral)} className="space-y-8">
                 
                 {/* Avatar Upload */}
                 <div className="flex items-center gap-6">
                   <div className="relative group">
-                    <Avatar className="h-24 w-24 border border-slate-200 shadow-sm">
+                    <Avatar className="h-24 w-24 border border-white/10">
                       <AvatarImage src={avatarPreview || undefined} className="object-cover" />
-                      <AvatarFallback className="bg-slate-100 text-2xl font-medium text-slate-500">
+                      <AvatarFallback className="bg-graphite text-2xl text-muted-foreground">
                         {profile?.full_name?.charAt(0) || "U"}
                       </AvatarFallback>
                     </Avatar>
@@ -155,54 +134,60 @@ export default function SettingsPage() {
                     </label>
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-slate-900">Photo de profil</h3>
-                    <p className="text-xs text-slate-500 mt-1">Recommandé 500x500px, max 2MB.</p>
+                    <h3 className="font-display text-sm font-medium text-foreground">Profile Picture</h3>
+                    <p className="text-xs text-muted-foreground/60 mt-1">Recommended 500x500px, max 2MB.</p>
                   </div>
                 </div>
 
-                <div className="space-y-6 max-w-2xl">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-slate-700">Nom complet</Label>
+                <div className="space-y-5">
+                  <div className="space-y-2 relative group">
+                    <Label className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground group-focus-within:text-accent transition-colors">
+                      Full Name
+                    </Label>
                     <Input
                       {...register("full_name")}
-                      className="bg-slate-50 border-slate-200 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 h-11"
-                      placeholder="Entrez votre nom complet"
+                      className="bg-white/3 border-white/10 focus-visible:border-accent/50 focus-visible:ring-accent/20 h-11"
+                      placeholder="Enter your full name"
                     />
-                    {errors.full_name && <p className="text-xs text-red-500 mt-1">{errors.full_name.message}</p>}
+                    {errors.full_name && <p className="text-[10px] text-destructive mt-1">{errors.full_name.message}</p>}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-slate-700">Bio</Label>
+                  <div className="space-y-2 relative group">
+                    <Label className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground group-focus-within:text-accent transition-colors">
+                      Bio
+                    </Label>
                     <textarea
                       {...register("bio")}
-                      className="flex min-h-[120px] w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-blue-500 focus-visible:ring-4 focus-visible:ring-blue-500/10 transition-colors"
-                      placeholder="Parlez-nous de vous..."
+                      className="flex min-h-[100px] w-full rounded-md border border-white/10 bg-white/3 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-accent/50 focus-visible:ring-2 focus-visible:ring-accent/20 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+                      placeholder="Tell us about your practice..."
                     />
-                    {errors.bio && <p className="text-xs text-red-500 mt-1">{errors.bio.message}</p>}
+                    {errors.bio && <p className="text-[10px] text-destructive mt-1">{errors.bio.message}</p>}
                   </div>
 
-                  {(!profile || profile?.role === "freelancer") && (
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-slate-700">Taux horaire ($)</Label>
+                  {profile?.role === "freelancer" && (
+                    <div className="space-y-2 relative group">
+                      <Label className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground group-focus-within:text-accent transition-colors">
+                        Hourly Rate ($)
+                      </Label>
                       <Input
                         type="number"
                         {...register("rate")}
-                        className="bg-slate-50 border-slate-200 focus-visible:ring-blue-500/20 focus-visible:border-blue-500 h-11 max-w-[200px]"
-                        placeholder="Ex: 150"
+                        className="bg-white/3 border-white/10 focus-visible:border-accent/50 focus-visible:ring-accent/20 h-11"
+                        placeholder="e.g. 150"
                       />
-                      {errors.rate && <p className="text-xs text-red-500 mt-1">{errors.rate.message}</p>}
+                      {errors.rate && <p className="text-[10px] text-destructive mt-1">{errors.rate.message}</p>}
                     </div>
                   )}
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex justify-end">
+                <div className="pt-4 flex justify-end">
                   <button
                     type="submit"
                     disabled={isSaving}
-                    className="flex items-center gap-2 rounded-full bg-blue-600 text-white px-6 py-2.5 text-sm font-semibold hover:bg-blue-700 transition disabled:opacity-50 shadow-sm"
+                    className="flex items-center gap-2 rounded-full bg-foreground text-background px-6 py-2.5 text-xs font-semibold hover:bg-foreground/90 transition disabled:opacity-50 cursor-pointer"
                   >
                     <Save className="h-4 w-4" />
-                    {isSaving ? "Enregistrement..." : "Enregistrer les modifications"}
+                    {isSaving ? "Saving..." : "Save Changes"}
                   </button>
                 </div>
               </form>
@@ -210,48 +195,48 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="security">
-            <div className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Mot de passe et sécurité</h3>
-              <p className="text-sm text-slate-500 mb-6">Gérez vos paramètres de sécurité et d'authentification.</p>
+            <div className="glass rounded-3xl p-8 hairline border border-white/6 bg-white/1">
+              <h3 className="font-display text-base font-medium text-foreground mb-4">Password & Security</h3>
+              <p className="text-sm text-muted-foreground mb-6">Manage your password and security preferences.</p>
               
-              <div className="space-y-4 max-w-2xl">
-                <button className="flex items-center justify-between w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors">
-                  <span>Changer de mot de passe</span>
-                  <span className="text-slate-400 text-xs font-normal">Mis à jour il y a 2 mois</span>
+              <div className="space-y-4">
+                <button className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium hover:bg-white/10 transition w-full text-left flex justify-between items-center cursor-pointer">
+                  Change Password
+                  <span className="text-muted-foreground text-xs">Updated 2 months ago</span>
                 </button>
-                <button className="flex items-center justify-between w-full rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors">
-                  <span>Authentification à deux facteurs (2FA)</span>
-                  <span className="px-2 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-slate-200 text-slate-600">Désactivé</span>
+                <button className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium hover:bg-white/10 transition w-full text-left flex justify-between items-center cursor-pointer">
+                  Two-Factor Authentication (2FA)
+                  <Badge variant="outline" className="border-accent/30 text-accent bg-accent/10">Disabled</Badge>
                 </button>
               </div>
             </div>
           </TabsContent>
 
           <TabsContent value="notifications">
-            <div className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900 mb-6">Préférences de notifications</h3>
+            <div className="glass rounded-3xl p-8 hairline border border-white/6 bg-white/1">
+              <h3 className="font-display text-base font-medium text-foreground mb-4">Notification Preferences</h3>
               
-              <div className="space-y-6 max-w-2xl">
-                <div className="flex items-start justify-between pb-4 border-b border-slate-100">
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-medium text-slate-900">Alertes par email</h4>
-                    <p className="text-sm text-slate-500 mt-1">Recevez des mises à jour sur vos contrats et messages.</p>
+                    <h4 className="text-sm font-medium text-foreground">Email Alerts</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Receive contract updates and messages via email.</p>
                   </div>
                   <Switch defaultChecked />
                 </div>
                 
-                <div className="flex items-start justify-between pb-4 border-b border-slate-100">
+                <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-medium text-slate-900">Notifications Push</h4>
-                    <p className="text-sm text-slate-500 mt-1">Alertes en temps réel dans votre navigateur.</p>
+                    <h4 className="text-sm font-medium text-foreground">Push Notifications</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Real-time alerts in the browser.</p>
                   </div>
                   <Switch defaultChecked />
                 </div>
                 
-                <div className="flex items-start justify-between">
+                <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-medium text-slate-900">Communications Marketing</h4>
-                    <p className="text-sm text-slate-500 mt-1">Actualités et mises à jour de la plateforme.</p>
+                    <h4 className="text-sm font-medium text-foreground">Marketing Communications</h4>
+                    <p className="text-xs text-muted-foreground mt-1">News and platform updates.</p>
                   </div>
                   <Switch />
                 </div>
@@ -260,16 +245,14 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="billing">
-            <div className="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm flex flex-col items-center justify-center py-20 text-center">
-              <div className="h-16 w-16 rounded-full bg-slate-50 flex items-center justify-center mb-4">
-                <CreditCard className="h-8 w-8 text-slate-400" />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900">Détails de facturation</h3>
-              <p className="text-sm text-slate-500 mt-2 max-w-sm">
-                La gestion de l'escrow et l'historique de facturation sont gérés de manière sécurisée via Stripe Connect.
+            <div className="glass rounded-3xl p-8 hairline border border-white/6 bg-white/1 flex flex-col items-center justify-center py-16 text-center">
+              <CreditCard className="h-10 w-10 text-muted-foreground/30 mb-4" />
+              <h3 className="font-display text-base font-medium text-foreground">Billing details</h3>
+              <p className="text-sm text-muted-foreground/70 mt-2 max-w-sm">
+                Escrow management and billing history is handled securely via Stripe Connect.
               </p>
-              <button className="mt-6 rounded-full border border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition shadow-sm">
-                Gérer la facturation sur Stripe
+              <button className="mt-6 rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-xs font-semibold hover:bg-white/10 transition cursor-pointer">
+                Manage Billing in Stripe
               </button>
             </div>
           </TabsContent>

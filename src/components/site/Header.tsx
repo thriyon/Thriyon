@@ -4,8 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { User } from "lucide-react";
+import { User, Settings, LogOut, LayoutDashboard, Bell } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const nav = [
   { href: "/talent", label: "Talent" },
@@ -73,20 +80,65 @@ export function Header() {
 
         <div className="hidden items-center gap-2 md:flex">
           {user ? (
-            <Link
-              href="/user/profile"
-              className="transition hover:scale-105"
-              title="Mon Compte"
-            >
-              <Avatar className="h-10 w-10 border border-white/20 cursor-pointer">
-                <AvatarImage src={profile?.avatar_url ?? undefined} />
-                <AvatarFallback className="bg-white/10 text-foreground text-sm">
-                  {profile?.full_name
-                    ? profile.full_name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()
-                    : user?.email?.[0]?.toUpperCase() ?? "?"}
-                </AvatarFallback>
-              </Avatar>
-            </Link>
+            <div className="flex items-center gap-4">
+              <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
+                <Bell className="h-4 w-4 text-muted-foreground" />
+              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="outline-none">
+                  <div className="transition hover:scale-105" title="Mon Compte">
+                    <Avatar className="h-10 w-10 border border-white/20 cursor-pointer">
+                      <AvatarImage src={profile?.avatar_url ?? undefined} />
+                      <AvatarFallback className="bg-white/10 text-foreground text-sm">
+                        {profile?.full_name
+                          ? profile.full_name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()
+                          : user?.email?.[0]?.toUpperCase() ?? "?"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 glass bg-graphite/95 border-white/10 p-1">
+                <div className="flex items-center gap-3 p-2">
+                  <Avatar className="h-8 w-8 border border-white/10">
+                    <AvatarImage src={profile?.avatar_url ?? undefined} />
+                    <AvatarFallback className="bg-white/5 text-[10px] text-foreground">
+                      {profile?.full_name
+                        ? profile.full_name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()
+                        : user?.email?.[0]?.toUpperCase() ?? "?"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col space-y-0.5 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">{profile?.full_name || "User"}</p>
+                    <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem asChild className="cursor-pointer focus:bg-white/5 text-foreground rounded-md">
+                  <Link href={dashboardLink} className="flex items-center w-full">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="cursor-pointer focus:bg-white/5 text-foreground rounded-md">
+                  <Link href="/user/profile" className="flex items-center w-full">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="cursor-pointer focus:bg-white/5 text-foreground rounded-md">
+                  <Link href="/user/settings" className="flex items-center w-full">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10 rounded-md">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            </div>
           ) : (
             <>
               <Link
@@ -135,6 +187,20 @@ export function Header() {
                   className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 >
                   Dashboard
+                </Link>
+                <Link
+                  href="/user/dashboard/messages"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                >
+                  Messages
+                </Link>
+                <Link
+                  href="/user/dashboard/services"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                >
+                  Services
                 </Link>
                 <button
                   onClick={() => { signOut(); setOpen(false); }}

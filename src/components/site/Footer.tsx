@@ -1,6 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/user")) {
+    return null;
+  }
+
   return (
     <footer className="relative mt-32 border-t border-white/8 px-6 pt-20 pb-10">
       <div className="mx-auto max-w-[1400px]">
