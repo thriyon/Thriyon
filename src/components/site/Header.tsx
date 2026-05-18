@@ -4,7 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User, Search, Settings, LogOut } from "lucide-react";
 const nav = [
   { href: "/talent", label: "Talent" },
   { href: "/projects", label: "Projects" },
@@ -76,18 +85,48 @@ export function Header() {
         <div className="hidden items-center gap-2 md:flex">
           {user ? (
             <>
-              <Link
-                href={dashboardLink}
-                className="rounded-full px-4 py-2 text-[13px] text-muted-foreground transition hover:text-foreground"
-              >
-                Dashboard
-              </Link>
-              <button
-                onClick={() => signOut()}
-                className="group relative overflow-hidden rounded-full bg-white px-4 py-2 text-[13px] font-medium text-black transition hover:bg-white/90 cursor-pointer"
-              >
-                Sign out
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="focus:outline-none">
+                  <Avatar className="h-9 w-9 border border-white/10 cursor-pointer hover:border-white/30 transition-colors">
+                    <AvatarImage src={profile?.avatar_url || ""} />
+                    <AvatarFallback className="bg-white/5 text-xs text-foreground">
+                      {profile?.full_name?.charAt(0)?.toUpperCase() || profile?.username?.charAt(0)?.toUpperCase() || "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 bg-[#0A0A0A] border border-white/10 text-foreground">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{profile?.full_name || profile?.username}</p>
+                      <p className="text-xs leading-none text-muted-foreground">@{profile?.username}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-white/10" />
+                  <DropdownMenuItem asChild className="focus:bg-white/5 cursor-pointer">
+                    <Link href={`/${profile?.username}/profile`}>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Mon Profil</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="focus:bg-white/5 cursor-pointer">
+                    <Link href={dashboardLink}>
+                      <Search className="mr-2 h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="focus:bg-white/5 cursor-pointer">
+                    <Link href={`/${profile?.username}/dashboard/settings`}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Paramètres</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/10" />
+                  <DropdownMenuItem onClick={() => signOut()} className="focus:bg-white/5 text-red-400 focus:text-red-400 cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Se déconnecter</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           ) : (
             <>
