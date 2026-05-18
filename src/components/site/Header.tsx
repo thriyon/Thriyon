@@ -26,7 +26,11 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const dashboardLink = profile?.role === "client" ? "/user/dashboard/client" : "/user/dashboard/freelancer";
+  const dashboardLink = profile
+    ? profile.role === "client"
+      ? `/${profile.username || "user"}/dashboard/client`
+      : `/${profile.username || "user"}/dashboard/freelancer`
+    : "/auth/login";
 
   return (
     <header

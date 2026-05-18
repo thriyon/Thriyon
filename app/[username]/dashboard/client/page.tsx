@@ -161,6 +161,32 @@ export default function ClientDashboardPage() {
           </p>
         </div>
 
+        {/* Freelancer Upgrade Banner */}
+        {profile?.role !== "freelancer" && (
+          <Link
+            href={`/${profile?.username || 'user'}/dashboard/become-freelancer`}
+            className="group flex items-center justify-between gap-4 mb-10 rounded-2xl border border-accent/20 bg-accent/5 px-6 py-4 transition-all duration-300 hover:border-accent/40 hover:bg-accent/8"
+          >
+            <div className="flex items-center gap-4">
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent text-base">
+                ◆
+              </div>
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/70 mb-0.5">
+                  Activer le Mode Créateur
+                </div>
+                <p className="text-sm text-foreground/90">
+                  Vous souhaitez proposer vos services sur le Nexus ?{" "}
+                  <span className="text-accent font-medium">Devenez Freelance en 2 min →</span>
+                </p>
+              </div>
+            </div>
+            <div className="hidden sm:flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-accent/20 text-accent/60 group-hover:border-accent/50 group-hover:text-accent transition-all">
+              →
+            </div>
+          </Link>
+        )}
+
         {/* Stats */}
         <div className="grid gap-6 sm:grid-cols-3 mb-10">
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
@@ -185,7 +211,7 @@ export default function ClientDashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid gap-6 md:grid-cols-2 mb-10">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-10">
           <Link
             href={`/${profile?.username || 'user'}/dashboard/client/offers/new`}
             className="group glass rounded-2xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background hover:bg-white/5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
@@ -217,6 +243,24 @@ export default function ClientDashboardPage() {
               </p>
             </div>
             <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Sovereign coordination</div>
+          </Link>
+          <Link
+            href={`/${profile?.username || 'user'}/dashboard/become-business`}
+            className="group glass rounded-2xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background hover:bg-white/5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
+          >
+            <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-fuchsia-500/15 to-violet-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
+            <div>
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">Studio Identity</span>
+              <h3 className="font-display text-2xl font-medium text-foreground mt-2 group-hover:text-accent transition-colors">
+                {profile?.company_name ? "Modifier le Profil Business →" : "Configurer le Profil Business →"}
+              </h3>
+              <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
+                {profile?.company_name
+                  ? `${profile.company_name} · Mettez à jour vos infos d'entreprise.`
+                  : "Ajoutez les informations de votre entreprise pour attirer les meilleurs talents."}
+              </p>
+            </div>
+            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Company credentials</div>
           </Link>
         </div>
 
