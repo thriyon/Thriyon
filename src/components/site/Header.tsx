@@ -41,6 +41,8 @@ export function Header() {
       : `/${profile.username || "user"}/dashboard/freelancer`
     : "/auth/login";
 
+  if (pathname?.includes("/dashboard")) return null;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
