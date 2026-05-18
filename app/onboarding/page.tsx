@@ -30,9 +30,10 @@ export default function OnboardingPage() {
     if (profile && user) {
       const defaultName = profile.full_name || user.user_metadata?.full_name || user.user_metadata?.name || "";
       const defaultAvatar = profile.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+      const defaultUsername = profile.username || defaultName.replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
 
       if (defaultName && !fullName) setFullName(defaultName);
-      if (profile.username && !username) setUsername(profile.username);
+      if (defaultUsername && !username) setUsername(defaultUsername);
       if (defaultAvatar && !avatarPreview) setAvatarPreview(defaultAvatar);
     }
   }, [profile, user]);
@@ -200,10 +201,12 @@ export default function OnboardingPage() {
 
           <div className="grid gap-5 sm:grid-cols-2">
             {/* Full Name */}
-            <div className="space-y-1.5">
-              <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
-                Nom Complet
-              </label>
+            <div className="space-y-1.5 flex flex-col">
+              <div className="flex items-center justify-between h-[18px]">
+                <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                  Nom Complet
+                </label>
+              </div>
               <input
                 type="text"
                 value={fullName}
@@ -214,8 +217,8 @@ export default function OnboardingPage() {
             </div>
 
             {/* Username */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
+            <div className="space-y-1.5 flex flex-col">
+              <div className="flex items-center justify-between h-[18px]">
                 <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
                   Nom d'utilisateur
                 </label>

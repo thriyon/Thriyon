@@ -43,6 +43,7 @@ export default function BecomeFreelancerPage() {
   const [bio, setBio] = useState("");
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [rate, setRate] = useState<number>(80);
+  const [rateModified, setRateModified] = useState(false);
 
   // Step 2 — First service
   const [serviceTitle, setServiceTitle] = useState("");
@@ -60,6 +61,15 @@ export default function BecomeFreelancerPage() {
       prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
     );
   };
+
+  React.useEffect(() => {
+    if (!rateModified && servicePrice > 0 && serviceDelivery > 0) {
+      let calc = Math.round(servicePrice / (serviceDelivery * 8));
+      if (calc < 20) calc = 20;
+      if (calc > 500) calc = 500;
+      setRate(calc);
+    }
+  }, [servicePrice, serviceDelivery, rateModified]);
 
   const handleStep1 = () => {
     if (!bio && selectedSkills.length === 0) {
@@ -183,28 +193,6 @@ export default function BecomeFreelancerPage() {
                   />
                 </div>
 
-                {/* Rate */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
-                      Taux Horaire Standard
-                    </label>
-                    <span className="font-display text-lg text-foreground">${rate}/h</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={20}
-                    max={500}
-                    step={5}
-                    value={rate}
-                    onChange={(e) => setRate(Number(e.target.value))}
-                    className="w-full accent-[oklch(0.7_0.18_295)]"
-                  />
-                  <div className="flex justify-between font-mono text-[9px] text-muted-foreground/50">
-                    <span>$20</span><span>$500</span>
-                  </div>
-                </div>
-
                 {/* Disciplines */}
                 <div className="space-y-2">
                   <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
@@ -295,7 +283,10 @@ export default function BecomeFreelancerPage() {
                       type="number"
                       min={10}
                       value={servicePrice}
-                      onChange={(e) => setServicePrice(Number(e.target.value))}
+                      onChange={(e) => {
+                        setServicePrice(Number(e.target.value));
+                        setRateModified(false); // recalculate if they change service values
+                      }}
                       className="w-full bg-white/5 border border-white/12 rounded-2xl px-4 py-3.5 text-sm text-foreground transition-all focus:outline-none focus:border-accent/40"
                     />
                   </div>
@@ -305,11 +296,43 @@ export default function BecomeFreelancerPage() {
                       type="number"
                       min={1}
                       value={serviceDelivery}
-                      onChange={(e) => setServiceDelivery(Number(e.target.value))}
+                      onChange={(e) => {
+                        setServiceDelivery(Number(e.target.value));
+                        setRateModified(false); // recalculate if they change service values
+                      }}
                       className="w-full bg-white/5 border border-white/12 rounded-2xl px-4 py-3.5 text-sm text-foreground transition-all focus:outline-none focus:border-accent/40"
                     />
                   </div>
                 </div>
+
+                {/* Rate (Calculated) */}
+                <div className="space-y-1.5 rounded-2xl bg-white/5 border border-white/10 p-5">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90">
+                      Taux Horaire Déduit
+                    </label>
+                    <span className="font-display text-xl text-accent">${rate}/h</span>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground/60 mb-4">
+                    Calculé sur la base de {serviceDelivery * 8 || 0} heures de travail ({serviceDelivery || 0} jours × 8h). Vous pouvez l'ajuster.
+                  </p>
+                  <input
+                    type="range"
+                    min={20}
+                    max={500}
+                    step={5}
+                    value={rate}
+                    onChange={(e) => {
+                      setRate(Number(e.target.value));
+                      setRateModified(true);
+                    }}
+                    className="w-full accent-[oklch(0.7_0.18_295)]"
+                  />
+                  <div className="flex justify-between font-mono text-[9px] text-muted-foreground/50 mt-1">
+                    <span>$20</span><span>$500</span>
+                  </div>
+                </div>
+
 
                 {/* Description */}
                 <div className="space-y-1.5">
