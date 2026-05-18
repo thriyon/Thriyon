@@ -25,14 +25,17 @@ export default function OnboardingPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Pre-fill from existing profile
+  // Pre-fill from existing profile or Google metadata
   useEffect(() => {
-    if (profile) {
-      if (profile.full_name && !fullName) setFullName(profile.full_name);
+    if (profile && user) {
+      const defaultName = profile.full_name || user.user_metadata?.full_name || user.user_metadata?.name || "";
+      const defaultAvatar = profile.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+
+      if (defaultName && !fullName) setFullName(defaultName);
       if (profile.username && !username) setUsername(profile.username);
-      if (profile.avatar_url && !avatarPreview) setAvatarPreview(profile.avatar_url);
+      if (defaultAvatar && !avatarPreview) setAvatarPreview(defaultAvatar);
     }
-  }, [profile]);
+  }, [profile, user]);
 
   // Guard: already onboarded → redirect
   useEffect(() => {
@@ -74,7 +77,7 @@ export default function OnboardingPage() {
     setError(null);
 
     try {
-      let avatarUrl = profile?.avatar_url || null;
+      let avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
 
       if (avatarFile) {
         const fileExt = avatarFile.name.split(".").pop();
