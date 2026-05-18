@@ -151,9 +151,8 @@ export default function FreelancerDashboardPage() {
   ] as const;
 
   return (
-    <div className="relative min-h-screen w-full bg-background px-6 pt-32 pb-24 overflow-hidden">
+    <div className="relative w-full">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[450px] w-[900px] -translate-x-1/2 rounded-full bg-accent/12 blur-[120px] opacity-75" />
-      <div className="pointer-events-none absolute inset-0 scanline opacity-15" />
 
       <div className="mx-auto max-w-[1400px]">
         {/* Header */}
