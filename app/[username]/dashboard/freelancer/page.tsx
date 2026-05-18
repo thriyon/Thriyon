@@ -40,7 +40,7 @@ export default function FreelancerDashboardPage() {
   const [updatingRate, setUpdatingRate] = useState(false);
   const [rateSuccess, setRateSuccess] = useState(false);
 
-  // Open Briefs
+  // Offres Ouvertes
   const [openJobs, setOpenJobs] = useState<OpenJob[]>([]);
   const [loadingJobs, setLoadingJobs] = useState(true);
 
@@ -57,7 +57,7 @@ export default function FreelancerDashboardPage() {
   const [totalEarnings, setTotalEarnings] = useState(0);
 
   // Active tab
-  const [activeTab, setActiveTab] = useState<"briefs" | "services" | "proposals">("briefs");
+  const [activeTab, setActiveTab] = useState<"offers" | "services" | "proposals">("offers");
 
   useEffect(() => {
     if (profile?.rate) setRateInput(profile.rate.toString());
@@ -145,7 +145,7 @@ export default function FreelancerDashboardPage() {
   };
 
   const tabs = [
-    { key: "briefs", label: "Open Briefs" },
+    { key: "offers", label: "Offres Ouvertes" },
     { key: "services", label: "My Services" },
     { key: "proposals", label: "My Proposals" },
   ] as const;
@@ -219,13 +219,13 @@ export default function FreelancerDashboardPage() {
             </div>
 
             <AnimatePresence mode="wait">
-              {/* Open Briefs Tab */}
-              {activeTab === "briefs" && (
-                <motion.div key="briefs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              {/* Open Offers Tab */}
+              {activeTab === "offers" && (
+                <motion.div key="offers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   {loadingJobs ? (
                     <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">Synchronizing ledger...</p>
                   ) : openJobs.length === 0 ? (
-                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">No open briefs at this time.</p>
+                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">Aucune offre disponible pour le moment.</p>
                   ) : (
                     <div className="space-y-6">
                       {openJobs.map((job) => (
@@ -336,7 +336,7 @@ export default function FreelancerDashboardPage() {
                           <div key={proposal.id} className="flex items-center justify-between rounded-2xl border border-white/6 bg-white/2 p-5">
                             <div>
                               <h4 className="font-display text-sm font-medium text-foreground mb-1">
-                                {proposal.freelance_jobs?.title || "Unknown Brief"}
+                                {proposal.freelance_jobs?.title || "Unknown Offer"}
                               </h4>
                               <div className="font-mono text-[8px] uppercase tracking-wider text-muted-foreground/60">
                                 Bid: ${proposal.bid_amount.toLocaleString()}

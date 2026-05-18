@@ -594,7 +594,7 @@ export default function OnboardingPage() {
                         Sovereign Studio
                       </div>
                       <p className="mt-2.5 text-[12px] text-muted-foreground/70 leading-relaxed">
-                        You offer services, take on briefs, and deliver exceptional creative work independently.
+                        You offer services, take on offers, and deliver exceptional creative work independently.
                       </p>
                     </div>
                   </button>
@@ -614,10 +614,10 @@ export default function OnboardingPage() {
                     <div>
                       <div className="font-display text-lg font-medium tracking-tight">Client / Studio</div>
                       <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                        Initiate Briefs
+                        Initiate Offers
                       </div>
                       <p className="mt-2.5 text-[12px] text-muted-foreground/70 leading-relaxed">
-                        You commission work, post briefs, and collaborate with world-class creative talent.
+                        You commission work, post offers, and collaborate with world-class creative talent.
                       </p>
                     </div>
                   </button>

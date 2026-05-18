@@ -298,7 +298,7 @@ function TalentTeaser() {
       <div className="grid gap-8 md:grid-cols-3">
         {[
           { n: "01", t: "Identify", b: "Curated talent across brand, product, motion, sound, type and code. Every profile, hand-reviewed." },
-          { n: "02", t: "Initiate", b: "Cinematic briefs replace bid wars. Scoping, contracts, and milestones, in a single floating canvas." },
+          { n: "02", t: "Initiate", b: "Cinematic offers replace bid wars. Scoping, contracts, and milestones, in a single floating canvas." },
           { n: "03", t: "Inhabit", b: "Work, message, deliver, get paid. A sovereign workspace tuned for slow, deep, long-arc creative practice." },
         ].map((s, i) => (
           <motion.div key={s.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }} className="glass rounded-2xl p-7 hairline">

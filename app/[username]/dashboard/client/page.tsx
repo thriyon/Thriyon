@@ -35,7 +35,7 @@ type Notification = {
 export default function ClientDashboardPage() {
   const { user, profile } = useAuth();
 
-  const [briefs, setBriefs] = useState<Brief[]>([]);
+  const [offers, setOffers] = useState<Brief[]>([]);
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,17 +48,17 @@ export default function ClientDashboardPage() {
     if (!user) return;
 
     async function loadAll() {
-      // My briefs with proposal counts
-      const { data: briefsData } = await supabase
+      // My offers with proposal counts
+      const { data: offersData } = await supabase
         .from("freelance_jobs")
         .select("id, title, category, budget, status, created_at")
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false })
         .limit(5);
 
-      if (briefsData) {
-        const briefsWithCounts = await Promise.all(
-          briefsData.map(async (b: any) => {
+      if (offersData) {
+        const offersWithCounts = await Promise.all(
+          offersData.map(async (b: any) => {
             const { count } = await supabase
               .from("job_proposals")
               .select("*", { count: "exact", head: true })
@@ -66,7 +66,7 @@ export default function ClientDashboardPage() {
             return { ...b, proposal_count: count || 0 };
           })
         );
-        setBriefs(briefsWithCounts);
+        setOffers(offersWithCounts);
       }
 
       // My active contracts
@@ -157,16 +157,16 @@ export default function ClientDashboardPage() {
             Welcome back, {profile?.full_name || "Sovereign Client"}
           </h1>
           <p className="text-xs text-muted-foreground/80 mt-1">
-            Manage your briefs, monitor active contracts, and track escrow flows.
+            Gérez vos offres, suivez vos contrats actifs et flux d'escrow.
           </p>
         </div>
 
         {/* Stats */}
         <div className="grid gap-6 sm:grid-cols-3 mb-10">
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Live Briefs</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Offres actives</span>
             <div className="font-display text-3xl font-semibold text-foreground mt-2">
-              {loading ? "..." : briefs.length}
+              {loading ? "..." : offers.length}
             </div>
             <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Transmitted to ledger</p>
           </div>
@@ -187,33 +187,33 @@ export default function ClientDashboardPage() {
         {/* Quick Actions */}
         <div className="grid gap-6 md:grid-cols-2 mb-10">
           <Link
-            href={`/${profile?.username || 'user'}/dashboard/client/briefs/new`}
+            href={`/${profile?.username || 'user'}/dashboard/client/offers/new`}
             className="group glass rounded-2xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background hover:bg-white/5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
             <div>
               <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">Escrow Contract Node</span>
               <h3 className="font-display text-2xl font-medium text-foreground mt-2 group-hover:text-accent transition-colors">
-                Initiate New Brief →
+                Créer une Offre →
               </h3>
               <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
-                Publish a sovereign task statement, specify parameters, and open application channels.
+                Publiez un cahier des charges, spécifiez les paramètres et ouvrez les candidatures.
               </p>
             </div>
             <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Sovereign allocation</div>
           </Link>
           <Link
-            href={`/${profile?.username || 'user'}/dashboard/client/briefs`}
+            href={`/${profile?.username || 'user'}/dashboard/client/offers`}
             className="group glass rounded-2xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background hover:bg-white/5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
             <div>
               <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">Active Ledger Node</span>
               <h3 className="font-display text-2xl font-medium text-foreground mt-2 group-hover:text-accent transition-colors">
-                Manage Active Briefs →
+                Gérer les Offres Actives →
               </h3>
               <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
-                Review incoming proposals, verify escrow milestones, and coordinate deliveries.
+                Examinez les propositions reçues, vérifiez les jalons d'escrow et coordonnez les livraisons.
               </p>
             </div>
             <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Sovereign coordination</div>
@@ -226,18 +226,18 @@ export default function ClientDashboardPage() {
           {/* Recent Briefs */}
           <div className="glass rounded-3xl p-6 hairline border border-white/6">
             <div className="flex justify-between items-center mb-5 border-b border-white/5 pb-4">
-              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Recent Briefs</span>
-              <Link href={`/${profile?.username || 'user'}/dashboard/client/briefs`} className="font-mono text-[8px] uppercase tracking-wider text-accent/80 hover:text-accent transition">
+              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Offres Récentes</span>
+              <Link href={`/${profile?.username || 'user'}/dashboard/client/offers`} className="font-mono text-[8px] uppercase tracking-wider text-accent/80 hover:text-accent transition">
                 View all →
               </Link>
             </div>
             {loading ? (
               <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">Loading...</p>
-            ) : briefs.length === 0 ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">No briefs posted yet.</p>
+            ) : offers.length === 0 ? (
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">Aucune offre publiée pour le moment.</p>
             ) : (
               <div className="space-y-3">
-                {briefs.map((brief) => (
+                {offers.map((brief) => (
                   <div key={brief.id} className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3">
                     <div className="min-w-0 flex-1">
                       <p className="text-xs text-foreground font-medium truncate">{brief.title}</p>

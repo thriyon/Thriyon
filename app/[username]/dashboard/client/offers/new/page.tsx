@@ -19,12 +19,12 @@ const BUDGET_SUGGESTIONS = ["< $1K", "$1K – $5K", "$5K – $20K", "$20K – $5
 
 const ONBOARDING_TIPS: Record<string, { title: string; body: string }> = {
   title: {
-    title: "Craft a clear project statement",
-    body: "The best briefs attract top talent. Be specific: include the type of work, your industry, and the outcome you're after.",
+    title: "Définissez un titre clair",
+    body: "Les meilleures offres attirent les meilleurs talents. Soyez précis : décrivez le type de travail, votre secteur d'activité et le résultat attendu.",
   },
   category: {
-    title: "Pick the right discipline",
-    body: "This determines which freelancers see your brief. Choose the primary skill area — you can add more detail in the description.",
+    title: "Choisissez la bonne discipline",
+    body: "Cela détermine quels freelances verront votre offre. Choisissez le domaine de compétence principal — vous pourrez ajouter des détails dans la description.",
   },
   budget: {
     title: "Budget builds trust",
@@ -35,7 +35,7 @@ const ONBOARDING_TIPS: Record<string, { title: string; body: string }> = {
     body: "Cover: what you need, what you don't want, your timeline, target audience, and what success looks like.",
   },
   tags: {
-    title: "Tags surface your brief to the right talent",
+    title: "Les tags rendent votre offre visible auprès des bons talents",
     body: "Use skill names and tools. e.g. Figma, React, After Effects, Branding, WebGL",
   },
 };
@@ -59,7 +59,7 @@ function NewBriefForm() {
   useEffect(() => {
     if (targetTalent) {
       setDescription(
-        `Initiating a sovereign contract brief specifically for practitioner: @${targetTalent}.\n\n[Outline your project scope, constraints, and delivery timelines here...]`
+        `Initiating a sovereign contract offer specifically for practitioner: @${targetTalent}.\n\n[Outline your project scope, constraints, and delivery timelines here...]`
       );
     }
   }, [targetTalent]);
@@ -67,11 +67,11 @@ function NewBriefForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      setError("You must be signed in as a client to post a brief.");
+      setError("Vous devez être connecté en tant que client pour publier une offre.");
       return;
     }
     if (!title || !budget || !description) {
-      setError("Please fill in all necessary brief details.");
+      setError("Veuillez remplir toutes les informations nécessaires pour l'offre.");
       return;
     }
 
@@ -102,7 +102,7 @@ function NewBriefForm() {
         }, 2200);
       }
     } catch (err) {
-      console.error("Error creating job brief:", err);
+      console.error("Error creating job offer:", err);
       setError("An unexpected error occurred during database transmission.");
     } finally {
       setLoading(false);
@@ -129,7 +129,7 @@ function NewBriefForm() {
             transition={{ delay: 0.2 }}
             className="font-mono text-[10px] uppercase tracking-[0.35em] text-accent mb-3"
           >
-            Nouveau Brief
+            Nouvelle Offre
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
@@ -137,8 +137,8 @@ function NewBriefForm() {
             transition={{ delay: 0.3 }}
             className="font-display text-[clamp(2.5rem,6vw,4rem)] leading-[0.9] tracking-[-0.04em] text-gradient pb-2"
           >
-            Créer un <br />
-            Projet
+            Créer une <br />
+            Offre
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -146,7 +146,7 @@ function NewBriefForm() {
             transition={{ delay: 0.4 }}
             className="mt-6 text-[13px] text-muted-foreground/75 leading-relaxed max-w-[400px] mx-auto"
           >
-            Lancez un nouveau brief sur le Nexus.
+            Lancez une nouvelle offre sur le Nexus.
           </motion.p>
         </div>
 
@@ -171,10 +171,10 @@ function NewBriefForm() {
                 ✓
               </div>
               <h2 className="font-display text-3xl font-medium text-gradient mb-3">
-                Brief Transmis !
+                Offre Transmise !
               </h2>
               <p className="text-muted-foreground/80">
-                Votre projet souverain est maintenant disponible sur le ledger Thriyon.
+                Votre offre souveraine est maintenant disponible sur le ledger Thriyon.
               </p>
             </motion.div>
           ) : (
@@ -397,7 +397,7 @@ function NewBriefForm() {
                       disabled={loading}
                       className="w-full rounded-full bg-white py-4 text-sm font-semibold text-black transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                     >
-                      {loading ? "Création..." : "Commit Project Brief"}
+                      {loading ? "Création..." : "Publier l'Offre"}
                     </button>
                   </div>
                 </form>
@@ -410,12 +410,12 @@ function NewBriefForm() {
   );
 }
 
-export default function NewBriefPage() {
+export default function NewOfferPage() {
   return (
     <Suspense
       fallback={
         <div className="min-h-screen w-full flex items-center justify-center bg-background text-muted-foreground font-mono text-xs uppercase tracking-widest">
-          Initializing Brief Space...
+          Initialisation de l'Espace Offres...
         </div>
       }
     >

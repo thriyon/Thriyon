@@ -7,14 +7,14 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { projects as mockProjects, Project } from "@/lib/mock";
 
-export default function ClientBriefsPage() {
+export default function ClientOffersPage() {
   const { user, profile } = useAuth();
   const [dbJobs, setDbJobs] = useState<Project[]>([]);
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchClientBriefs() {
+    async function fetchClientOffers() {
       if (!user) {
         setLoading(false);
         return;
@@ -28,7 +28,7 @@ export default function ClientBriefsPage() {
           .order("created_at", { ascending: false });
 
         if (error) {
-          console.error("Error fetching database briefs:", error.message);
+          console.error("Error fetching database offers:", error.message);
           return;
         }
 
@@ -48,13 +48,13 @@ export default function ClientBriefsPage() {
           setDbJobs(formatted);
         }
       } catch (err) {
-        console.error("Error in briefs load logic:", err);
+        console.error("Error in offers load logic:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchClientBriefs();
+    fetchClientOffers();
   }, [user]);
 
   useEffect(() => {
@@ -75,17 +75,17 @@ export default function ClientBriefsPage() {
             <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
               Client Workspace · Project Ledgers
             </span>
-            <h1 className="font-display text-4xl font-medium text-gradient mt-1">Briefs & Escrow Contracts</h1>
+            <h1 className="font-display text-4xl font-medium text-gradient mt-1">Offres & Contrats Escrow</h1>
             <p className="text-xs text-muted-foreground/80 mt-1">
-              Monitor project briefs, escrow releases, and active agency engagements.
+              Gérez vos offres de projet, libérations d'escrow et engagements partenaires.
             </p>
           </div>
 
           <Link
-            href={`/${profile?.username || 'user'}/dashboard/client/briefs/new`}
+            href={`/${profile?.username || 'user'}/dashboard/client/offers/new`}
             className="inline-flex rounded-full bg-white px-6 py-3 text-xs font-semibold text-black transition hover:bg-white/90 text-center"
           >
-            + Initiate Project Brief
+            + Créer une Offre
           </Link>
         </div>
 
