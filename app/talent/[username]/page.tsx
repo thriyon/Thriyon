@@ -190,7 +190,7 @@ export default function TalentShowcasePage() {
             </div>
 
             <button
-              onClick={() => router.push(`/${profile?.username || 'user'}/dashboard/client/offers/new?talent=${talent.username}`)}
+              onClick={() => router.push(`/${profile?.username}/dashboard/client/offers/new?talent=${talent.username}`)}
               className="w-full mt-8 rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
             >
               Créer une Offre →

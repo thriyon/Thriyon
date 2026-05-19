@@ -78,7 +78,7 @@ export default function BecomeBusinessPage() {
       await refreshProfile();
       setDone(true);
       setTimeout(() => {
-        const uname = profile?.username || "user";
+        const uname = profile?.username;
         router.push(`/${uname}/dashboard/client`);
       }, 1200);
     } catch (err: any) {

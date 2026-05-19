@@ -18,10 +18,12 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user && profile) {
-      if (profile.role === "client") {
-        router.push(`/${profile.username || 'user'}/dashboard/client`);
+      if (!profile.username || !profile.onboarding_completed) {
+        router.push("/onboarding");
+      } else if (profile.role === "client") {
+        router.push(`/${profile.username}/dashboard/client`);
       } else {
-        router.push(`/${profile.username || 'user'}/dashboard/freelancer`);
+        router.push(`/${profile.username}/dashboard/freelancer`);
       }
     }
   }, [user, profile, router]);
@@ -50,10 +52,12 @@ export default function LoginPage() {
         .eq("id", data.user.id)
         .single();
 
-      if (profile?.role === "client") {
-        router.push(`/${profile.username || 'user'}/dashboard/client`);
+      if (!profile?.username) {
+        router.push("/onboarding");
+      } else if (profile?.role === "client") {
+        router.push(`/${profile.username}/dashboard/client`);
       } else {
-        router.push(`/${profile?.username || 'user'}/dashboard/freelancer`);
+        router.push(`/${profile?.username}/dashboard/freelancer`);
       }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");

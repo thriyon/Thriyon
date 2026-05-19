@@ -74,7 +74,7 @@ export default function NewServicePage() {
 
       setSuccess(true);
       setTimeout(() => {
-        router.push(`/${profile?.username || 'user'}/dashboard/freelancer`);
+        router.push(`/${profile?.username}/dashboard/freelancer`);
       }, 2000);
     } catch (err: any) {
       setError(err.message || "Erreur lors de la création du service.");

@@ -120,7 +120,7 @@ export default function BecomeFreelancerPage() {
       }
 
       await refreshProfile();
-      const uname = profile?.username || "user";
+      const uname = profile?.username;
       router.push(`/${uname}/dashboard/freelancer`);
     } catch (err: any) {
       setError(err.message || "Une erreur est survenue.");

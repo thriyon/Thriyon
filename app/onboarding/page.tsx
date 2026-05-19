@@ -40,12 +40,11 @@ export default function OnboardingPage() {
 
   // Guard: already onboarded → redirect
   useEffect(() => {
-    if (!loading && user && profile && profile.onboarding_completed) {
-      const uname = profile.username || "user";
+    if (!loading && user && profile && profile.onboarding_completed && profile.username) {
       if (profile.role === "client") {
-        router.push(`/${uname}/dashboard/client`);
+        router.push(`/${profile.username}/dashboard/client`);
       } else {
-        router.push(`/${uname}/dashboard/freelancer`);
+        router.push(`/${profile.username}/dashboard/freelancer`);
       }
     }
     if (!loading && !user) {

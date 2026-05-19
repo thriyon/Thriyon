@@ -340,15 +340,15 @@ export default function HomePage() {
     // let's redirect them to their dashboard!
     const hash = typeof window !== "undefined" ? window.location.hash : "";
     if (user && profile) {
-      if (!profile.onboarding_completed) {
+      if (!profile.onboarding_completed || !profile.username) {
         router.push("/onboarding");
         return;
       }
       if (hash.includes("access_token") || hash.includes("id_token")) {
         if (profile.role === "client") {
-          router.push(`/${profile.username || 'user'}/dashboard/client`);
+          router.push(`/${profile.username}/dashboard/client`);
         } else {
-          router.push(`/${profile.username || 'user'}/dashboard/freelancer`);
+          router.push(`/${profile.username}/dashboard/freelancer`);
         }
       }
     }

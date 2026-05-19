@@ -98,7 +98,7 @@ function NewBriefForm() {
       } else {
         setSuccess(true);
         setTimeout(() => {
-          router.push(`/${profile?.username || 'user'}/dashboard/client`);
+          router.push(`/${profile?.username}/dashboard/client`);
         }, 2200);
       }
     } catch (err) {

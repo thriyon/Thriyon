@@ -19,12 +19,12 @@ export default function SignupPage() {
   // Already logged in → send to right place
   useEffect(() => {
     if (user && profile) {
-      if (!profile.onboarding_completed) {
+      if (!profile.onboarding_completed || !profile.username) {
         router.push("/onboarding");
       } else if (profile.role === "client") {
-        router.push(`/${profile.username || 'user'}/dashboard/client`);
+        router.push(`/${profile.username}/dashboard/client`);
       } else {
-        router.push(`/${profile.username || 'user'}/dashboard/freelancer`);
+        router.push(`/${profile.username}/dashboard/freelancer`);
       }
     }
   }, [user, profile, router]);

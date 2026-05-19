@@ -36,9 +36,11 @@ export function Header() {
   }, []);
 
   const dashboardLink = profile
-    ? profile.role === "client"
-      ? `/${profile.username || "user"}/dashboard/client`
-      : `/${profile.username || "user"}/dashboard/freelancer`
+    ? !profile.username
+      ? "/onboarding"
+      : profile.role === "client"
+        ? `/${profile.username}/dashboard/client`
+        : `/${profile.username}/dashboard/freelancer`
     : "/auth/login";
 
   if (pathname?.includes("/dashboard")) return null;

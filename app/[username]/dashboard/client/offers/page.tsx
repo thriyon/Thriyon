@@ -82,7 +82,7 @@ export default function ClientOffersPage() {
           </div>
 
           <Link
-            href={`/${profile?.username || 'user'}/dashboard/client/offers/new`}
+            href={`/${profile?.username}/dashboard/client/offers/new`}
             className="inline-flex rounded-full bg-white px-6 py-3 text-xs font-semibold text-black transition hover:bg-white/90 text-center"
           >
             + Créer une Offre
