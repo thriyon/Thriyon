@@ -7,8 +7,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint app src proxy.ts next.config.ts",
     "format": "prettier --write ."
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -76,10 +79,14 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "eslint": "^9.32.0",
-    "eslint-config-next": "^15.5.18",
+    "eslint-config-next": "^16.2.6",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
     "prettier": "^3.7.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.59.4"
   }
 }

@@ -40,18 +40,16 @@ export default function SecurityLayout({ children }: { children: React.ReactNode
   // Once authenticated and authorized, render the dashboard shell
   return (
     <div className="flex h-screen overflow-hidden bg-[#0A0A0A] text-foreground">
-      <Sidebar 
-        isExpanded={isSidebarExpanded} 
-        setIsExpanded={setIsSidebarExpanded} 
+      <Sidebar
+        isExpanded={isSidebarExpanded}
+        setIsExpanded={setIsSidebarExpanded}
         role={profile?.role as "client" | "freelancer"}
         username={profile?.username || ""}
       />
       <div className="flex-1 flex flex-col min-w-0">
         <DashboardHeader username={profile?.username || ""} />
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mx-auto max-w-7xl">
-            {children}
-          </div>
+          <div className="mx-auto max-w-7xl">{children}</div>
         </main>
       </div>
     </div>

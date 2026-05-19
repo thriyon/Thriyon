@@ -14,7 +14,15 @@ export default function TalentIndexPage() {
   const [loading, setLoading] = useState(true);
 
   // Categories extracted from disciplines
-  const categories = ["All", "Brand", "3D & Motion", "Product Design", "Engineering", "Typography", "Sound Design"];
+  const categories = [
+    "All",
+    "Brand",
+    "3D & Motion",
+    "Product Design",
+    "Engineering",
+    "Typography",
+    "Sound Design",
+  ];
 
   useEffect(() => {
     async function fetchLiveFreelancers() {
@@ -68,16 +76,18 @@ export default function TalentIndexPage() {
       t.bio.toLowerCase().includes(search.toLowerCase());
 
     if (activeCategory === "All") return matchesSearch;
-    
+
     // Skill matches active category
     const categoryKey = activeCategory.toLowerCase();
     const matchesCategory =
       t.skills.some((s) => s.toLowerCase().includes(categoryKey)) ||
       t.role.toLowerCase().includes(categoryKey) ||
-      (activeCategory === "3D & Motion" && (
-        t.skills.some((s) => ["cinema4d", "houdini", "octane", "motion"].includes(s.toLowerCase())) ||
-        t.role.toLowerCase().includes("3d") || t.role.toLowerCase().includes("motion")
-      ));
+      (activeCategory === "3D & Motion" &&
+        (t.skills.some((s) =>
+          ["cinema4d", "houdini", "octane", "motion"].includes(s.toLowerCase()),
+        ) ||
+          t.role.toLowerCase().includes("3d") ||
+          t.role.toLowerCase().includes("motion")));
 
     return matchesSearch && matchesCategory;
   });
@@ -113,7 +123,8 @@ export default function TalentIndexPage() {
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mt-4 max-w-xl text-sm md:text-base text-muted-foreground/80 leading-relaxed"
           >
-            An invite-only ecosystem of sovereign developers, 3D artists, type designers, and brand architects.
+            An invite-only ecosystem of sovereign developers, 3D artists, type designers, and brand
+            architects.
           </motion.p>
         </div>
 
@@ -150,7 +161,11 @@ export default function TalentIndexPage() {
               strokeWidth={2}
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
             </svg>
             <input
               type="text"
@@ -163,10 +178,7 @@ export default function TalentIndexPage() {
         </motion.div>
 
         {/* Talent Grid */}
-        <motion.div
-          layout
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        >
+        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AnimatePresence mode="popLayout">
             {filtered.map((talent, index) => {
               // Custom hue index coloring
@@ -175,7 +187,7 @@ export default function TalentIndexPage() {
                 "from-emerald-500/20 to-teal-500/5",
                 "from-rose-500/20 to-indigo-500/5",
                 "from-amber-500/20 to-rose-500/5",
-                "from-sky-500/20 to-violet-500/5"
+                "from-sky-500/20 to-violet-500/5",
               ];
               const cardHue = hues[index % hues.length];
 
@@ -193,7 +205,9 @@ export default function TalentIndexPage() {
                     className="group glass block rounded-2xl p-6 hairline transition-all duration-300 hover:bg-white/8 hover:shadow-[0_0_25px_-5px_oklch(0.7_0.18_295/0.25)] relative overflow-hidden h-full flex flex-col justify-between"
                   >
                     {/* Corner hover glow */}
-                    <div className={`pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br ${cardHue} blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125 group-hover:opacity-85`} />
+                    <div
+                      className={`pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br ${cardHue} blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125 group-hover:opacity-85`}
+                    />
 
                     <div>
                       {/* Live user indicator or availability */}
@@ -202,7 +216,9 @@ export default function TalentIndexPage() {
                           {talent.location}
                         </div>
                         <div className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider pl-2.5 pr-2 py-0.5 rounded-full border border-white/6 bg-white/3">
-                          <span className={`h-1 w-1 rounded-full ${talent.available ? "bg-accent" : "bg-muted-foreground/50"}`} />
+                          <span
+                            className={`h-1 w-1 rounded-full ${talent.available ? "bg-accent" : "bg-muted-foreground/50"}`}
+                          />
                           {talent.available ? "Online" : "Booked"}
                         </div>
                       </div>
@@ -223,12 +239,20 @@ export default function TalentIndexPage() {
                     {/* Footer/Meta metrics */}
                     <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
                       <div>
-                        <div className="font-mono text-[8px] uppercase tracking-wider text-muted-foreground/50">Hourly Rate</div>
-                        <div className="font-display text-sm font-medium text-foreground mt-0.5">${talent.rate}/hr</div>
+                        <div className="font-mono text-[8px] uppercase tracking-wider text-muted-foreground/50">
+                          Hourly Rate
+                        </div>
+                        <div className="font-display text-sm font-medium text-foreground mt-0.5">
+                          ${talent.rate}/hr
+                        </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-mono text-[8px] uppercase tracking-wider text-muted-foreground/50">Experience</div>
-                        <div className="font-display text-sm font-medium text-foreground mt-0.5">{talent.projects} cases</div>
+                        <div className="font-mono text-[8px] uppercase tracking-wider text-muted-foreground/50">
+                          Experience
+                        </div>
+                        <div className="font-display text-sm font-medium text-foreground mt-0.5">
+                          {talent.projects} cases
+                        </div>
                       </div>
                     </div>
                   </Link>
@@ -241,7 +265,9 @@ export default function TalentIndexPage() {
         {/* Empty state */}
         {filtered.length === 0 && (
           <div className="text-center py-24 glass rounded-3xl border border-white/6 mt-6">
-            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">No creative practitioners match filters</p>
+            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              No creative practitioners match filters
+            </p>
           </div>
         )}
       </div>

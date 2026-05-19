@@ -28,15 +28,18 @@ export default function OnboardingPage() {
   // Pre-fill from existing profile or Google metadata
   useEffect(() => {
     if (profile && user) {
-      const defaultName = profile.full_name || user.user_metadata?.full_name || user.user_metadata?.name || "";
-      const defaultAvatar = profile.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
-      const defaultUsername = profile.username || defaultName.replace(/[^a-zA-Z0-9_]/g, '').toLowerCase();
+      const defaultName =
+        profile.full_name || user.user_metadata?.full_name || user.user_metadata?.name || "";
+      const defaultAvatar =
+        profile.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+      const defaultUsername =
+        profile.username || defaultName.replace(/[^a-zA-Z0-9_]/g, "").toLowerCase();
 
       if (defaultName && !fullName) setFullName(defaultName);
       if (defaultUsername && !username) setUsername(defaultUsername);
       if (defaultAvatar && !avatarPreview) setAvatarPreview(defaultAvatar);
     }
-  }, [profile, user]);
+  }, [profile, user, fullName, username, avatarPreview]);
 
   // Guard: already onboarded → redirect
   useEffect(() => {
@@ -77,7 +80,11 @@ export default function OnboardingPage() {
     setError(null);
 
     try {
-      let avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+      let avatarUrl =
+        profile?.avatar_url ||
+        user.user_metadata?.avatar_url ||
+        user.user_metadata?.picture ||
+        null;
 
       if (avatarFile) {
         const fileExt = avatarFile.name.split(".").pop();
@@ -180,10 +187,14 @@ export default function OnboardingPage() {
               {avatarPreview ? (
                 <img src={avatarPreview} alt="Avatar" className="h-full w-full object-cover" />
               ) : (
-                <div className="text-3xl text-muted-foreground/50 group-hover:text-accent/80 transition-colors">+</div>
+                <div className="text-3xl text-muted-foreground/50 group-hover:text-accent/80 transition-colors">
+                  +
+                </div>
               )}
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-white">Upload</span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-white">
+                  Upload
+                </span>
               </div>
             </div>
             <input
@@ -230,7 +241,9 @@ export default function OnboardingPage() {
                 </button>
               </div>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 font-mono text-sm">@</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 font-mono text-sm">
+                  @
+                </span>
                 <input
                   type="text"
                   value={username}
@@ -252,7 +265,9 @@ export default function OnboardingPage() {
                 exit={{ opacity: 0, height: 0 }}
                 className="mt-4 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
               >
-                <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_USERNAME_TIP.title}</div>
+                <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                  {ONBOARDING_USERNAME_TIP.title}
+                </div>
                 <p className="text-xs text-muted-foreground/80">{ONBOARDING_USERNAME_TIP.body}</p>
               </motion.div>
             )}

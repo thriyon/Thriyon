@@ -45,7 +45,7 @@ export function Sidebar({ isExpanded, setIsExpanded, role, username }: SidebarPr
     <aside
       className={cn(
         "relative flex flex-col h-screen border-r border-white/10 bg-[#0A0A0A] transition-all duration-300 ease-in-out",
-        isExpanded ? "w-64" : "w-20"
+        isExpanded ? "w-64" : "w-20",
       )}
     >
       {/* Logo Area */}
@@ -55,7 +55,10 @@ export function Sidebar({ isExpanded, setIsExpanded, role, username }: SidebarPr
             THRIYON
           </Link>
         ) : (
-          <Link href="/" className="font-display text-xl tracking-widest text-foreground font-bold mx-auto">
+          <Link
+            href="/"
+            className="font-display text-xl tracking-widest text-foreground font-bold mx-auto"
+          >
             T
           </Link>
         )}
@@ -83,7 +86,7 @@ export function Sidebar({ isExpanded, setIsExpanded, role, username }: SidebarPr
                 "flex items-center px-3 py-3 rounded-xl transition-all duration-200 group",
                 isActive
                   ? "bg-white/10 text-accent"
-                  : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                  : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
               )}
             >
               <Icon size={20} className={cn("min-w-[20px]", isActive ? "text-accent" : "")} />
@@ -104,11 +107,13 @@ export function Sidebar({ isExpanded, setIsExpanded, role, username }: SidebarPr
             "flex items-center px-3 py-3 rounded-xl transition-all duration-200",
             pathname.includes("/settings")
               ? "bg-white/10 text-accent"
-              : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+              : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
           )}
         >
           <Settings size={20} className="min-w-[20px]" />
-          {isExpanded && <span className="ml-3 text-sm font-medium whitespace-nowrap">Paramètres</span>}
+          {isExpanded && (
+            <span className="ml-3 text-sm font-medium whitespace-nowrap">Paramètres</span>
+          )}
         </Link>
       </div>
     </aside>

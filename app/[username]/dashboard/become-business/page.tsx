@@ -118,7 +118,6 @@ export default function BecomeBusinessPage() {
         {/* Card */}
         <div className="rounded-3xl border border-white/8 bg-gradient-to-b from-graphite/60 to-background p-8 md:p-10 grain glow">
           <AnimatePresence mode="wait">
-
             {done ? (
               <motion.div
                 key="done"
@@ -207,7 +206,9 @@ export default function BecomeBusinessPage() {
                               : "border-white/8 bg-white/2 text-muted-foreground hover:border-white/15"
                           }`}
                         >
-                          <div className={`h-2 w-2 rounded-full flex-shrink-0 ${companySize === s.value ? "bg-accent" : "bg-white/20"}`} />
+                          <div
+                            className={`h-2 w-2 rounded-full flex-shrink-0 ${companySize === s.value ? "bg-accent" : "bg-white/20"}`}
+                          />
                           <span className="text-xs">{s.label}</span>
                         </button>
                       ))}
@@ -230,7 +231,9 @@ export default function BecomeBusinessPage() {
                               : "border-white/8 bg-white/2 text-muted-foreground hover:border-white/15"
                           }`}
                         >
-                          <div className={`h-2 w-2 rounded-full flex-shrink-0 ${budgetRange === b.value ? "bg-accent" : "bg-white/20"}`} />
+                          <div
+                            className={`h-2 w-2 rounded-full flex-shrink-0 ${budgetRange === b.value ? "bg-accent" : "bg-white/20"}`}
+                          />
                           <span className="text-xs">{b.label}</span>
                         </button>
                       ))}
@@ -283,7 +286,6 @@ export default function BecomeBusinessPage() {
                 </button>
               </motion.div>
             )}
-
           </AnimatePresence>
         </div>
       </motion.div>

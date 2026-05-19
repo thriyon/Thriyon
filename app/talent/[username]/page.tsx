@@ -23,7 +23,9 @@ export default function TalentShowcasePage() {
       if (!username) return;
 
       // 1. Check if it's a mock talent
-      const mockMatch = mockTalents.find((t) => t.username.toLowerCase() === username.toLowerCase());
+      const mockMatch = mockTalents.find(
+        (t) => t.username.toLowerCase() === username.toLowerCase(),
+      );
       if (mockMatch) {
         setTalent(mockMatch);
         setLoading(false);
@@ -77,9 +79,16 @@ export default function TalentShowcasePage() {
   if (error || !talent) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-background px-6 text-center">
-        <div className="font-mono text-xs uppercase tracking-widest text-destructive mb-4">⚡ Interface Error</div>
-        <h2 className="font-display text-2xl font-medium mb-6">Identity could not be verified in the index.</h2>
-        <Link href="/talent" className="rounded-full border border-white/15 px-6 py-2.5 text-xs hover:bg-white/5">
+        <div className="font-mono text-xs uppercase tracking-widest text-destructive mb-4">
+          ⚡ Interface Error
+        </div>
+        <h2 className="font-display text-2xl font-medium mb-6">
+          Identity could not be verified in the index.
+        </h2>
+        <Link
+          href="/talent"
+          className="rounded-full border border-white/15 px-6 py-2.5 text-xs hover:bg-white/5"
+        >
           Return to index
         </Link>
       </div>
@@ -87,8 +96,8 @@ export default function TalentShowcasePage() {
   }
 
   // Filter showcases for this specific user or display fallback curated galleries
-  const personalShowcases = mockShowcases.filter(
-    (s) => s.studio.toLowerCase().includes(talent.name.split(" ")[0].toLowerCase())
+  const personalShowcases = mockShowcases.filter((s) =>
+    s.studio.toLowerCase().includes(talent.name.split(" ")[0].toLowerCase()),
   );
 
   return (
@@ -100,7 +109,10 @@ export default function TalentShowcasePage() {
       <div className="mx-auto max-w-[1400px]">
         {/* Navigation back */}
         <div className="mb-12">
-          <Link href="/talent" className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground transition-all">
+          <Link
+            href="/talent"
+            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground transition-all"
+          >
             ← Return to registry
           </Link>
         </div>
@@ -114,8 +126,12 @@ export default function TalentShowcasePage() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4"
             >
-              <span className="relative flex h-1.5 w-1.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" /></span>
-              {talent.available ? "Ready for brief assignment" : "Currently occupied"} · {talent.location}
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              {talent.available ? "Ready for brief assignment" : "Currently occupied"} ·{" "}
+              {talent.location}
             </motion.div>
 
             <motion.h1
@@ -176,21 +192,31 @@ export default function TalentShowcasePage() {
 
             <div className="space-y-6">
               <div className="flex justify-between items-baseline border-b border-white/5 pb-4">
-                <span className="font-mono text-[10px] uppercase text-muted-foreground">Min Escrow Rate</span>
+                <span className="font-mono text-[10px] uppercase text-muted-foreground">
+                  Min Escrow Rate
+                </span>
                 <span className="font-display text-2xl font-medium">${talent.rate}/hr</span>
               </div>
               <div className="flex justify-between items-baseline border-b border-white/5 pb-4">
-                <span className="font-mono text-[10px] uppercase text-muted-foreground">Reputation Index</span>
+                <span className="font-mono text-[10px] uppercase text-muted-foreground">
+                  Reputation Index
+                </span>
                 <span className="font-display text-2xl font-medium">{talent.rating} / 5.0</span>
               </div>
               <div className="flex justify-between items-baseline border-b border-white/5 pb-4">
-                <span className="font-mono text-[10px] uppercase text-muted-foreground">Active cases</span>
+                <span className="font-mono text-[10px] uppercase text-muted-foreground">
+                  Active cases
+                </span>
                 <span className="font-display text-2xl font-medium">{talent.projects} cases</span>
               </div>
             </div>
 
             <button
-              onClick={() => router.push(`/${profile?.username}/dashboard/client/offers/new?talent=${talent.username}`)}
+              onClick={() =>
+                router.push(
+                  `/${profile?.username}/dashboard/client/offers/new?talent=${talent.username}`,
+                )
+              }
               className="w-full mt-8 rounded-full bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
             >
               Créer une Offre →
@@ -220,7 +246,9 @@ export default function TalentShowcasePage() {
                       <span className="font-mono text-[9px] uppercase text-accent/80 border border-accent/25 bg-accent/5 px-2.5 py-0.5 rounded-full">
                         {showcase.discipline}
                       </span>
-                      <span className="font-mono text-[9px] text-muted-foreground/60">{showcase.year}</span>
+                      <span className="font-mono text-[9px] text-muted-foreground/60">
+                        {showcase.year}
+                      </span>
                     </div>
 
                     <h4 className="font-display text-lg font-medium text-foreground mb-1">
@@ -231,7 +259,9 @@ export default function TalentShowcasePage() {
                     </p>
 
                     <div className="mt-12 h-36 rounded-xl border border-white/5 bg-gradient-to-br from-white/3 to-white/1 relative overflow-hidden flex items-center justify-center">
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/40">Visualizer hold</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/40">
+                        Visualizer hold
+                      </span>
                     </div>
                   </div>
                 ))
@@ -239,7 +269,7 @@ export default function TalentShowcasePage() {
                 [
                   { id: 1, title: "Identity — Sovereign System", disc: "Brand" },
                   { id: 2, title: "Canvas — Visual Workspace", disc: "Web / Core" },
-                  { id: 3, title: "Pulse — Motion & Sound", disc: "3D / Motion" }
+                  { id: 3, title: "Pulse — Motion & Sound", disc: "3D / Motion" },
                 ].map((fallback) => (
                   <div
                     key={fallback.id}
@@ -260,7 +290,9 @@ export default function TalentShowcasePage() {
                     </p>
 
                     <div className="mt-12 h-36 rounded-xl border border-white/5 bg-gradient-to-br from-white/3 to-white/1 relative overflow-hidden flex items-center justify-center">
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/40">Visualizer hold</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/40">
+                        Visualizer hold
+                      </span>
                     </div>
                   </div>
                 ))}

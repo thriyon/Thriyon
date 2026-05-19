@@ -34,7 +34,7 @@ export async function GET(request: Request) {
             });
           },
         },
-      }
+      },
     );
 
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
@@ -60,18 +60,22 @@ export async function GET(request: Request) {
 
       // Fully onboarded → go to correct dashboard
       if (profile.role === "client") {
-        response = NextResponse.redirect(new URL(`/${profile.username}/dashboard/client`, requestUrl.origin));
+        response = NextResponse.redirect(
+          new URL(`/${profile.username}/dashboard/client`, requestUrl.origin),
+        );
       } else {
-        response = NextResponse.redirect(new URL(`/${profile.username}/dashboard/freelancer`, requestUrl.origin));
+        response = NextResponse.redirect(
+          new URL(`/${profile.username}/dashboard/freelancer`, requestUrl.origin),
+        );
       }
-      
+
       const allCookies = cookieStore.getAll();
       allCookies.forEach((cookie) => {
         response.cookies.set({ ...cookie, httpOnly: false });
       });
       return response;
     }
-    
+
     // If error or no user, just return the fallback response
     return response;
   }
@@ -79,4 +83,3 @@ export async function GET(request: Request) {
   // Default fallback redirect if no code
   return NextResponse.redirect(new URL(next, requestUrl.origin));
 }
-

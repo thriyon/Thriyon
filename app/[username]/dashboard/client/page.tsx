@@ -64,7 +64,7 @@ export default function ClientDashboardPage() {
               .select("*", { count: "exact", head: true })
               .eq("job_id", b.id);
             return { ...b, proposal_count: count || 0 };
-          })
+          }),
         );
         setOffers(offersWithCounts);
       }
@@ -80,12 +80,14 @@ export default function ClientDashboardPage() {
       if (contractsData) {
         setContracts(contractsData as any);
         setActiveContractCount(
-          contractsData.filter((c: any) => ["En cours", "Fonds déposés", "Livré"].includes(c.escrow_status)).length
+          contractsData.filter((c: any) =>
+            ["En cours", "Fonds déposés", "Livré"].includes(c.escrow_status),
+          ).length,
         );
         setTotalEscrow(
           contractsData
             .filter((c: any) => !["Terminé", "Annulé"].includes(c.escrow_status))
-            .reduce((acc: number, c: any) => acc + (c.escrow_amount || 0), 0)
+            .reduce((acc: number, c: any) => acc + (c.escrow_amount || 0), 0),
         );
       }
 
@@ -108,29 +110,40 @@ export default function ClientDashboardPage() {
       .channel(`notifications:${user.id}`)
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${user.id}` },
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "notifications",
+          filter: `user_id=eq.${user.id}`,
+        },
         (payload) => {
           setNotifications((prev) => [payload.new as Notification, ...prev.slice(0, 4)]);
-        }
+        },
       )
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [user]);
 
   const markAllRead = async () => {
-    await supabase.from("notifications").update({ read: true }).eq("user_id", user!.id).eq("read", false);
+    await supabase
+      .from("notifications")
+      .update({ read: true })
+      .eq("user_id", user!.id)
+      .eq("read", false);
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
   };
 
   const statusColors: Record<string, string> = {
-    "Ouvert": "text-accent border-accent/25 bg-accent/5",
+    Ouvert: "text-accent border-accent/25 bg-accent/5",
     "En cours": "text-yellow-400 border-yellow-400/20 bg-yellow-400/5",
-    "Terminé": "text-muted-foreground border-white/10 bg-white/3",
-    "Fermé": "text-muted-foreground border-white/10 bg-white/3",
+    Terminé: "text-muted-foreground border-white/10 bg-white/3",
+    Fermé: "text-muted-foreground border-white/10 bg-white/3",
     "Fonds déposés": "text-yellow-400 border-yellow-400/20 bg-yellow-400/5",
-    "Livré": "text-accent border-accent/25 bg-accent/5",
-    "Annulé": "text-destructive border-destructive/20 bg-destructive/5",
+    Livré: "text-accent border-accent/25 bg-accent/5",
+    Annulé: "text-destructive border-destructive/20 bg-destructive/5",
     "En litige": "text-destructive border-destructive/20 bg-destructive/5",
   };
 
@@ -189,23 +202,37 @@ export default function ClientDashboardPage() {
         {/* Stats */}
         <div className="grid gap-6 sm:grid-cols-3 mb-10">
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Offres actives</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+              Offres actives
+            </span>
             <div className="font-display text-3xl font-semibold text-foreground mt-2">
               {loading ? "..." : offers.length}
             </div>
-            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Transmitted to ledger</p>
+            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">
+              Transmitted to ledger
+            </p>
           </div>
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Allocated Escrow</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+              Allocated Escrow
+            </span>
             <div className="font-display text-3xl font-semibold text-foreground mt-2">
               ${totalEscrow.toLocaleString()}
             </div>
-            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Held in active contracts</p>
+            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">
+              Held in active contracts
+            </p>
           </div>
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Active Contracts</span>
-            <div className="font-display text-3xl font-semibold text-foreground mt-2">{activeContractCount}</div>
-            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Live partner engagements</p>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+              Active Contracts
+            </span>
+            <div className="font-display text-3xl font-semibold text-foreground mt-2">
+              {activeContractCount}
+            </div>
+            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">
+              Live partner engagements
+            </p>
           </div>
         </div>
 
@@ -217,7 +244,9 @@ export default function ClientDashboardPage() {
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
             <div>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">Escrow Contract Node</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">
+                Escrow Contract Node
+              </span>
               <h3 className="font-display text-2xl font-medium text-foreground mt-2 group-hover:text-accent transition-colors">
                 Créer une Offre →
               </h3>
@@ -225,7 +254,9 @@ export default function ClientDashboardPage() {
                 Publiez un cahier des charges, spécifiez les paramètres et ouvrez les candidatures.
               </p>
             </div>
-            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Sovereign allocation</div>
+            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">
+              Sovereign allocation
+            </div>
           </Link>
           <Link
             href={`/${profile?.username}/dashboard/client/offers`}
@@ -233,15 +264,20 @@ export default function ClientDashboardPage() {
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-violet-500/20 to-blue-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
             <div>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">Active Ledger Node</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">
+                Active Ledger Node
+              </span>
               <h3 className="font-display text-2xl font-medium text-foreground mt-2 group-hover:text-accent transition-colors">
                 Gérer les Offres Actives →
               </h3>
               <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
-                Examinez les propositions reçues, vérifiez les jalons d'escrow et coordonnez les livraisons.
+                Examinez les propositions reçues, vérifiez les jalons d'escrow et coordonnez les
+                livraisons.
               </p>
             </div>
-            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Sovereign coordination</div>
+            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">
+              Sovereign coordination
+            </div>
           </Link>
           <Link
             href={`/${profile?.username}/dashboard/become-business`}
@@ -249,9 +285,13 @@ export default function ClientDashboardPage() {
           >
             <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br from-fuchsia-500/15 to-violet-500/5 blur-3xl opacity-40 transition-all duration-500 group-hover:scale-125" />
             <div>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">Studio Identity</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent/80">
+                Studio Identity
+              </span>
               <h3 className="font-display text-2xl font-medium text-foreground mt-2 group-hover:text-accent transition-colors">
-                {profile?.company_name ? "Modifier le Profil Business →" : "Configurer le Profil Business →"}
+                {profile?.company_name
+                  ? "Modifier le Profil Business →"
+                  : "Configurer le Profil Business →"}
               </h3>
               <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
                 {profile?.company_name
@@ -259,36 +299,51 @@ export default function ClientDashboardPage() {
                   : "Ajoutez les informations de votre entreprise pour attirer les meilleurs talents."}
               </p>
             </div>
-            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">Company credentials</div>
+            <div className="mt-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/60">
+              Company credentials
+            </div>
           </Link>
         </div>
 
         {/* Bottom grid: Recent briefs + Recent contracts + Notifications */}
         <div className="grid gap-6 md:grid-cols-[1fr_1fr_340px]">
-
           {/* Recent Briefs */}
           <div className="glass rounded-3xl p-6 hairline border border-white/6">
             <div className="flex justify-between items-center mb-5 border-b border-white/5 pb-4">
-              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Offres Récentes</span>
-              <Link href={`/${profile?.username}/dashboard/client/offers`} className="font-mono text-[8px] uppercase tracking-wider text-accent/80 hover:text-accent transition">
+              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                Offres Récentes
+              </span>
+              <Link
+                href={`/${profile?.username}/dashboard/client/offers`}
+                className="font-mono text-[8px] uppercase tracking-wider text-accent/80 hover:text-accent transition"
+              >
                 View all →
               </Link>
             </div>
             {loading ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">Loading...</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">
+                Loading...
+              </p>
             ) : offers.length === 0 ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">Aucune offre publiée pour le moment.</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">
+                Aucune offre publiée pour le moment.
+              </p>
             ) : (
               <div className="space-y-3">
                 {offers.map((brief) => (
-                  <div key={brief.id} className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3">
+                  <div
+                    key={brief.id}
+                    className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3"
+                  >
                     <div className="min-w-0 flex-1">
                       <p className="text-xs text-foreground font-medium truncate">{brief.title}</p>
                       <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-0.5">
                         {brief.proposal_count} proposal{brief.proposal_count !== 1 ? "s" : ""}
                       </p>
                     </div>
-                    <span className={`ml-3 font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 ${statusColors[brief.status] || ""}`}>
+                    <span
+                      className={`ml-3 font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 ${statusColors[brief.status] || ""}`}
+                    >
                       {brief.status}
                     </span>
                   </div>
@@ -300,19 +355,32 @@ export default function ClientDashboardPage() {
           {/* Active Contracts */}
           <div className="glass rounded-3xl p-6 hairline border border-white/6">
             <div className="flex justify-between items-center mb-5 border-b border-white/5 pb-4">
-              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Active Contracts</span>
+              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                Active Contracts
+              </span>
             </div>
             {loading ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">Loading...</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">
+                Loading...
+              </p>
             ) : contracts.length === 0 ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">No contracts yet.</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">
+                No contracts yet.
+              </p>
             ) : (
               <div className="space-y-3">
                 {contracts.map((contract) => (
-                  <div key={contract.id} className="rounded-xl border border-white/6 bg-white/2 px-4 py-3">
+                  <div
+                    key={contract.id}
+                    className="rounded-xl border border-white/6 bg-white/2 px-4 py-3"
+                  >
                     <div className="flex justify-between items-start mb-1">
-                      <p className="text-xs text-foreground font-medium truncate flex-1 mr-2">{contract.title}</p>
-                      <span className={`font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 ${statusColors[contract.escrow_status] || ""}`}>
+                      <p className="text-xs text-foreground font-medium truncate flex-1 mr-2">
+                        {contract.title}
+                      </p>
+                      <span
+                        className={`font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 ${statusColors[contract.escrow_status] || ""}`}
+                      >
                         {contract.escrow_status}
                       </span>
                     </div>
@@ -330,7 +398,9 @@ export default function ClientDashboardPage() {
           <div className="glass rounded-3xl p-6 hairline border border-white/6">
             <div className="flex justify-between items-center mb-5 border-b border-white/5 pb-4">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Notifications</span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                  Notifications
+                </span>
                 {notifications.some((n) => !n.read) && (
                   <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                 )}
@@ -345,9 +415,13 @@ export default function ClientDashboardPage() {
               )}
             </div>
             {loading ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">Loading...</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">
+                Loading...
+              </p>
             ) : notifications.length === 0 ? (
-              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">No activity yet.</p>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground text-center py-6">
+                No activity yet.
+              </p>
             ) : (
               <div className="space-y-3">
                 {notifications.map((notif) => (
@@ -358,13 +432,19 @@ export default function ClientDashboardPage() {
                     }`}
                   >
                     <div className="flex justify-between items-baseline">
-                      <p className={`text-xs font-medium ${notif.read ? "text-foreground/70" : "text-foreground"}`}>
+                      <p
+                        className={`text-xs font-medium ${notif.read ? "text-foreground/70" : "text-foreground"}`}
+                      >
                         {notif.title}
                       </p>
-                      <span className="font-mono text-[8px] text-muted-foreground/40 ml-2 shrink-0">{timeAgo(notif.created_at)}</span>
+                      <span className="font-mono text-[8px] text-muted-foreground/40 ml-2 shrink-0">
+                        {timeAgo(notif.created_at)}
+                      </span>
                     </div>
                     {notif.content && (
-                      <p className="text-[10px] text-muted-foreground/60 mt-1 leading-relaxed line-clamp-2">{notif.content}</p>
+                      <p className="text-[10px] text-muted-foreground/60 mt-1 leading-relaxed line-clamp-2">
+                        {notif.content}
+                      </p>
                     )}
                   </div>
                 ))}

@@ -61,21 +61,30 @@ export default function MessagesPage() {
     async function loadConversations() {
       const { data, error } = await supabase
         .from("conversations")
-        .select(`
+        .select(
+          `
           id,
           last_message_at,
           participant_one,
           participant_two
-        `)
+        `,
+        )
         .or(`participant_one.eq.${user!.id},participant_two.eq.${user!.id}`)
         .order("last_message_at", { ascending: false });
 
-      if (error) { console.error(error); setLoadingConvs(false); return; }
-      if (!data || data.length === 0) { setLoadingConvs(false); return; }
+      if (error) {
+        console.error(error);
+        setLoadingConvs(false);
+        return;
+      }
+      if (!data || data.length === 0) {
+        setLoadingConvs(false);
+        return;
+      }
 
       // Fetch partner profiles
       const partnerIds = data.map((c: any) =>
-        c.participant_one === user!.id ? c.participant_two : c.participant_one
+        c.participant_one === user!.id ? c.participant_two : c.participant_one,
       );
 
       const { data: profiles } = await supabase
@@ -89,7 +98,12 @@ export default function MessagesPage() {
       const convList: Conversation[] = await Promise.all(
         data.map(async (c: any) => {
           const partnerId = c.participant_one === user!.id ? c.participant_two : c.participant_one;
-          const partner = profileMap[partnerId] || { id: partnerId, full_name: "Unknown", role: "—", avatar_url: null };
+          const partner = profileMap[partnerId] || {
+            id: partnerId,
+            full_name: "Unknown",
+            role: "—",
+            avatar_url: null,
+          };
 
           const { data: lastMsgData } = await supabase
             .from("messages")
@@ -104,7 +118,7 @@ export default function MessagesPage() {
             last_message_at: c.last_message_at,
             lastMessage: lastMsgData?.[0]?.content || "No messages yet.",
           };
-        })
+        }),
       );
 
       setConversations(convList);
@@ -117,14 +131,14 @@ export default function MessagesPage() {
 
   // Load messages when active conversation changes
   useEffect(() => {
-    if (!activeConvId) return;
+    if (!activeConvId || !user) return;
     setLoadingMsgs(true);
 
     async function loadMessages() {
       const { data, error } = await supabase
         .from("messages")
         .select("id, sender_id, content, created_at, read")
-        .eq("conversation_id", activeConvId!)
+        .eq("conversation_id", activeConvId)
         .order("created_at", { ascending: true });
 
       if (!error && data) setMessages(data);
@@ -138,7 +152,7 @@ export default function MessagesPage() {
       .from("messages")
       .update({ read: true })
       .eq("conversation_id", activeConvId)
-      .neq("sender_id", user?.id!)
+      .neq("sender_id", user.id)
       .then(() => {});
 
     // Realtime subscription for new messages
@@ -146,14 +160,21 @@ export default function MessagesPage() {
       .channel(`messages:${activeConvId}`)
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "messages", filter: `conversation_id=eq.${activeConvId}` },
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter: `conversation_id=eq.${activeConvId}`,
+        },
         (payload) => {
           setMessages((prev) => [...prev, payload.new as Message]);
-        }
+        },
       )
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [activeConvId, user]);
 
   // Scroll to bottom when messages update
@@ -183,8 +204,8 @@ export default function MessagesPage() {
         prev.map((c) =>
           c.id === activeConvId
             ? { ...c, lastMessage: text.trim(), last_message_at: new Date().toISOString() }
-            : c
-        )
+            : c,
+        ),
       );
       setText("");
     }
@@ -203,11 +224,12 @@ export default function MessagesPage() {
           <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
             Le Conduit · Quiet Chat
           </span>
-          <h1 className="font-display text-4xl font-medium text-gradient mt-1">Sovereign Messaging</h1>
+          <h1 className="font-display text-4xl font-medium text-gradient mt-1">
+            Sovereign Messaging
+          </h1>
         </div>
 
         <div className="flex-1 grid grid-cols-1 md:grid-cols-[320px_1fr] rounded-3xl glass hairline border border-white/6 overflow-hidden bg-gradient-to-br from-graphite/30 to-background/50">
-
           {/* Sidebar */}
           <div className="border-r border-white/6 flex flex-col bg-white/1">
             <div className="p-4 border-b border-white/6 font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
@@ -235,18 +257,32 @@ export default function MessagesPage() {
                       }`}
                     >
                       <div className="relative h-10 w-10 shrink-0 rounded-full border border-white/10 bg-white/5 flex items-center justify-center font-display text-xs font-semibold text-foreground">
-                        {conv.partner.avatar_url
-                          ? <img src={conv.partner.avatar_url} alt="" className="h-full w-full rounded-full object-cover" />
-                          : initials(conv.partner.full_name)}
+                        {conv.partner.avatar_url ? (
+                          <img
+                            src={conv.partner.avatar_url}
+                            alt=""
+                            className="h-full w-full rounded-full object-cover"
+                          />
+                        ) : (
+                          initials(conv.partner.full_name)
+                        )}
                         <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-[#09090b] bg-accent" />
                       </div>
                       <div className="flex-grow min-w-0">
                         <div className="flex justify-between items-baseline mb-0.5">
-                          <span className="font-display text-sm font-medium text-foreground truncate">{conv.partner.full_name}</span>
-                          <span className="font-mono text-[8px] text-muted-foreground/50 shrink-0 ml-2">{timeAgo(conv.last_message_at)}</span>
+                          <span className="font-display text-sm font-medium text-foreground truncate">
+                            {conv.partner.full_name}
+                          </span>
+                          <span className="font-mono text-[8px] text-muted-foreground/50 shrink-0 ml-2">
+                            {timeAgo(conv.last_message_at)}
+                          </span>
                         </div>
-                        <p className="font-mono text-[9px] text-accent/80 uppercase tracking-wide mb-1 truncate">{conv.partner.role}</p>
-                        <p className="text-xs text-muted-foreground/60 truncate leading-relaxed">{conv.lastMessage}</p>
+                        <p className="font-mono text-[9px] text-accent/80 uppercase tracking-wide mb-1 truncate">
+                          {conv.partner.role}
+                        </p>
+                        <p className="text-xs text-muted-foreground/60 truncate leading-relaxed">
+                          {conv.lastMessage}
+                        </p>
                       </div>
                     </button>
                   );
@@ -266,8 +302,12 @@ export default function MessagesPage() {
                 {/* Header */}
                 <div className="p-4 border-b border-white/6 flex items-center justify-between bg-white/1">
                   <div>
-                    <h3 className="font-display text-base font-medium text-foreground">{activeConv.partner.full_name}</h3>
-                    <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">{activeConv.partner.role}</p>
+                    <h3 className="font-display text-base font-medium text-foreground">
+                      {activeConv.partner.full_name}
+                    </h3>
+                    <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
+                      {activeConv.partner.role}
+                    </p>
                   </div>
                   <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-wider pl-3 pr-2 py-0.5 rounded-full border border-white/6 bg-white/3">
                     <span className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -289,7 +329,10 @@ export default function MessagesPage() {
                     <AnimatePresence>
                       {messages.map((msg) => {
                         const isMe = msg.sender_id === user?.id;
-                        const time = new Date(msg.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                        const time = new Date(msg.created_at).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        });
                         return (
                           <motion.div
                             key={msg.id}
@@ -297,14 +340,18 @@ export default function MessagesPage() {
                             animate={{ opacity: 1, y: 0 }}
                             className={`flex flex-col max-w-[70%] ${isMe ? "ml-auto items-end" : "mr-auto items-start"}`}
                           >
-                            <div className={`rounded-2xl px-4 py-3 text-xs leading-relaxed ${
-                              isMe
-                                ? "bg-white text-black font-medium rounded-tr-none"
-                                : "glass border border-white/8 text-foreground/90 rounded-tl-none bg-white/4"
-                            }`}>
+                            <div
+                              className={`rounded-2xl px-4 py-3 text-xs leading-relaxed ${
+                                isMe
+                                  ? "bg-white text-black font-medium rounded-tr-none"
+                                  : "glass border border-white/8 text-foreground/90 rounded-tl-none bg-white/4"
+                              }`}
+                            >
                               {msg.content}
                             </div>
-                            <span className="font-mono text-[8px] text-muted-foreground/45 mt-1">{time}</span>
+                            <span className="font-mono text-[8px] text-muted-foreground/45 mt-1">
+                              {time}
+                            </span>
                           </motion.div>
                         );
                       })}
@@ -314,7 +361,10 @@ export default function MessagesPage() {
                 </div>
 
                 {/* Input */}
-                <form onSubmit={handleSend} className="p-4 border-t border-white/6 bg-white/1 flex items-center gap-3">
+                <form
+                  onSubmit={handleSend}
+                  className="p-4 border-t border-white/6 bg-white/1 flex items-center gap-3"
+                >
                   <input
                     type="text"
                     value={text}
@@ -330,8 +380,18 @@ export default function MessagesPage() {
                     {sending ? (
                       <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-black border-t-transparent" />
                     ) : (
-                      <svg className="h-4 w-4 transform rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9-2-9-15-9 15 9-2zm0 0v-8" />
+                      <svg
+                        className="h-4 w-4 transform rotate-90"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 19l9-2-9-15-9 15 9-2zm0 0v-8"
+                        />
                       </svg>
                     )}
                   </button>

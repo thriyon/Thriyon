@@ -58,7 +58,7 @@ export default function BecomeFreelancerPage() {
 
   const toggleSkill = (skill: string) => {
     setSelectedSkills((prev) =>
-      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
+      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill],
     );
   };
 
@@ -104,7 +104,10 @@ export default function BecomeFreelancerPage() {
       // 2 — Create first service (optional)
       if (!skipService) {
         const tags = serviceTags
-          ? serviceTags.split(",").map((t) => t.trim()).filter(Boolean)
+          ? serviceTags
+              .split(",")
+              .map((t) => t.trim())
+              .filter(Boolean)
           : [];
         const { error: svcErr } = await supabase.from("freelancer_services").insert({
           freelancer_id: user.id,
@@ -168,7 +171,6 @@ export default function BecomeFreelancerPage() {
         {/* Card */}
         <div className="rounded-3xl border border-white/8 bg-gradient-to-b from-graphite/60 to-background p-8 md:p-10 grain glow">
           <AnimatePresence mode="wait">
-
             {/* Step 1 */}
             {step === 1 && (
               <motion.div
@@ -266,19 +268,25 @@ export default function BecomeFreelancerPage() {
                 {/* Category + Price + Delivery in grid */}
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div className="space-y-1.5 sm:col-span-1">
-                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">Catégorie</label>
+                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                      Catégorie
+                    </label>
                     <select
                       value={serviceCategory}
                       onChange={(e) => setServiceCategory(e.target.value)}
                       className="w-full bg-white/5 border border-white/12 rounded-2xl px-4 py-3.5 text-sm text-foreground transition-all focus:outline-none focus:border-accent/40 appearance-none"
                     >
                       {CATEGORIES.map((c) => (
-                        <option key={c.value} value={c.value}>{c.icon} {c.label}</option>
+                        <option key={c.value} value={c.value}>
+                          {c.icon} {c.label}
+                        </option>
                       ))}
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">Prix (USD)</label>
+                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                      Prix (USD)
+                    </label>
                     <input
                       type="number"
                       min={10}
@@ -291,7 +299,9 @@ export default function BecomeFreelancerPage() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">Délai (jours)</label>
+                    <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                      Délai (jours)
+                    </label>
                     <input
                       type="number"
                       min={1}
@@ -314,7 +324,8 @@ export default function BecomeFreelancerPage() {
                     <span className="font-display text-xl text-accent">${rate}/h</span>
                   </div>
                   <p className="text-[10px] text-muted-foreground/60 mb-4">
-                    Calculé sur la base de {serviceDelivery * 8 || 0} heures de travail ({serviceDelivery || 0} jours × 8h). Vous pouvez l'ajuster.
+                    Calculé sur la base de {serviceDelivery * 8 || 0} heures de travail (
+                    {serviceDelivery || 0} jours × 8h). Vous pouvez l'ajuster.
                   </p>
                   <input
                     type="range"
@@ -329,14 +340,16 @@ export default function BecomeFreelancerPage() {
                     className="w-full accent-[oklch(0.7_0.18_295)]"
                   />
                   <div className="flex justify-between font-mono text-[9px] text-muted-foreground/50 mt-1">
-                    <span>$20</span><span>$500</span>
+                    <span>$20</span>
+                    <span>$500</span>
                   </div>
                 </div>
 
-
                 {/* Description */}
                 <div className="space-y-1.5">
-                  <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">Description</label>
+                  <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                    Description
+                  </label>
                   <textarea
                     value={serviceDesc}
                     onChange={(e) => setServiceDesc(e.target.value)}
@@ -348,7 +361,9 @@ export default function BecomeFreelancerPage() {
 
                 {/* Tags */}
                 <div className="space-y-1.5">
-                  <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">Tags (séparés par virgule)</label>
+                  <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/90 pl-1">
+                    Tags (séparés par virgule)
+                  </label>
                   <input
                     type="text"
                     value={serviceTags}
@@ -399,7 +414,6 @@ export default function BecomeFreelancerPage() {
                 </button>
               </motion.div>
             )}
-
           </AnimatePresence>
         </div>
       </motion.div>

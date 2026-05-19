@@ -75,7 +75,9 @@ export default function ClientOffersPage() {
             <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">
               Client Workspace · Project Ledgers
             </span>
-            <h1 className="font-display text-4xl font-medium text-gradient mt-1">Offres & Contrats Escrow</h1>
+            <h1 className="font-display text-4xl font-medium text-gradient mt-1">
+              Offres & Contrats Escrow
+            </h1>
             <p className="text-xs text-muted-foreground/80 mt-1">
               Gérez vos offres de projet, libérations d'escrow et engagements partenaires.
             </p>
@@ -111,7 +113,9 @@ export default function ClientOffersPage() {
                       <span className="font-mono text-[9px] uppercase tracking-wider pl-2.5 pr-2 py-0.5 rounded-full border border-accent/25 bg-accent/5 text-accent">
                         {proj.category}
                       </span>
-                      <span className="font-mono text-[9px] text-muted-foreground/70">{proj.posted}</span>
+                      <span className="font-mono text-[9px] text-muted-foreground/70">
+                        {proj.posted}
+                      </span>
                     </div>
 
                     {/* Title */}
@@ -140,12 +144,18 @@ export default function ClientOffersPage() {
                   {/* Financial Meta footer */}
                   <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                     <div>
-                      <div className="font-mono text-[8px] uppercase text-muted-foreground/50">Project Escrow Value</div>
+                      <div className="font-mono text-[8px] uppercase text-muted-foreground/50">
+                        Project Escrow Value
+                      </div>
                       <div className="font-display text-sm font-semibold mt-0.5">{proj.budget}</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-mono text-[8px] uppercase text-muted-foreground/50">Proposals</div>
-                      <div className="font-display text-sm font-semibold mt-0.5">{proj.proposals} active</div>
+                      <div className="font-mono text-[8px] uppercase text-muted-foreground/50">
+                        Proposals
+                      </div>
+                      <div className="font-display text-sm font-semibold mt-0.5">
+                        {proj.proposals} active
+                      </div>
                     </div>
                   </div>
                 </motion.div>

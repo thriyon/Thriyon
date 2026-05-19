@@ -110,7 +110,7 @@ export default function FreelancerDashboardPage() {
           setTotalEarnings(
             data
               .filter((c: any) => c.escrow_status === "Terminé")
-              .reduce((acc: number, c: any) => acc + (c.escrow_amount || 0), 0)
+              .reduce((acc: number, c: any) => acc + (c.escrow_amount || 0), 0),
           );
         }
       });
@@ -136,7 +136,9 @@ export default function FreelancerDashboardPage() {
   const handleToggleService = async (serviceId: string, currentStatus: string) => {
     const newStatus = currentStatus === "Actif" ? "Inactif" : "Actif";
     await supabase.from("freelancer_services").update({ status: newStatus }).eq("id", serviceId);
-    setMyServices((prev) => prev.map((s) => (s.id === serviceId ? { ...s, status: newStatus } : s)));
+    setMyServices((prev) =>
+      prev.map((s) => (s.id === serviceId ? { ...s, status: newStatus } : s)),
+    );
   };
 
   const handleDeleteService = async (serviceId: string) => {
@@ -168,23 +170,37 @@ export default function FreelancerDashboardPage() {
         {/* Stats Row */}
         <div className="grid gap-6 sm:grid-cols-3 mb-10">
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Active Contracts</span>
-            <div className="font-display text-3xl font-semibold text-foreground mt-2">{activeContracts}</div>
-            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Live escrow sprints</p>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+              Active Contracts
+            </span>
+            <div className="font-display text-3xl font-semibold text-foreground mt-2">
+              {activeContracts}
+            </div>
+            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">
+              Live escrow sprints
+            </p>
           </div>
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Cumulative Earnings</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+              Cumulative Earnings
+            </span>
             <div className="font-display text-3xl font-semibold text-foreground mt-2">
               ${totalEarnings.toLocaleString()}
             </div>
-            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Escrow released</p>
+            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">
+              Escrow released
+            </p>
           </div>
           <div className="glass rounded-2xl p-6 hairline border border-white/6 bg-white/1">
-            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Current Rate</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+              Current Rate
+            </span>
             <div className="font-display text-3xl font-semibold text-foreground mt-2">
               ${profile?.rate || 0}/hr
             </div>
-            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">Sovereign hourly tag</p>
+            <p className="font-mono text-[8px] uppercase text-muted-foreground/50 mt-1">
+              Sovereign hourly tag
+            </p>
           </div>
         </div>
 
@@ -220,26 +236,45 @@ export default function FreelancerDashboardPage() {
             <AnimatePresence mode="wait">
               {/* Open Offers Tab */}
               {activeTab === "offers" && (
-                <motion.div key="offers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div
+                  key="offers"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
                   {loadingJobs ? (
-                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">Synchronizing ledger...</p>
+                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      Synchronizing ledger...
+                    </p>
                   ) : openJobs.length === 0 ? (
-                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">Aucune offre disponible pour le moment.</p>
+                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      Aucune offre disponible pour le moment.
+                    </p>
                   ) : (
                     <div className="space-y-6">
                       {openJobs.map((job) => (
-                        <div key={job.id} className="border-b border-white/4 pb-6 last:border-0 last:pb-0">
+                        <div
+                          key={job.id}
+                          className="border-b border-white/4 pb-6 last:border-0 last:pb-0"
+                        >
                           <div className="flex justify-between items-start mb-2">
-                            <h4 className="font-display text-base font-medium text-foreground">{job.title}</h4>
+                            <h4 className="font-display text-base font-medium text-foreground">
+                              {job.title}
+                            </h4>
                             <span className="font-mono text-[9px] uppercase tracking-wider pl-2.5 pr-2 py-0.5 rounded border border-accent/25 bg-accent/5 text-accent shrink-0 ml-3">
                               {job.category}
                             </span>
                           </div>
-                          <p className="text-xs text-muted-foreground/80 leading-relaxed line-clamp-2 mb-4">{job.description}</p>
+                          <p className="text-xs text-muted-foreground/80 leading-relaxed line-clamp-2 mb-4">
+                            {job.description}
+                          </p>
                           {job.tags.length > 0 && (
                             <div className="flex flex-wrap gap-1.5 mb-4">
                               {job.tags.map((t) => (
-                                <span key={t} className="font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 rounded border border-white/8 text-muted-foreground/60">
+                                <span
+                                  key={t}
+                                  className="font-mono text-[8px] uppercase tracking-wider px-2 py-0.5 rounded border border-white/8 text-muted-foreground/60"
+                                >
                                   {t}
                                 </span>
                               ))}
@@ -247,8 +282,12 @@ export default function FreelancerDashboardPage() {
                           )}
                           <div className="flex justify-between items-center">
                             <div>
-                              <span className="font-mono text-[8px] uppercase text-muted-foreground/50">Budget</span>
-                              <div className="font-display text-sm font-semibold mt-0.5">{job.budget}</div>
+                              <span className="font-mono text-[8px] uppercase text-muted-foreground/50">
+                                Budget
+                              </span>
+                              <div className="font-display text-sm font-semibold mt-0.5">
+                                {job.budget}
+                              </div>
                             </div>
                             <Link
                               href={`/${profile?.username}/dashboard/freelancer/proposals/new?job=${job.id}`}
@@ -266,12 +305,21 @@ export default function FreelancerDashboardPage() {
 
               {/* My Services Tab */}
               {activeTab === "services" && (
-                <motion.div key="services" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div
+                  key="services"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
                   {loadingServices ? (
-                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">Loading services...</p>
+                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      Loading services...
+                    </p>
                   ) : myServices.length === 0 ? (
                     <div className="text-center py-12">
-                      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">No services listed yet.</p>
+                      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                        No services listed yet.
+                      </p>
                       <Link
                         href={`/${profile?.username}/dashboard/freelancer/services/new`}
                         className="rounded-full bg-white px-6 py-2.5 text-xs font-semibold text-black hover:bg-white/90 transition"
@@ -282,11 +330,18 @@ export default function FreelancerDashboardPage() {
                   ) : (
                     <div className="space-y-4">
                       {myServices.map((service) => (
-                        <div key={service.id} className="flex items-center justify-between rounded-2xl border border-white/6 bg-white/2 p-5">
+                        <div
+                          key={service.id}
+                          className="flex items-center justify-between rounded-2xl border border-white/6 bg-white/2 p-5"
+                        >
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className={`h-1.5 w-1.5 rounded-full ${service.status === "Actif" ? "bg-accent" : "bg-muted-foreground/30"}`} />
-                              <h4 className="font-display text-sm font-medium text-foreground truncate">{service.title}</h4>
+                              <span
+                                className={`h-1.5 w-1.5 rounded-full ${service.status === "Actif" ? "bg-accent" : "bg-muted-foreground/30"}`}
+                              />
+                              <h4 className="font-display text-sm font-medium text-foreground truncate">
+                                {service.title}
+                              </h4>
                             </div>
                             <div className="flex gap-4 font-mono text-[8px] uppercase tracking-wider text-muted-foreground/60">
                               <span>${service.price}</span>
@@ -317,22 +372,34 @@ export default function FreelancerDashboardPage() {
 
               {/* My Proposals Tab */}
               {activeTab === "proposals" && (
-                <motion.div key="proposals" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <motion.div
+                  key="proposals"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
                   {loadingProposals ? (
-                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">Loading proposals...</p>
+                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      Loading proposals...
+                    </p>
                   ) : myProposals.length === 0 ? (
-                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">No proposals submitted yet.</p>
+                    <p className="text-center py-12 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      No proposals submitted yet.
+                    </p>
                   ) : (
                     <div className="space-y-4">
                       {myProposals.map((proposal) => {
                         const statusColors: Record<string, string> = {
                           "En attente": "text-yellow-400 border-yellow-400/20 bg-yellow-400/5",
-                          "Accepté": "text-accent border-accent/20 bg-accent/5",
-                          "Refusé": "text-destructive border-destructive/20 bg-destructive/5",
-                          "Retiré": "text-muted-foreground border-white/10 bg-white/3",
+                          Accepté: "text-accent border-accent/20 bg-accent/5",
+                          Refusé: "text-destructive border-destructive/20 bg-destructive/5",
+                          Retiré: "text-muted-foreground border-white/10 bg-white/3",
                         };
                         return (
-                          <div key={proposal.id} className="flex items-center justify-between rounded-2xl border border-white/6 bg-white/2 p-5">
+                          <div
+                            key={proposal.id}
+                            className="flex items-center justify-between rounded-2xl border border-white/6 bg-white/2 p-5"
+                          >
                             <div>
                               <h4 className="font-display text-sm font-medium text-foreground mb-1">
                                 {proposal.freelance_jobs?.title || "Unknown Offer"}
@@ -341,7 +408,9 @@ export default function FreelancerDashboardPage() {
                                 Bid: ${proposal.bid_amount.toLocaleString()}
                               </div>
                             </div>
-                            <span className={`font-mono text-[8px] uppercase tracking-wider px-2.5 py-1 rounded-full border ${statusColors[proposal.status] || statusColors["En attente"]}`}>
+                            <span
+                              className={`font-mono text-[8px] uppercase tracking-wider px-2.5 py-1 rounded-full border ${statusColors[proposal.status] || statusColors["En attente"]}`}
+                            >
                               {proposal.status}
                             </span>
                           </div>
@@ -357,8 +426,12 @@ export default function FreelancerDashboardPage() {
           {/* Right sidebar — Rate modifier */}
           <div className="space-y-6">
             <div className="glass rounded-3xl p-8 hairline border border-white/8 bg-gradient-to-b from-graphite/40 to-background grain">
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-muted-foreground">Rate Tag Persistency</span>
-              <h3 className="font-display text-2xl font-medium text-gradient mt-2">Adjust Hourly Escrow</h3>
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-muted-foreground">
+                Rate Tag Persistency
+              </span>
+              <h3 className="font-display text-2xl font-medium text-gradient mt-2">
+                Adjust Hourly Escrow
+              </h3>
               <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
                 Updates your sovereign profile entry instantly across the talent indices.
               </p>
@@ -369,7 +442,9 @@ export default function FreelancerDashboardPage() {
                     Current Rate ($/hr)
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 text-xs">$</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 text-xs">
+                      $
+                    </span>
                     <input
                       type="number"
                       required
@@ -404,13 +479,21 @@ export default function FreelancerDashboardPage() {
             </div>
 
             <div className="glass rounded-3xl p-6 hairline border border-white/6">
-              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Quick Links</span>
+              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                Quick Links
+              </span>
               <div className="mt-4 space-y-2">
-                <Link href={`/${profile?.username}/dashboard/messages`} className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3 text-xs text-foreground hover:bg-white/5 transition">
+                <Link
+                  href={`/${profile?.username}/dashboard/messages`}
+                  className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3 text-xs text-foreground hover:bg-white/5 transition"
+                >
                   <span>Le Conduit Messages</span>
                   <span className="text-muted-foreground">→</span>
                 </Link>
-                <Link href="/talent" className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3 text-xs text-foreground hover:bg-white/5 transition">
+                <Link
+                  href="/talent"
+                  className="flex items-center justify-between rounded-xl border border-white/6 bg-white/2 px-4 py-3 text-xs text-foreground hover:bg-white/5 transition"
+                >
                   <span>View Talent Registry</span>
                   <span className="text-muted-foreground">→</span>
                 </Link>

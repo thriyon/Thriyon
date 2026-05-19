@@ -8,7 +8,12 @@ import { useAuth } from "@/hooks/useAuth";
 
 const CATEGORIES = [
   { value: "Brand", label: "Brand Identity", icon: "◆", desc: "Logo, visual system, strategy" },
-  { value: "Product", label: "Product Design", icon: "⬡", desc: "UI/UX, prototyping, design system" },
+  {
+    value: "Product",
+    label: "Product Design",
+    icon: "⬡",
+    desc: "UI/UX, prototyping, design system",
+  },
   { value: "Campaign", label: "3D & Motion", icon: "◎", desc: "Animation, VFX, 3D" },
   { value: "Engineering", label: "Engineering", icon: "⟡", desc: "Web app, mobile, backend" },
   { value: "Editorial", label: "Editorial & Type", icon: "◈", desc: "Publication, typography" },
@@ -56,7 +61,10 @@ export default function NewServicePage() {
     setSaving(true);
     setError(null);
 
-    const tagsArray = tags.split(",").map((t) => t.trim()).filter((t) => t.length > 0);
+    const tagsArray = tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0);
 
     try {
       const { error: insertError } = await supabase.from("freelancer_services").insert({
@@ -182,8 +190,12 @@ export default function NewServicePage() {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
                         >
-                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.title.title}</div>
-                          <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.title.body}</p>
+                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                            {ONBOARDING_TIPS.title.title}
+                          </div>
+                          <p className="text-xs text-muted-foreground/80">
+                            {ONBOARDING_TIPS.title.body}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -216,7 +228,9 @@ export default function NewServicePage() {
                           }`}
                         >
                           <span className="text-base">{cat.icon}</span>
-                          <div className={`font-mono text-[9px] uppercase tracking-wider ${category === cat.value ? "text-accent" : "text-foreground/80"}`}>
+                          <div
+                            className={`font-mono text-[9px] uppercase tracking-wider ${category === cat.value ? "text-accent" : "text-foreground/80"}`}
+                          >
                             {cat.label}
                           </div>
                         </button>
@@ -240,7 +254,9 @@ export default function NewServicePage() {
                         </button>
                       </div>
                       <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 text-sm">$</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 text-sm">
+                          $
+                        </span>
                         <input
                           type="number"
                           required
@@ -269,7 +285,9 @@ export default function NewServicePage() {
                           onChange={(e) => setDeliveryDays(Number(e.target.value) || 0)}
                           className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-accent/40"
                         />
-                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 text-xs font-mono">jours</span>
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 text-xs font-mono">
+                          jours
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -282,7 +300,9 @@ export default function NewServicePage() {
                       </label>
                       <button
                         type="button"
-                        onClick={() => setActiveTip(activeTip === "description" ? null : "description")}
+                        onClick={() =>
+                          setActiveTip(activeTip === "description" ? null : "description")
+                        }
                         className="font-mono text-[8px] uppercase tracking-widest text-accent/60 hover:text-accent"
                       >
                         Conseil ✦

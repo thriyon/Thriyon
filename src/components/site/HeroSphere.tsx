@@ -6,7 +6,10 @@ import { MeshDistortMaterial, Float, Environment } from "@react-three/drei";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 
-class ErrorBoundary extends Component<{children: ReactNode, fallback: ReactNode}, {hasError: boolean}> {
+class ErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
   constructor(props: any) {
     super(props);
     this.state = { hasError: false };

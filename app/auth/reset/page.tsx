@@ -56,13 +56,24 @@ export default function ResetPasswordPage() {
           {sent ? (
             <div className="text-center space-y-4">
               <div className="mx-auto w-12 h-12 rounded-full bg-violet-500/20 flex items-center justify-center">
-                <svg className="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  className="w-6 h-6 text-violet-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
               </div>
               <h2 className="text-xl font-semibold text-white">Email envoyé !</h2>
               <p className="text-sm text-white/50">
-                Si un compte existe pour <span className="text-white/80">{email}</span>, vous recevrez un lien de réinitialisation dans quelques instants.
+                Si un compte existe pour <span className="text-white/80">{email}</span>, vous
+                recevrez un lien de réinitialisation dans quelques instants.
               </p>
               <button
                 onClick={() => router.push("/auth/login")}
@@ -95,9 +106,7 @@ export default function ResetPasswordPage() {
                   />
                 </div>
 
-                {error && (
-                  <p className="text-xs text-red-400 text-center">{error}</p>
-                )}
+                {error && <p className="text-xs text-red-400 text-center">{error}</p>}
 
                 <button
                   type="submit"
@@ -109,7 +118,10 @@ export default function ResetPasswordPage() {
               </form>
 
               <p className="mt-6 text-center text-xs text-white/40">
-                <Link href="/auth/login" className="text-violet-400 hover:text-violet-300 transition">
+                <Link
+                  href="/auth/login"
+                  className="text-violet-400 hover:text-violet-300 transition"
+                >
                   ← Retour à la connexion
                 </Link>
               </p>

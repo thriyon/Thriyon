@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export function Footer() {
   const pathname = usePathname();
-  
+
   if (pathname?.includes("/dashboard")) return null;
 
   return (
@@ -17,28 +17,37 @@ export function Footer() {
               THRIYON
             </div>
             <p className="mt-6 max-w-sm text-sm text-muted-foreground">
-              An operating system for the world's most ambitious creative
-              practitioners. Invite-only. Quietly powerful.
+              An operating system for the world's most ambitious creative practitioners.
+              Invite-only. Quietly powerful.
             </p>
           </div>
-          <FooterCol title="Platform" items={[
-            ["Talent", "/talent"],
-            ["Projects", "/projects"],
-            ["Showcase", "/showcase"],
-            ["Pricing", "/pricing"],
-          ]} />
-          <FooterCol title="Studio" items={[
-            ["About", "/about"],
-            ["Method", "/how-it-works"],
-            ["Journal", "/journal"],
-            ["Contact", "/contact"],
-          ]} />
-          <FooterCol title="System" items={[
-            ["Sign in", "/contact"],
-            ["Request access", "/contact"],
-            ["Press", "/contact"],
-            ["Legal", "/contact"],
-          ]} />
+          <FooterCol
+            title="Platform"
+            items={[
+              ["Talent", "/talent"],
+              ["Projects", "/projects"],
+              ["Showcase", "/showcase"],
+              ["Pricing", "/pricing"],
+            ]}
+          />
+          <FooterCol
+            title="Studio"
+            items={[
+              ["About", "/about"],
+              ["Method", "/how-it-works"],
+              ["Journal", "/journal"],
+              ["Contact", "/contact"],
+            ]}
+          />
+          <FooterCol
+            title="System"
+            items={[
+              ["Sign in", "/contact"],
+              ["Request access", "/contact"],
+              ["Press", "/contact"],
+              ["Legal", "/contact"],
+            ]}
+          />
         </div>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/6 pt-6 text-xs text-muted-foreground md:flex-row">

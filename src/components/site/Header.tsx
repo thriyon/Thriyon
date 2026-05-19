@@ -94,15 +94,24 @@ export function Header() {
                   <Avatar className="h-9 w-9 border border-white/10 cursor-pointer hover:border-white/30 transition-colors">
                     <AvatarImage src={profile?.avatar_url || ""} />
                     <AvatarFallback className="bg-white/5 text-xs text-foreground">
-                      {profile?.full_name?.charAt(0)?.toUpperCase() || profile?.username?.charAt(0)?.toUpperCase() || "U"}
+                      {profile?.full_name?.charAt(0)?.toUpperCase() ||
+                        profile?.username?.charAt(0)?.toUpperCase() ||
+                        "U"}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-[#0A0A0A] border border-white/10 text-foreground">
+                <DropdownMenuContent
+                  align="end"
+                  className="w-56 bg-[#0A0A0A] border border-white/10 text-foreground"
+                >
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{profile?.full_name || profile?.username}</p>
-                      <p className="text-xs leading-none text-muted-foreground">@{profile?.username}</p>
+                      <p className="text-sm font-medium leading-none">
+                        {profile?.full_name || profile?.username}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        @{profile?.username}
+                      </p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator className="bg-white/10" />
@@ -125,7 +134,10 @@ export function Header() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-white/10" />
-                  <DropdownMenuItem onClick={() => signOut()} className="focus:bg-white/5 text-red-400 focus:text-red-400 cursor-pointer">
+                  <DropdownMenuItem
+                    onClick={() => signOut()}
+                    className="focus:bg-white/5 text-red-400 focus:text-red-400 cursor-pointer"
+                  >
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Se déconnecter</span>
                   </DropdownMenuItem>
@@ -182,7 +194,10 @@ export function Header() {
                   Dashboard
                 </Link>
                 <button
-                  onClick={() => { signOut(); setOpen(false); }}
+                  onClick={() => {
+                    signOut();
+                    setOpen(false);
+                  }}
                   className="mt-2 rounded-lg bg-white px-3 py-2 text-center text-sm font-medium text-black cursor-pointer"
                 >
                   Sign out

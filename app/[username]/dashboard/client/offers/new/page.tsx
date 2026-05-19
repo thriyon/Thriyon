@@ -7,15 +7,47 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 
 const CATEGORIES = [
-  { value: "Brand", label: "Brand Identity", icon: "◆", desc: "Logo, visual system, brand strategy" },
-  { value: "Product", label: "Product Design", icon: "⬡", desc: "UI/UX, prototyping, design system" },
-  { value: "Campaign", label: "3D & Motion", icon: "◎", desc: "Animation, visual effects, 3D renders" },
-  { value: "Engineering", label: "Engineering", icon: "⟡", desc: "Web app, mobile, backend, cloud" },
-  { value: "Editorial", label: "Editorial & Type", icon: "◈", desc: "Publication, typography, content" },
+  {
+    value: "Brand",
+    label: "Brand Identity",
+    icon: "◆",
+    desc: "Logo, visual system, brand strategy",
+  },
+  {
+    value: "Product",
+    label: "Product Design",
+    icon: "⬡",
+    desc: "UI/UX, prototyping, design system",
+  },
+  {
+    value: "Campaign",
+    label: "3D & Motion",
+    icon: "◎",
+    desc: "Animation, visual effects, 3D renders",
+  },
+  {
+    value: "Engineering",
+    label: "Engineering",
+    icon: "⟡",
+    desc: "Web app, mobile, backend, cloud",
+  },
+  {
+    value: "Editorial",
+    label: "Editorial & Type",
+    icon: "◈",
+    desc: "Publication, typography, content",
+  },
   { value: "Sound", label: "Sound & Music", icon: "◉", desc: "Composition, sound design, mixing" },
 ];
 
-const BUDGET_SUGGESTIONS = ["< $1K", "$1K – $5K", "$5K – $20K", "$20K – $50K", "$50K+", "Open to discuss"];
+const BUDGET_SUGGESTIONS = [
+  "< $1K",
+  "$1K – $5K",
+  "$5K – $20K",
+  "$20K – $50K",
+  "$50K+",
+  "Open to discuss",
+];
 
 const ONBOARDING_TIPS: Record<string, { title: string; body: string }> = {
   title: {
@@ -59,7 +91,7 @@ function NewBriefForm() {
   useEffect(() => {
     if (targetTalent) {
       setDescription(
-        `Initiating a sovereign contract offer specifically for practitioner: @${targetTalent}.\n\n[Outline your project scope, constraints, and delivery timelines here...]`
+        `Initiating a sovereign contract offer specifically for practitioner: @${targetTalent}.\n\n[Outline your project scope, constraints, and delivery timelines here...]`,
       );
     }
   }, [targetTalent]);
@@ -79,7 +111,10 @@ function NewBriefForm() {
     setError("");
 
     const tagsArray = tagInput
-      ? tagInput.split(",").map((t) => t.trim()).filter((t) => t.length > 0)
+      ? tagInput
+          .split(",")
+          .map((t) => t.trim())
+          .filter((t) => t.length > 0)
       : [];
 
     try {
@@ -208,8 +243,12 @@ function NewBriefForm() {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
                         >
-                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.title.title}</div>
-                          <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.title.body}</p>
+                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                            {ONBOARDING_TIPS.title.title}
+                          </div>
+                          <p className="text-xs text-muted-foreground/80">
+                            {ONBOARDING_TIPS.title.body}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -246,8 +285,12 @@ function NewBriefForm() {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
                         >
-                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.category.title}</div>
-                          <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.category.body}</p>
+                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                            {ONBOARDING_TIPS.category.title}
+                          </div>
+                          <p className="text-xs text-muted-foreground/80">
+                            {ONBOARDING_TIPS.category.body}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -264,7 +307,9 @@ function NewBriefForm() {
                           }`}
                         >
                           <span className="text-base">{cat.icon}</span>
-                          <div className={`font-mono text-[9px] uppercase tracking-wider ${category === cat.value ? "text-accent" : "text-foreground/80"}`}>
+                          <div
+                            className={`font-mono text-[9px] uppercase tracking-wider ${category === cat.value ? "text-accent" : "text-foreground/80"}`}
+                          >
                             {cat.label}
                           </div>
                         </button>
@@ -294,8 +339,12 @@ function NewBriefForm() {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
                         >
-                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.budget.title}</div>
-                          <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.budget.body}</p>
+                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                            {ONBOARDING_TIPS.budget.title}
+                          </div>
+                          <p className="text-xs text-muted-foreground/80">
+                            {ONBOARDING_TIPS.budget.body}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -305,8 +354,14 @@ function NewBriefForm() {
                       onFocus={() => setActiveTip("budget")}
                       className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-accent/40"
                     >
-                      <option value="" disabled>Sélectionner...</option>
-                      {BUDGET_SUGGESTIONS.map(b => <option key={b} value={b} className="bg-background">{b}</option>)}
+                      <option value="" disabled>
+                        Sélectionner...
+                      </option>
+                      {BUDGET_SUGGESTIONS.map((b) => (
+                        <option key={b} value={b} className="bg-background">
+                          {b}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -318,7 +373,9 @@ function NewBriefForm() {
                       </label>
                       <button
                         type="button"
-                        onClick={() => setActiveTip(activeTip === "description" ? null : "description")}
+                        onClick={() =>
+                          setActiveTip(activeTip === "description" ? null : "description")
+                        }
                         className="font-mono text-[8px] uppercase tracking-widest text-accent/60 hover:text-accent"
                       >
                         Conseil ✦
@@ -332,8 +389,12 @@ function NewBriefForm() {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
                         >
-                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.description.title}</div>
-                          <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.description.body}</p>
+                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                            {ONBOARDING_TIPS.description.title}
+                          </div>
+                          <p className="text-xs text-muted-foreground/80">
+                            {ONBOARDING_TIPS.description.body}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -370,8 +431,12 @@ function NewBriefForm() {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-3 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3"
                         >
-                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">{ONBOARDING_TIPS.tags.title}</div>
-                          <p className="text-xs text-muted-foreground/80">{ONBOARDING_TIPS.tags.body}</p>
+                          <div className="font-mono text-[8px] uppercase tracking-widest text-accent mb-1">
+                            {ONBOARDING_TIPS.tags.title}
+                          </div>
+                          <p className="text-xs text-muted-foreground/80">
+                            {ONBOARDING_TIPS.tags.body}
+                          </p>
                         </motion.div>
                       )}
                     </AnimatePresence>

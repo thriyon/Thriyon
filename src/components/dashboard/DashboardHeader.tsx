@@ -56,13 +56,14 @@ export function DashboardHeader({ username }: DashboardHeaderProps) {
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-[#0A0A0A] border border-white/10 text-foreground">
+          <DropdownMenuContent
+            align="end"
+            className="w-56 bg-[#0A0A0A] border border-white/10 text-foreground"
+          >
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">{profile?.full_name || username}</p>
-                <p className="text-xs leading-none text-muted-foreground">
-                  @{username}
-                </p>
+                <p className="text-xs leading-none text-muted-foreground">@{username}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-white/10" />
@@ -73,7 +74,9 @@ export function DashboardHeader({ username }: DashboardHeaderProps) {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="focus:bg-white/5 cursor-pointer">
-              <Link href={`/${username}/dashboard/${profile?.role === "client" ? "client" : "freelancer"}`}>
+              <Link
+                href={`/${username}/dashboard/${profile?.role === "client" ? "client" : "freelancer"}`}
+              >
                 <Search className="mr-2 h-4 w-4" />
                 <span>Dashboard</span>
               </Link>
@@ -85,7 +88,10 @@ export function DashboardHeader({ username }: DashboardHeaderProps) {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuItem onClick={handleSignOut} className="focus:bg-white/5 text-red-500 focus:text-red-500 cursor-pointer">
+            <DropdownMenuItem
+              onClick={handleSignOut}
+              className="focus:bg-white/5 text-red-500 focus:text-red-500 cursor-pointer"
+            >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Se déconnecter</span>
             </DropdownMenuItem>
