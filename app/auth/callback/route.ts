@@ -47,10 +47,10 @@ export async function GET(request: Request) {
         .eq("id", data.user.id)
         .single();
 
-      // If no profile, or onboarding not done, or no role assigned → go onboard
-      if (!profile || !profile.onboarding_completed || !profile.role) {
+      // If no profile, onboarding not done, no role assigned, OR username missing → go onboard
+      if (!profile || !profile.onboarding_completed || !profile.role || !profile.username) {
         response = NextResponse.redirect(new URL("/onboarding", requestUrl.origin));
-        // Need to re-apply cookies to the NEW response object!
+        // Re-apply cookies to the NEW response object
         const allCookies = cookieStore.getAll();
         allCookies.forEach((cookie) => {
           response.cookies.set({ ...cookie, httpOnly: false });
@@ -58,11 +58,11 @@ export async function GET(request: Request) {
         return response;
       }
 
-      // Onboarded → go to correct dashboard
+      // Fully onboarded → go to correct dashboard
       if (profile.role === "client") {
-        response = NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/client`, requestUrl.origin));
+        response = NextResponse.redirect(new URL(`/${profile.username}/dashboard/client`, requestUrl.origin));
       } else {
-        response = NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/freelancer`, requestUrl.origin));
+        response = NextResponse.redirect(new URL(`/${profile.username}/dashboard/freelancer`, requestUrl.origin));
       }
       
       const allCookies = cookieStore.getAll();
