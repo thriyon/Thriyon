@@ -18,18 +18,18 @@ export default function SecurityLayout({ children }: { children: React.ReactNode
         router.push("/auth/login");
         return;
       }
-      
+
       const routeUsername = params?.username as string;
-      if (profile && routeUsername && profile.username !== routeUsername) {
-        // Prevent cross-user dashboard access by redirecting the user to their own dashboard
+      if (profile && routeUsername && profile.username && profile.username !== routeUsername) {
+        // Prevent cross-user dashboard access
         const myDashboard = profile.role === "client" ? "client" : "freelancer";
         router.push(`/${profile.username}/dashboard/${myDashboard}`);
       }
     }
   }, [user, profile, loading, params, router]);
 
-  // Loading state & safety guard while verifying authenticity
-  if (loading || !user || (profile && params?.username && profile.username !== params.username)) {
+  // Only show spinner while auth is loading or user is not yet confirmed
+  if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0A0A0A]">
         <div className="h-8 w-8 rounded-full border-2 border-accent/30 border-t-accent animate-spin" />
