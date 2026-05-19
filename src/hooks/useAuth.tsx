@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useRef } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 
@@ -43,7 +43,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const initialised = useRef(false);
 
   const fetchProfile = async (userId: string) => {
     try {
@@ -66,23 +65,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // Safety timeout — never leave users stuck in loading state
-    const safetyTimer = setTimeout(() => {
-      setLoading((prev) => {
-        if (prev) {
-          console.warn("Auth: loading timed out after 6s, forcing false.");
-        }
-        return false;
-      });
-    }, 6000);
+    // 1. Immediately read the cookie-based session on mount.
+    //    This is critical for createBrowserClient which stores session in cookies.
+    //    onAuthStateChange alone may not fire INITIAL_SESSION reliably.
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        fetchProfile(currentUser.id).finally(() => setLoading(false));
+      } else {
+        setProfile(null);
+        setLoading(false);
+      }
+    });
 
-    // onAuthStateChange fires INITIAL_SESSION immediately, handles PKCE + detectSessionInUrl
+    // 2. Listen for subsequent auth changes (sign in, sign out, token refresh)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!initialised.current) {
-        initialised.current = true;
-      }
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
@@ -91,12 +91,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setProfile(null);
       }
       setLoading(false);
-      clearTimeout(safetyTimer);
     });
 
     return () => {
       subscription.unsubscribe();
-      clearTimeout(safetyTimer);
     };
   }, []);
 
