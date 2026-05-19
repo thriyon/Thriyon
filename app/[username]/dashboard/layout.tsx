@@ -19,8 +19,13 @@ export default function SecurityLayout({ children }: { children: React.ReactNode
         return;
       }
 
+      if (!profile?.username || !profile?.onboarding_completed) {
+        router.push("/onboarding");
+        return;
+      }
+
       const routeUsername = params?.username as string;
-      if (profile && routeUsername && profile.username && profile.username !== routeUsername) {
+      if (routeUsername && profile.username !== routeUsername) {
         // Prevent cross-user dashboard access
         const myDashboard = profile.role === "client" ? "client" : "freelancer";
         router.push(`/${profile.username}/dashboard/${myDashboard}`);

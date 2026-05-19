@@ -68,23 +68,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = async (currentUser: User) => {
     try {
-      const { data: authData } = await supabase.auth.getUser();
-      const currentUser = authData.user;
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .eq("id", userId)
+        .eq("id", currentUser.id)
         .maybeSingle();
 
       if (error) {
         console.warn("Could not fetch profile:", error.message);
-        setProfile(currentUser ? createPendingProfile(currentUser) : null);
+        setProfile(createPendingProfile(currentUser));
       } else if (data) {
         setProfile(data as Profile);
       } else {
-        setProfile(currentUser ? createPendingProfile(currentUser) : null);
+        setProfile(createPendingProfile(currentUser));
       }
     } catch (err) {
       console.error("Error fetching profile:", err);
@@ -100,7 +98,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
-        fetchProfile(currentUser.id).finally(() => setLoading(false));
+        fetchProfile(currentUser).finally(() => setLoading(false));
       } else {
         setProfile(null);
         setLoading(false);
@@ -114,7 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
-        await fetchProfile(currentUser.id);
+        await fetchProfile(currentUser);
       } else {
         setProfile(null);
       }
@@ -136,7 +134,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshProfile = async () => {
     if (user) {
-      await fetchProfile(user.id);
+      await fetchProfile(user);
     }
   };
 
