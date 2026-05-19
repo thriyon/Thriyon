@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 
@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const initialised = useRef(false);
 
   const fetchProfile = async (userId: string) => {
     try {
@@ -53,7 +54,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (error) {
-        // Profile might not exist yet if just registered before trigger
         console.warn("Could not fetch profile:", error.message);
         setProfile(null);
       } else {
@@ -66,33 +66,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // 1. Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id).finally(() => setLoading(false));
+    // Safety timeout — never leave users stuck in loading state
+    const safetyTimer = setTimeout(() => {
+      setLoading((prev) => {
+        if (prev) {
+          console.warn("Auth: loading timed out after 6s, forcing false.");
+        }
+        return false;
+      });
+    }, 6000);
+
+    // onAuthStateChange fires INITIAL_SESSION immediately, handles PKCE + detectSessionInUrl
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!initialised.current) {
+        initialised.current = true;
+      }
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        await fetchProfile(currentUser.id);
       } else {
         setProfile(null);
-        setLoading(false);
       }
+      setLoading(false);
+      clearTimeout(safetyTimer);
     });
-
-    // 2. Listen to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        const currentUser = session?.user ?? null;
-        setUser(currentUser);
-        if (currentUser) {
-          await fetchProfile(currentUser.id);
-        } else {
-          setProfile(null);
-        }
-        setLoading(false);
-      }
-    );
 
     return () => {
       subscription.unsubscribe();
+      clearTimeout(safetyTimer);
     };
   }, []);
 
