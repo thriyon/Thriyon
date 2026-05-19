@@ -57,12 +57,19 @@ export default function SignupPage() {
       }
 
       // Create a minimal profile record so the user exists in profiles
-      await supabase.from("profiles").upsert({
+      const { error: profileError } = await supabase.from("profiles").upsert({
         id: newUser.id,
         full_name: fullName,
+        role: "client",
         onboarding_completed: false,
         updated_at: new Date().toISOString(),
       });
+
+      if (profileError) {
+        setError(profileError.message);
+        setLoading(false);
+        return;
+      }
 
       // Send directly to onboarding
       router.push("/onboarding");

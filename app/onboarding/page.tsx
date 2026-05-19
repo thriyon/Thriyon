@@ -27,13 +27,16 @@ export default function OnboardingPage() {
 
   // Pre-fill from existing profile or Google metadata
   useEffect(() => {
-    if (profile && user) {
+    if (user) {
       const defaultName =
-        profile.full_name || user.user_metadata?.full_name || user.user_metadata?.name || "";
+        profile?.full_name || user.user_metadata?.full_name || user.user_metadata?.name || "";
       const defaultAvatar =
-        profile.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+        profile?.avatar_url ||
+        user.user_metadata?.avatar_url ||
+        user.user_metadata?.picture ||
+        null;
       const defaultUsername =
-        profile.username || defaultName.replace(/[^a-zA-Z0-9_]/g, "").toLowerCase();
+        profile?.username || defaultName.replace(/[^a-zA-Z0-9_]/g, "").toLowerCase();
 
       if (defaultName && !fullName) setFullName(defaultName);
       if (defaultUsername && !username) setUsername(defaultUsername);

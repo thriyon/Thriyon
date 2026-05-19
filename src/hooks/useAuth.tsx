@@ -39,6 +39,30 @@ const AuthContext = createContext<AuthContextType>({
   refreshProfile: async () => {},
 });
 
+function createPendingProfile(user: User): Profile {
+  return {
+    id: user.id,
+    full_name:
+      user.user_metadata?.full_name ??
+      user.user_metadata?.name ??
+      user.email?.split("@")[0] ??
+      null,
+    username: null,
+    bio: null,
+    skills: null,
+    role: "client",
+    avatar_url: user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? null,
+    rate: null,
+    updated_at: null,
+    company_name: null,
+    industry: null,
+    company_size: null,
+    website: null,
+    budget_range: null,
+    onboarding_completed: false,
+  };
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -46,13 +70,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchProfile = async (userId: string) => {
     try {
-      const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
+      const { data: authData } = await supabase.auth.getUser();
+      const currentUser = authData.user;
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .maybeSingle();
 
       if (error) {
         console.warn("Could not fetch profile:", error.message);
-        setProfile(null);
-      } else {
+        setProfile(currentUser ? createPendingProfile(currentUser) : null);
+      } else if (data) {
         setProfile(data as Profile);
+      } else {
+        setProfile(currentUser ? createPendingProfile(currentUser) : null);
       }
     } catch (err) {
       console.error("Error fetching profile:", err);
