@@ -9,6 +9,7 @@ export async function GET(request: Request) {
 
   if (code) {
     const cookieStore = await cookies();
+    let response = NextResponse.redirect(new URL(next, requestUrl.origin));
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,13 +20,18 @@ export async function GET(request: Request) {
             return cookieStore.getAll();
           },
           setAll(cookiesToSet) {
+            // Set cookies on the cookie store (for immediate use if needed)
             try {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                cookieStore.set(name, value, options)
-              );
+              cookiesToSet.forEach(({ name, value, options }) => {
+                cookieStore.set({ name, value, ...options, httpOnly: false });
+              });
             } catch {
-              // Server component — cookies may be read-only
+              // Ignore
             }
+            // And CRITICALLY, attach them directly to the response object we will return!
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set({ name, value, ...options, httpOnly: false });
+            });
           },
         },
       }
@@ -43,19 +49,34 @@ export async function GET(request: Request) {
 
       // If no profile, or onboarding not done, or no role assigned → go onboard
       if (!profile || !profile.onboarding_completed || !profile.role) {
-        return NextResponse.redirect(new URL("/onboarding", requestUrl.origin));
+        response = NextResponse.redirect(new URL("/onboarding", requestUrl.origin));
+        // Need to re-apply cookies to the NEW response object!
+        const allCookies = cookieStore.getAll();
+        allCookies.forEach((cookie) => {
+          response.cookies.set({ ...cookie, httpOnly: false });
+        });
+        return response;
       }
 
       // Onboarded → go to correct dashboard
       if (profile.role === "client") {
-        return NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/client`, requestUrl.origin));
+        response = NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/client`, requestUrl.origin));
       } else {
-        return NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/freelancer`, requestUrl.origin));
+        response = NextResponse.redirect(new URL(`/${profile.username || 'user'}/dashboard/freelancer`, requestUrl.origin));
       }
+      
+      const allCookies = cookieStore.getAll();
+      allCookies.forEach((cookie) => {
+        response.cookies.set({ ...cookie, httpOnly: false });
+      });
+      return response;
     }
+    
+    // If error or no user, just return the fallback response
+    return response;
   }
 
-  // Default fallback redirect
+  // Default fallback redirect if no code
   return NextResponse.redirect(new URL(next, requestUrl.origin));
 }
 
